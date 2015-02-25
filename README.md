@@ -1,5 +1,6 @@
 #CastleMind
 [Nic Wolf](https://github.com/Nic-Wolf)
+&
 [David Hasenjaeger](https://github.com/GerryFudd)
 
 ##Description
