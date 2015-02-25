@@ -2,11 +2,90 @@
 <html>
 <head>
 	<title>Castlemind Main View</title>
+
+	<style type="text/css">
+
+		#grid {
+			width: 306px;
+			height: 306px;
+			background: #777;
+			border: 4px solid black;
+		}
+		.square {
+			width: 50px;
+			height: 50px;
+			background-color: #ddd;
+			border: 2px, solid black;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+
+	function Square() {
+		var square = document.createElement('div');
+		square.className = 'square';
+		square.innerHTML = "buh";
+
+		var x, y;
+
+		var randomValue = Math.floor(Math.random() * (1 - 4));
+		var colors = ["blue", "green", "red", "purple"];
+
+		square.style.backgroundColor = colors[randomValue];
+		//randomly generate a color
+		// switch (randomValue) {
+		// 	case 1:
+		// 		square.style.backgroundColor = "blue";
+		// 		break;
+		// 	case 2:
+		// 		square.style.backgroundColor = "red";
+		// 		break;
+		// 	case 3:
+		// 		square.style.backgroundColor = "green";
+		// 		break;
+		// 	case 4:
+		// 		square.style.backgroundColor = "purple";
+		// 		break;
+		// 	default:
+		// 		console.log("Switch error: " + square.style.backgroundColor);
+		// }
+		
+		return square;
+	};
+
+	window.onload = init;
+
+	function init() {
+
+		var divGrid = document.getElementById('divGrid');
+		//thus far, this should return us a square in the div with a random color
+		//... but of course it doesn't. Well tough shit. I need to sleep.
+		divGrid.innerHTML = new Square();
+
+		// Make a constructor for rows
+		function Row() {
+			return ["col-1", "col-2", "col-3", "col-4", "col-5"];
+		}
+		// Use said constructor
+		function GameBoard() {
+			var board = [];
+			for (var i = 0; i < 5; i++) { //make 5 new rows
+				board[i] = new Row();
+			}
+			document.write(board);
+		}
+		
+	}//end init()
+
+	</script>
+
 </head>
 <body>
 
 	<h1>Welcome to Castlemind!</h1>
-	<p>stuff goes here...</p>
+
+	<div id='divGrid'></div>
 
 </body>
 </html>
