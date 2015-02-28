@@ -5,78 +5,97 @@
 
 	<style type="text/css">
 
-		#grid {
-			width: 306px;
-			height: 306px;
+		#divGrid {
+			width: 260px;
+			height: 260px;
 			background: #777;
 			border: 4px solid black;
 		}
 		.square {
 			width: 50px;
 			height: 50px;
-			background-color: #ddd;
-			border: 2px, solid black;
+			/*background-color: #ddd;*/
+			margin: 1px;
+			float: left;
+			text-align: center;
 		}
 
 	</style>
 
 	<script type="text/javascript">
 
-	function Square() {
-		var square = document.createElement('div');
-		square.className = 'square';
-		square.innerHTML = "buh";
-
-		var x, y;
-
-		var randomValue = Math.floor(Math.random() * (1 - 4));
-		var colors = ["blue", "green", "red", "purple"];
-
-		square.style.backgroundColor = colors[randomValue];
-		//randomly generate a color
-		// switch (randomValue) {
-		// 	case 1:
-		// 		square.style.backgroundColor = "blue";
-		// 		break;
-		// 	case 2:
-		// 		square.style.backgroundColor = "red";
-		// 		break;
-		// 	case 3:
-		// 		square.style.backgroundColor = "green";
-		// 		break;
-		// 	case 4:
-		// 		square.style.backgroundColor = "purple";
-		// 		break;
-		// 	default:
-		// 		console.log("Switch error: " + square.style.backgroundColor);
-		// }
-		
-		return square;
-	};
-
 	window.onload = init;
 
 	function init() {
 
 		var divGrid = document.getElementById('divGrid');
-		//thus far, this should return us a square in the div with a random color
-		//... but of course it doesn't. Well tough shit. I need to sleep.
-		divGrid.innerHTML = new Square();
 
-		// Make a constructor for rows
-		function Row() {
-			return ["col-1", "col-2", "col-3", "col-4", "col-5"];
+		// make a factory to produce new squares
+		// squares need:
+		function newSquare(rowNum, colNum) {
+			// to be divs
+			var square = document.createElement('div');
+			
+			// to have the square class
+			square.className = 'square';
+			
+			// to have a random color
+			square.style.backgroundColor = someColor();
+
+
+			
+			// to have proper x/y coordinates
+			// these values should be passed in, since they'll be created when we loop
+			var x = rowNum;
+			var y = colNum;
+
+			// TESTS
+			// display the x/y in the square
+			square.innerHTML = x + ", " + y; 
+			//alert(square.style.backgroundColor);
+			// set onclick to check the color
+			// square.onclick = function() {
+			// 	alert(square.style.backgroundColor);
+			// };
+
+
+			return square;
 		}
-		// Use said constructor
-		function GameBoard() {
-			var board = [];
-			for (var i = 0; i < 5; i++) { //make 5 new rows
-				board[i] = new Row();
+
+		for (var row = 1; row < 6; row++) {
+			for (var col = 1; col < 6; col++) {
+				divGrid.appendChild(newSquare(row, col));
 			}
-			document.write(board);
+			//line break ... hmm... maybe handle this in the styling
 		}
-		
-	}//end init()
+
+	}
+
+	//check the 
+
+
+	function someColor() {
+		var randomValue = Math.floor(Math.random() * 5);
+		switch (randomValue) {
+			case 0:
+				return "#f00";
+				break;
+			case 1:
+				return "#f90";
+				break;
+			case 2:
+				return "#0f0";
+				break;
+			case 3:
+				return "#09f";
+				break;
+			case 4:
+				return "#00f";
+				break;
+			default:
+				console.log("Switch error!");
+		}
+	};
 
 	</script>
 
