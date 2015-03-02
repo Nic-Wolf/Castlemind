@@ -30,72 +30,201 @@
 
 		var divGrid = document.getElementById('divGrid');
 
-		// make a factory to produce new squares
-		// squares need:
-		function newSquare(rowNum, colNum) {
-			// to be divs
-			var square = document.createElement('div');
-			
-			// to have the square class
-			square.className = 'square';
-			
-			// to have a random color
-			square.style.backgroundColor = someColor();
-
-
-			
-			// to have proper x/y coordinates
-			// these values should be passed in, since they'll be created when we loop
-			var x = rowNum;
-			var y = colNum;
-
-			// TESTS
-			// display the x/y in the square
-			square.innerHTML = x + ", " + y; 
-			//alert(square.style.backgroundColor);
-			// set onclick to check the color
-			// square.onclick = function() {
-			// 	alert(square.style.backgroundColor);
-			// };
-
-
-			return square;
-		}
-
 		for (var row = 1; row < 6; row++) {
 			for (var col = 1; col < 6; col++) {
+
+				//print to the DOM
 				divGrid.appendChild(newSquare(row, col));
+
+				// var color = newSquare(row, col).style.backgroundColor;
+
+				// if ( color === newSquare(row-1, col).style.backgroundColor ||
+				// 	 color === newSquare(row+1, col).style.backgroundColor ||
+				// 	 color === newSquare(row, col-1).style.backgroundColor ||
+				// 	 color === newSquare(row, col+1).style.backgroundColor )
+				// {
+				// 	color = randomColor();
 			}
-			//line break ... hmm... maybe handle this in the styling
+				//assign to an object
 		}
 
-	}
 
-	//check the 
+		var divNodeList = document.getElementsByTagName("div");
+
+		//console.log(divNodeList.length - 1); // -1 to ignore parent div
+
+		// Check for congruent colors
+		//for (var i = 0; i < divNodeList.length; i++) { // Check each child element in the main div
+			//let's get back the colors form the style for each child in the div
+			//console.log(divNodeList[1].style.backgroundColor);
 
 
-	function someColor() {
+			// if () { // if the item at the index is the same color as an item at 1 of 4 other indexes
+
+			// }
+		//}
+		// get the character after "(", or " " and before "," or ")"
+
+
+
+
+
+
+	//get the 3 digit rgb values, and cut them from the gross-ass string
+	var rgb = divNodeList[1].style.backgroundColor;
+
+	// Take the value of HTMLElement.style.backgroundColor
+	// Retrieve an array of RGB values
+	function getColors(rgbString) {
+
+		// Clip the ends
+		rgbString = rgbString.slice(4, 16); // Remove "rgb("
+		rgbString = rgbString.slice(0, rgbString.length - 1) // remove ")"
+
+		var colorArray = [];
+
+		// Loop through to get the 3 color values
+		for (var h = 0; h < 3; h++) {
+			// Assign the color
+			var color = rgbString.slice(0, 4);
+			color = color.match(/\d{1,3}/i);
+			color = color.toString();
+			colorArray[h] = color;
+
+			console.log("rgb: "+ rgbString);
+			console.log("color: " + color);
+			// Clip from the string
+			var clip = 0; // Value sets the cursor
+			for (var i = 0; i < rgbString.length; i++) {
+				if (rgbString.charAt(i) === color.charAt(i)) {
+					clip++;
+				}
+			}
+			// Update the rgb string
+			rgbString = rgbString.slice(clip + 2, rgbString.length);
+		}
+		return colorArray;
+	}//end getColors()
+
+
+	var colors = getColors(rgb);
+
+	// TESTING
+	console.log(getColors(rgb));
+
+	console.log("hex values: " + parseRGBtoHex(colors));
+
+	// Take an array of RGB values and convert them to a single hex value
+	function parseRGBtoHex(rgbArray) {
+		var hex = "#";
+
+		for (var i = 0; i < rgbArray.length; i++) {
+			hex += ("0" + parseInt(rgbArray[i]).toString(16)).slice(-2);
+		}
+		return hex;
+	}//end parseRGBtoHEX()
+
+	// function hex(x) {
+	// 	return ("0" + parseInt(x).toString(16)).slice(-2);
+	// }
+
+
+
+
+
+	}//end init()
+
+
+	// make a factory to produce new squares
+	// squares need:
+	function newSquare(x, y) {
+		// to be divs
+		var square = document.createElement('div');
+		
+		// to have proper x/y coordinates
+		// these values should be passed in, since they'll be created when we loop
+		// store the coordinates in an EASILY ACCESSIBLE way
+		square.value = [x, y];
+
+		// to have the square class styles
+		square.className = 'square';
+		
+		// to have a random color
+		square.style.backgroundColor = randomColor(x, y);
+
+		
+
+		//**********************************//
+		// TESTS
+
+		// display the x/y in the square
+		square.innerHTML = x + ", " + y; 
+
+
+		function checkColor() {
+
+		}
+
+		return square;
+	}//end newSquare()
+	
+
+	// Make a new DOM element that allows us to create an object and extends a div
+	function newerSquare(rowNum, colNum) {
+		var x = rowNum;
+		var y = colNum;
+
+		var gameSquare = document.registerElement('gamesquare', {
+			prototype: Object.create(HTMLDivElement.prototype),
+			extends: 'div'
+		});
+
+		gameSquare.className = 'square';
+
+		gameSquare.style.backgroundColor = randomColor(x, y);
+		
+		gameSquare.innerHTML = x + ", " + y; 
+
+		return gameSquare;
+
+	}//end newerSquare()
+
+	//generate a random color as a string to be passed into *.style.backgroundColor attribute
+	function randomColor() {
 		var randomValue = Math.floor(Math.random() * 5);
 		switch (randomValue) {
 			case 0:
-				return "#f00";
+				// checkColor(x, y);
+				return "#ff0000";
 				break;
 			case 1:
-				return "#f90";
+				// checkColor(x, y);
+				return "#ffff00";
 				break;
 			case 2:
-				return "#0f0";
+				// checkColor(x, y);
+				return "#00ff00";
 				break;
 			case 3:
-				return "#09f";
+				// checkColor(x, y);
+				return "#ff00ff";
 				break;
 			case 4:
-				return "#00f";
+				// checkColor(x, y);
+				return "#0000ff";
 				break;
 			default:
 				console.log("Switch error!");
 		}
-	};
+	}//end randomColor()
+
+
+
+
+
+
+
+
 
 	</script>
 
