@@ -110,9 +110,11 @@ function init() {
 function newSquare(x, y) {
 	// TODO - maybe your own damn html element. this shit'll get confusing later.
 	var square = document.createElement('div');   // create a new HTMLDivElement
+	var colorKeys = [0, 1, 2, 3, 4];							// determine the possible colors
+	var random = Math.floor(Math.random() * colorKeys.length); // determine which color is chosen
 	square.value = [x, y];                        // assign the grid coordinates to the element's value as an array
 	square.className = 'square';                  //assign the .square style class
-	square.style.backgroundColor = randomColor(); // generate a random color
+	square.style.backgroundColor = newColor(colorKeys[random]); // generate a random color
 
 	// TESTS
 	// display the x/y in the square
@@ -123,9 +125,8 @@ function newSquare(x, y) {
 
 
 // Generate a random color as a string to be passed into HTMLElement.style.backgroundColor attribute
-function randomColor() {
-	var randomValue = Math.floor(Math.random() * 5);
-	switch (randomValue) {
+function newColor(number) {
+	switch (number) {
 		case 0:
 			// checkColor(x, y);
 			return "#ff0000";
