@@ -10,7 +10,6 @@
    and assigns each a unique coodinate and color.
 
    TODOS:
-     - get the hex value of every color.
      - colors need validating. can't have congruent colors
      - 
 */
@@ -30,39 +29,45 @@ function init() {
 	// Get an array of the squares as their HTMLElements
 	// TODO - create a custom element to use instead of something so ubiquitous.
 	var divNodeList = document.getElementsByTagName("div");
-	var rgb = divNodeList[1].style.backgroundColor; //don't forget that the 0th div is the parent.
+	//var rgb = divNodeList[1].style.backgroundColor; //don't forget that the 0th div is the parent.
 
 	// TESTING
 	// log every square's hex color.
 	for (var i = 1; i < divNodeList.length; i++) {
-		console.log(getHex(divNodeList[i].style.backgroundColor)); //just log it for now.
-	}
+		//console.log("Color: " + getHex(divNodeList[i].style.backgroundColor) + ", Coordinates: " + divNodeList[i].value);
+		
+		// Check to see if there are congruent colors
+		// Just validate the rows for now
+		// console.log(divNodeList[i].style.backgroundColor);
+		var check = 0;
+		while (divNodeList[i].style.backgroundColor === divNodeList[i-1].style.backgroundColor) {
+			check++;
+			console.log("checked square " + i + " " + check + " times.");
+			divNodeList[i].style.backgroundColor = randomColor();
+		}
 
+
+
+		//console.log("checked the row");
+	}
 }//end init()
 
 
 // Setup a "factory" function to create new squares
 function newSquare(x, y) {
 	// TODO - maybe your own damn html element. this shit'll get confusing later.
-	var square = document.createElement('div'); // create a new HTMLDivElement
-	square.value = [x, y];                      // assign the grid coordinates to the element's value as an array
-	square.className = 'square';                //assign the .square style class
-	square.style.backgroundColor = randomColor(x, y); // generate a random color
+	var square = document.createElement('div');   // create a new HTMLDivElement
+	square.value = [x, y];                        // assign the grid coordinates to the element's value as an array
+	square.className = 'square';                  //assign the .square style class
+	square.style.backgroundColor = randomColor(); // generate a random color
 
-	
-	//**********************************//
 	// TESTS
-
 	// display the x/y in the square
 	square.innerHTML = x + ", " + y; 
 
-
-	function checkColor() {
-
-	}
-
 	return square;
 }//end newSquare()
+
 
 //******* WIP *********
 // Make a new DOM element that allows us to create an object and extends a div
@@ -84,6 +89,7 @@ function newerSquare(rowNum, colNum) {
 	return gameSquare;
 
 }//end newerSquare()
+
 
 // Generate a random color as a string to be passed into *.style.backgroundColor attribute
 function randomColor() {
@@ -145,6 +151,7 @@ function getHex(rgbString) {
 	
 	return parseRGBtoHex(colorArray);
 
+
 	//******************************
 	// INTERNAL FUNCTIONS
 	function parseRGBtoHex(rgbArray) {
@@ -157,3 +164,17 @@ function getHex(rgbString) {
 	}//end parseRGBtoHEX()
 
 }//end getColors()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
