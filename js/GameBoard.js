@@ -1,16 +1,16 @@
 //************************************************************//
-// Title:    Game Board - Main Class
+// Title:    Game Board - Initializer and Checker
 // Project:  CastleMind
 // Author:   Nic Wolf
 // Sources:  None
-// Revision: 0.0.2 (3/1/2015)
+// Revision: 0.0.3 (3/1/2015)
 //************************************************************//
 /* Description:
    Sets up the game board, generating randomly-colored squares
    and assigns each a unique coodinate and color.
 
    TODOS:
-     - colors need validating. can't have congruent colors
+     - Maybe to a custom html tag instead of all that div crap
      - 
 */
 
@@ -31,14 +31,49 @@ function init() {
 	// TODO - create a custom element to use instead of something so ubiquitous.
 	var divNodeList = document.getElementsByTagName("div");
 
+	var colors = {
+		red:    false,
+		yellow: false,
+		green:  false,
+		purple: false,
+		blue:   false,
+		allTrue: function() {
+			if (colors.red && colors.yellow && colors.green && colors.purple && colors.blue) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	};
+
 	// Check the grid for congruent colors.
 	for (var test = 1; test < 4; test++) { // test the grid 3 separate times to ensure a correct state.
-		console.log("Grid test " + test + " of 3...");
+		console.log("Grid test " + test + " of 3...");		
 
-		// Do the Check
+		// Loop through the list of elements
 		for (var i = 1; i < divNodeList.length; i++) {
-			//console.log("Color: " + getHex(divNodeList[i].style.backgroundColor) + ", Coordinates: " + divNodeList[i].value);
-			
+
+			// Toggle colors when they're first used
+			switch (getHex(divNodeList[i].style.backgroundColor)) {
+				case "#ff0000":
+					colors.red    = true;
+					break;
+				case "#ffff00":
+					colors.yellow = true; 
+					break;
+				case "#00ff00":
+					colors.green  = true;
+					break;
+				case "#ff00ff":
+					colors.purple = true; 
+					break;
+				case "#0000ff":
+					colors.blue   = true;
+					break;
+				default:
+					console.log("Switch error!");
+			}
+
 			var check = 0;
 			// Check for congruent colors in the rows
 			while (divNodeList[i].style.backgroundColor === divNodeList[i-1].style.backgroundColor) {
@@ -59,6 +94,15 @@ function init() {
 			}
 		}
 	}
+
+	// Make sure all the colors were used
+	while (!colors.allTrue()) {
+		var random = Math.floor(Math.random() * 25); 
+		divNodeList[random].style.backgroundColor = randomColor();
+		console.log("There is a missing color!");
+		console.log("Changed the color of the square at (" + divNodeList[random].value + ").");
+	}
+
 }//end init()
 
 
@@ -78,23 +122,7 @@ function newSquare(x, y) {
 }//end newSquare()
 
 
-//******* WIP *********
-// Make a new DOM element that allows us to create an object and extends a div
-function newerSquare(x, y) {
-	// Create a new HTMLElement for the squares
-	var gameSquare = document.registerElement('game-square', { prototype: Object.create(HTMLDivElement.prototype) });
-
-	gameSquare.className = 'square';
-	gameSquare.style.backgroundColor = randomColor(x, y);
-	gameSquare.x = x;
-	gameSquare.y = y;
-	// gameSquare.innerHTML = x + ", " + y; 
-
-	return gameSquare;
-}//end newerSquare()
-
-
-// Generate a random color as a string to be passed into *.style.backgroundColor attribute
+// Generate a random color as a string to be passed into HTMLElement.style.backgroundColor attribute
 function randomColor() {
 	var randomValue = Math.floor(Math.random() * 5);
 	switch (randomValue) {
@@ -126,6 +154,7 @@ function randomColor() {
 
 // Take the value of HTMLElement.style.backgroundColor
 // Retrieve an array of RGB values
+// parse values to hex
 function getHex(rgbString) {
 	// Clip the ends
 	rgbString = rgbString.slice(4, 16); // Remove "rgb("
@@ -167,17 +196,3 @@ function getHex(rgbString) {
 	}//end parseRGBtoHEX()
 
 }//end getColors()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
