@@ -20,7 +20,8 @@ function init() {
 
 	var divGrid = document.getElementById('divGrid');
 
-	for (var row = 1; row < 6; row++) { // Setup the squares as a grid in the DOM
+	// Setup the squares as a grid in the DOM
+	for (var row = 1; row < 6; row++) {
 		for (var col = 1; col < 6; col++) {
 			divGrid.appendChild(newSquare(row, col));
 		}
@@ -29,26 +30,34 @@ function init() {
 	// Get an array of the squares as their HTMLElements
 	// TODO - create a custom element to use instead of something so ubiquitous.
 	var divNodeList = document.getElementsByTagName("div");
-	//var rgb = divNodeList[1].style.backgroundColor; //don't forget that the 0th div is the parent.
 
-	// TESTING
-	// log every square's hex color.
-	for (var i = 1; i < divNodeList.length; i++) {
-		//console.log("Color: " + getHex(divNodeList[i].style.backgroundColor) + ", Coordinates: " + divNodeList[i].value);
-		
-		// Check to see if there are congruent colors
-		// Just validate the rows for now
-		// console.log(divNodeList[i].style.backgroundColor);
-		var check = 0;
-		while (divNodeList[i].style.backgroundColor === divNodeList[i-1].style.backgroundColor) {
-			check++;
-			console.log("checked square " + i + " " + check + " times.");
-			divNodeList[i].style.backgroundColor = randomColor();
+	// Check the grid for congruent colors.
+	for (var test = 1; test < 4; test++) { // test the grid 3 separate times to ensure a correct state.
+		console.log("Grid test " + test + " of 3...");
+
+		// Do the Check
+		for (var i = 1; i < divNodeList.length; i++) {
+			//console.log("Color: " + getHex(divNodeList[i].style.backgroundColor) + ", Coordinates: " + divNodeList[i].value);
+			
+			var check = 0;
+			// Check for congruent colors in the rows
+			while (divNodeList[i].style.backgroundColor === divNodeList[i-1].style.backgroundColor) {
+				check++;
+				divNodeList[i].style.backgroundColor = randomColor();
+			}
+
+			if (i > 5) { // after the first row...
+				//check for congruent colors in the columns
+				while (divNodeList[i].style.backgroundColor === divNodeList[i-5].style.backgroundColor) {
+					check++;
+				 	divNodeList[i].style.backgroundColor = randomColor();
+				}
+			}
+			// Log any changes to squares
+			if (check !== 0) {
+				console.log("Changed the color of the square at (" + divNodeList[i].value + ") " + check + " time(s).");
+			}
 		}
-
-
-
-		//console.log("checked the row");
 	}
 }//end init()
 
@@ -71,23 +80,17 @@ function newSquare(x, y) {
 
 //******* WIP *********
 // Make a new DOM element that allows us to create an object and extends a div
-function newerSquare(rowNum, colNum) {
-	var x = rowNum;
-	var y = colNum;
-
-	var gameSquare = document.registerElement('gamesquare', {
-		prototype: Object.create(HTMLDivElement.prototype),
-		extends: 'div'
-	});
+function newerSquare(x, y) {
+	// Create a new HTMLElement for the squares
+	var gameSquare = document.registerElement('game-square', { prototype: Object.create(HTMLDivElement.prototype) });
 
 	gameSquare.className = 'square';
-
 	gameSquare.style.backgroundColor = randomColor(x, y);
-	
-	gameSquare.innerHTML = x + ", " + y; 
+	gameSquare.x = x;
+	gameSquare.y = y;
+	// gameSquare.innerHTML = x + ", " + y; 
 
 	return gameSquare;
-
 }//end newerSquare()
 
 
