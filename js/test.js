@@ -30,3 +30,9 @@ var squares;
 initSquares(function (result) {
 	squares = result;
 });
+
+function refineBoard (seed) {
+	return seed;
+}
+
+console.log(refineBoard(squares));
