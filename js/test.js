@@ -32,6 +32,22 @@ initSquares(function (result) {
 });
 
 function refineBoard (seed) {
+	// set the color to deal with
+	var color = 0;
+	// set the list to deal with
+	var row = 1;
+	// the list of columns that have not been filled
+	var columns = [1, 2, 3, 4];
+	// make a list of squares in the present row that could be current color
+	var possible = [];
+	columns.forEach( function (elem) {
+		if (seed.some( function (element) {
+			return element.value[1] !== elem || element.colorKey !== color;
+		}) && color !== row) {
+			possible.push(elem);
+		}
+	})
+	console.log('the squares in row 1 that may be color 0 are: ' + possible);
 	return seed;
 }
 
