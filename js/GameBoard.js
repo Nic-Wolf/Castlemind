@@ -6,14 +6,14 @@
 // Revision: 0.0.3 (3/1/2015)
 //************************************************************//
 /* Description:
-   Sets up the game board, generating randomly-colored squares
-   and assigns each a unique coodinate and color.
+	 Sets up the game board, generating randomly-colored squares
+	 and assigns each a unique coodinate and color.
 
-   TODOS:
-     - Maybe to a custom html tag instead of all that div crap
-     - 
+	 TODOS:
+		 - Maybe to a custom html tag instead of all that div crap
+		 - 
 */
-
+var squares = [];
 window.onload = init;
 
 function init() {
@@ -46,62 +46,62 @@ function init() {
 		}
 	};
 
-	// Check the grid for congruent colors.
-	for (var test = 1; test < 4; test++) { // test the grid 3 separate times to ensure a correct state.
-		console.log("Grid test " + test + " of 3...");		
+	// // Check the grid for congruent colors.
+	// for (var test = 1; test < 4; test++) { // test the grid 3 separate times to ensure a correct state.
+	// 	console.log("Grid test " + test + " of 3...");		
 
-		// Loop through the list of elements
-		for (var i = 1; i < divNodeList.length; i++) {
+	// 	// Loop through the list of elements
+	// 	for (var i = 1; i < divNodeList.length; i++) {
 
-			// Toggle colors when they're first used
-			switch (getHex(divNodeList[i].style.backgroundColor)) {
-				case "#ff0000":
-					colors.red    = true;
-					break;
-				case "#ffff00":
-					colors.yellow = true; 
-					break;
-				case "#00ff00":
-					colors.green  = true;
-					break;
-				case "#ff00ff":
-					colors.purple = true; 
-					break;
-				case "#0000ff":
-					colors.blue   = true;
-					break;
-				default:
-					console.log("Switch error!");
-			}
+	// 		// Toggle colors when they're first used
+	// 		switch (getHex(divNodeList[i].style.backgroundColor)) {
+	// 			case "#ff0000":
+	// 				colors.red    = true;
+	// 				break;
+	// 			case "#ffff00":
+	// 				colors.yellow = true; 
+	// 				break;
+	// 			case "#00ff00":
+	// 				colors.green  = true;
+	// 				break;
+	// 			case "#ff00ff":
+	// 				colors.purple = true; 
+	// 				break;
+	// 			case "#0000ff":
+	// 				colors.blue   = true;
+	// 				break;
+	// 			default:
+	// 				console.log("Switch error!");
+	// 		}
 
-			var check = 0;
-			// Check for congruent colors in the rows
-			while (divNodeList[i].style.backgroundColor === divNodeList[i-1].style.backgroundColor) {
-				check++;
-				divNodeList[i].style.backgroundColor = randomColor();
-			}
+	// 		var check = 0;
+	// 		// Check for congruent colors in the rows
+	// 		while (divNodeList[i].style.backgroundColor === divNodeList[i-1].style.backgroundColor) {
+	// 			check++;
+	// 			divNodeList[i].style.backgroundColor = randomColor();
+	// 		}
 
-			if (i > 5) { // after the first row...
-				//check for congruent colors in the columns
-				while (divNodeList[i].style.backgroundColor === divNodeList[i-5].style.backgroundColor) {
-					check++;
-				 	divNodeList[i].style.backgroundColor = randomColor();
-				}
-			}
-			// Log any changes to squares
-			if (check !== 0) {
-				console.log("Changed the color of the square at (" + divNodeList[i].value + ") " + check + " time(s).");
-			}
-		}
-	}
+	// 		if (i > 5) { // after the first row...
+	// 			//check for congruent colors in the columns
+	// 			while (divNodeList[i].style.backgroundColor === divNodeList[i-5].style.backgroundColor) {
+	// 				check++;
+	// 				divNodeList[i].style.backgroundColor = randomColor();
+	// 			}
+	// 		}
+	// 		// Log any changes to squares
+	// 		if (check !== 0) {
+	// 			console.log("Changed the color of the square at (" + divNodeList[i].value + ") " + check + " time(s).");
+	// 		}
+	// 	}
+	// }
 
-	// Make sure all the colors were used
-	while (!colors.allTrue()) {
-		var random = Math.floor(Math.random() * 25); 
-		divNodeList[random].style.backgroundColor = randomColor();
-		console.log("There is a missing color!");
-		console.log("Changed the color of the square at (" + divNodeList[random].value + ").");
-	}
+	// // Make sure all the colors were used
+	// while (!colors.allTrue()) {
+	// 	var random = Math.floor(Math.random() * 25); 
+	// 	divNodeList[random].style.backgroundColor = randomColor();
+	// 	console.log("There is a missing color!");
+	// 	console.log("Changed the color of the square at (" + divNodeList[random].value + ").");
+	// }
 
 }//end init()
 
@@ -109,23 +109,49 @@ function init() {
 // Setup a "factory" function to create new squares
 function newSquare(x, y) {
 	// TODO - maybe your own damn html element. this shit'll get confusing later.
-	var square = document.createElement('div');   // create a new HTMLDivElement
-	var colorKeys = [0, 1, 2, 3, 4];							// determine the possible colors
-	var random = Math.floor(Math.random() * colorKeys.length); // determine which color is chosen
-	square.value = [x, y];                        // assign the grid coordinates to the element's value as an array
-	square.className = 'square';                  //assign the .square style class
-	square.style.backgroundColor = newColor(colorKeys[random]); // generate a random color
+	var square = {};
+	var squareDiv = document.createElement('div');							// create a new HTMLDivElement
+	square.value = [x, y];                        							// assign the grid coordinates to the element's value as an array
+	squareDiv.value = square.value;
+	squareDiv.className = 'square';                  						//assign the .square style class
+	var colorKeys = getAvailable(square);							// determine the possible colors
+	var random = Math.floor(Math.random() * colorKeys.length); 	// determine which color is chosen
+	square.colorKey = colorKeys[random];
+	squareDiv.style.backgroundColor = randomColor(square.colorKey); 						// generate a random color
 
 	// TESTS
 	// display the x/y in the square
-	square.innerHTML = x + ", " + y; 
-
-	return square;
+	squareDiv.innerHTML = x + ", " + y; 
+	squares.push(square);
+	return squareDiv;
 }//end newSquare()
 
+function getAvailable (square) {
+	var starting = [0, 1, 2, 3, 4];
+	var remove = [];
+	squares.forEach(function (elem) {
+		console.log(elem);
+		if (elem.value[0] === square.value[0] || elem.value[1] === square.value[1]) {
+			if (remove.indexOf(elem.colorKey) === -1) {
+				remove.push(elem.colorKey);
+			}
+		}
+	});
+	var result = starting.reduce(function (prev, current) {
+		var res = prev;
+		if (remove.indexOf(current) === -1) {
+			res.push(current);
+		}
+		return res;
+	},[]);
+
+	console.log(result);
+
+	return result;
+}
 
 // Generate a random color as a string to be passed into HTMLElement.style.backgroundColor attribute
-function newColor(number) {
+function randomColor(number) {
 	switch (number) {
 		case 0:
 			// checkColor(x, y);
