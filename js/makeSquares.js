@@ -27,12 +27,6 @@ function makeSquare (coordinates, color, callback) {
 	callback(square);
 }
 
-
-var squares;
-initSquares(function (result) {
-	squares = result;
-});
-
 function refineBoard (seed) {
 	// set the color to deal with
 	var color = 3;
@@ -69,4 +63,9 @@ function colunmPossible (seed, row, color) {
 	return possible;
 }
 
-console.log(refineBoard(squares));
+function completeBoard (seed) {
+	return seed;
+}
+module.exports.completeBoard = completeBoard;
+module.exports.refineBoard = refineBoard;
+module.exports.initSquares = initSquares;
