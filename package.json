@@ -1,0 +1,22 @@
+{
+  "name": "castlemind",
+  "version": "1.0.0",
+  "description": "[Nic Wolf](https://github.com/Nic-Wolf) & [David Hasenjaeger](https://github.com/GerryFudd)",
+  "main": "index.js",
+  "scripts": {
+    "test": "`npm bin`/jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nic-Wolf/castlemind.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nic-Wolf/castlemind/issues"
+  },
+  "homepage": "https://github.com/Nic-Wolf/castlemind",
+  "devDependencies": {
+    "jasmine": "^2.2.1"
+  }
+}
