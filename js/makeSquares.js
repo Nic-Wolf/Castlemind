@@ -2,6 +2,11 @@ var size = 5;
 var guesses = {};
 var states = [];
 
+// returns random value from {0,...,num - 1}
+function randInt (num) {
+	return Math.floor(Math.random() * num);
+}
+
 function initSquares (callback) {
 	var squares = [];
 	var row;
@@ -60,7 +65,7 @@ function setPossibles (seed, color, callback) {
 	// row that could be the given color
 	for (row = 0; row < size; row++) {
 		var possible = colunmPossible(seed, row, color);
-		console.log('the squares in row ' + row + ' that may be color ' + color + ' are: ' + possible);
+		// console.log('the squares in row ' + row + ' that may be color ' + color + ' are: ' + possible);
 		possibles.push(possible);
 	}
 	callback(possibles);
@@ -91,8 +96,27 @@ function colunmPossible (seed, row, color) {
 }
 
 function guesser (seed, color, callback) {
+	// store the old board and make a clone
 	states.push(seed);
 	var newGuess = JSON.parse(JSON.stringify(seed));
+
+	// determine what possibilities remain for the present color
+	setPossibles(newGuess, color, function (result) {
+		// determine the first row that doesn't have the color yet
+		var row;
+		result.some(function (elem, index) {
+			row = index;
+			return elem.length > 0;
+		});
+		// randomly assign the color to one of the squares in the row
+		var randomValue = randInt(result[row].length);
+		var column = result[row][randomValue];
+		var coordinates = [row, column];
+		makeSquare(coordinates, color, function (result) {
+			newGuess.push(result);
+			guesses[coordinates] = color;
+		});
+	});
 	callback(newGuess, guesses, states);
 }
 
