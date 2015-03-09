@@ -1,6 +1,7 @@
 var size = 5;
 var guesses = {};
 var states = [];
+var presentColor = 0;
 
 // returns random value from {0,...,num - 1}
 function randInt (num) {
@@ -8,6 +9,8 @@ function randInt (num) {
 }
 
 function initSquares (callback) {
+	guesses = {};
+	states = [];
 	var squares = [];
 	var row;
 	var col;
@@ -34,11 +37,11 @@ function makeSquare (coordinates, color, callback) {
 	callback(square);
 }
 
-function refineBoard (seed) {
+function refineBoard (seed, callback) {
 	var initial = seed.length;
 	var newBoard = seed;
 
-	assignColorByRow(0, 0);
+	assignColorByRow(0, presentColor);
 
 	function assignColorByRow (row, color) {
 		// if for a given row and a given color there is only one possible
@@ -55,7 +58,15 @@ function refineBoard (seed) {
 		});
 	}
 
-	return newBoard;
+	if (newBoard.length === initial && newBoard.length < 13) {
+		guesser(newBoard, presentColor, function (result) {
+			newBoard = result;
+		});
+		refineBoard(newBoard, callback);
+	} else {
+		console.log(newBoard);
+		callback(newBoard);
+	}
 }
 
 function setPossibles (seed, color, callback) {
@@ -87,7 +98,7 @@ function colunmPossible (seed, row, color) {
 			var firstMatch = element.value[0] === row;
 			var secondMatch = element.value[1] === col;
 			var exactMatch = firstMatch && secondMatch;
-			return exactMatch || (secondMatch && element.colorKey === color);
+			return exactMatch || ((firstMatch || secondMatch) && element.colorKey === color);
 		})) {
 			possible.push(col);
 		}
@@ -112,8 +123,8 @@ function guesser (seed, color, callback) {
 		var randomValue = randInt(result[row].length);
 		var column = result[row][randomValue];
 		var coordinates = [row, column];
-		makeSquare(coordinates, color, function (result) {
-			newGuess.push(result);
+		makeSquare(coordinates, color, function (res) {
+			newGuess.push(res);
 			guesses[coordinates] = color;
 		});
 	});

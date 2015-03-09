@@ -27,36 +27,39 @@ describe('makeSquares', function () {
 		});
 	});
 	it('should have a function called refineBoard that produces a board with only one of each color in each row', function () {
-		var newSquares = refineBoard(squares);
-		newSquares.forEach(function (elem1) {
-			newSquares.forEach(function (elem2) {
-				var samesquare = elem1.value === elem2.value;
-				var same_color = elem1.colorKey === elem2.colorKey;
-				var same_row = elem1.value[0] === elem2.value[0];
-				expect(samesquare || !same_color || !same_row).toEqual(true);
+		refineBoard(squares, function (result) {
+			result.forEach(function (elem1) {
+				result.forEach(function (elem2) {
+					var samesquare = elem1.value === elem2.value;
+					var same_color = elem1.colorKey === elem2.colorKey;
+					var same_row = elem1.value[0] === elem2.value[0];
+					expect(samesquare || !same_color || !same_row).toEqual(true);
+				});
 			});
 		});
 	});
 	it('should have a function called refineBoard that produces a board with only one of each color in each column', function () {
-		var newSquares = refineBoard(squares);
-		newSquares.forEach(function (elem1) {
-			newSquares.forEach(function (elem2) {
-				var samesquare = elem1.value === elem2.value;
-				var same_color = elem1.colorKey === elem2.colorKey;
-				var same_column = elem1.value[1] === elem2.value[1];
-				expect(samesquare || !same_color || !same_column).toEqual(true);
+		refineBoard(squares, function (result) {
+			result.forEach(function (elem1) {
+				result.forEach(function (elem2) {
+					var samesquare = elem1.value === elem2.value;
+					var same_color = elem1.colorKey === elem2.colorKey;
+					var same_column = elem1.value[1] === elem2.value[1];
+					expect(samesquare || !same_color || !same_column).toEqual(true);
+				});
 			});
 		});
 	});
 	it('should have a function called refineBoard that produces a more complete board', function () {
-		var newSquares = refineBoard(squares);
-		expect(newSquares.length).toBeGreaterThan(squares.length);
+		refineBoard(squares, function (result) {
+			expect(result.length).toBeGreaterThan(squares.length);
+		});
 	});
 
 	it('should have a function called guesser stores the old board, the list of guesses, and applies the new guess', function () {
 		guesser(squares, 0, function () {
 			expect(arguments[0].length).toEqual(10);
-			expect(Object.keys(arguments[1]).length).toEqual(1);
+			expect(Object.keys(arguments[1]).length).toBeGreaterThan(0);
 			expect(arguments[2][0]).toEqual(squares);
 		});
 	});
