@@ -1,6 +1,8 @@
 var completeBoard = require('../js/makeSquares.js').completeBoard;
 var refineBoard = require('../js/makeSquares.js').refineBoard;
+var guesser = require('../js/makeSquares.js').guesser;
 var initSquares = require('../js/makeSquares.js').initSquares;
+
 
 var squares;
 initSquares(function (result) {
@@ -49,6 +51,14 @@ describe('makeSquares', function () {
 	it('should have a function called refineBoard that produces a more complete board', function () {
 		var newSquares = refineBoard(squares);
 		expect(newSquares.length).toBeGreaterThan(squares.length);
+	});
+
+	it('should have a function called guesser stores the old board, the list of guesses, and applies the new guess', function () {
+		guesser(squares, 0, function () {
+			expect(arguments[0].length).toEqual(10);
+			expect(Object.keys(arguments[1]).length).toEqual(1);
+			expect(arguments[2][0]).toEqual(squares);
+		});
 	});
 	
 	it('should have a function called completeBoard that produces a board with only one of each color in each row', function () {
