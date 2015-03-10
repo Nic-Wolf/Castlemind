@@ -34,7 +34,7 @@ square is complete
 	if yes, fill in value and proceed to (a)
 	if no, proceed to (b)
 
-	(a) are there rows left that don't have this color? (unhandled)
+	(a) are there rows left that don't have this color? (checkIfColorDone)
 	if yes, proceed to (*)
 	if no, increment color and proceed to (*)
 	(b) store state, guess square in the present row, update guesses,
@@ -44,10 +44,10 @@ square is complete
 	if yes, proceed to (a)
 	if no, revert and proceed to (*)
 
-	(a) Have all guesses been made for this color? (unhandled)
-	if yes, remove all guesses for this color, decrement color,
+	(a) Have all guesses been made for this color? (diagnoseProblem)
+	if yes, remove all guesses and states for this color, decrement color,
 		revert state to last color, and proceed to (*)
-	if no, remove all guesses for the last row,
+	if no, remove all guesses and states for the last row,
 		revert state to last row, and proceed to (*)
 **********************************************************************/
 function completeBoard (seed) {
@@ -55,15 +55,30 @@ function completeBoard (seed) {
 	checkConsistency (seed, presentColor, function (result) {
 		newBoard = result;
 	});
-	refineBoard(seed, presentColor, function (result) {
+
+	checkIfColorDone (newBoard, presentColor);
+
+	refineBoard(newBoard, presentColor, function (result) {
 		newBoard = result;
 	});
 
 	return newBoard;
 }
 
+function checkIfColorDone (board, color) {
+	// this is where I handle (1)(a)
+	setPossibles(board, color, function (result) {
+		// check if there is no row with possible values
+		if (!result.some( function (elem) {
+			return elem.length !== 0;
+		})) {
+			presentColor++;
+		}
+	});
+}
+
 function checkConsistency (board, color, callback) {
-	var result;
+	var res;
 	// this is where I handle (*)
 	// determine whether there is a row with no possible column given the
 	// present color
@@ -77,15 +92,13 @@ function checkConsistency (board, color, callback) {
 				return element.value[0] === row && element.colorKey === color;
 			});
 		})) {
-			diagnoseProblem(board, color, result);
-
-			result = board;
+			res = diagnoseProblem(board, color, result);
 		} else {
-			result = board;
+			res = board;
 		}
 
 		// run the callback on the result regardless
-		callback(result)
+		callback(res)
 	});
 }
 
@@ -93,13 +106,33 @@ function diagnoseProblem (board, color, possibles) {
 	// this is where I handle (2)
 	// check if there are no possibles left for the last guessed row
 	var rows_guessed = Object.keys(guesses[color]);
-	var last_guessed = Number(rows_guessed[rows_guessed.length - 1]);
+	var last_guessed = Number(getLast(rows_guessed));
 	console.log('last_guessed is ' + last_guessed);
 	console.log('possibles[last_guessed] is ' + possibles[last_guessed]);
 	if (possibles[last_guessed].length === 0) {
-		// look at the last state for the previous color.
+		// this is where I handle (a)
+		// look at the first state for this color.
 		// Check for possibles based on that old state and the current guesses
-		setPossibles()
+		var old_state = states[color][rows_guessed[0]][0];
+		setPossibles(old_state, color, function (result) {
+			// if there are no possibles, then there are no valid guesses left for this color
+			// check if there are no rows with possible values
+			if (!result.some( function (elem) {
+				return elem.length !== 0;
+			})) {
+				rows_guessed = Object.keys(guesses[color - 1]);
+				old_state = getLast(states[color - 1][getLast(rows_guessed)]);
+				states[color] = null;
+				guesses[color] = null;
+				presentColor = color - 1;
+				return old_state;
+			} else {
+				old_state = getLast(states[color][last_guessed - 1]);
+				states[color][last_guessed] = null;
+				guesses[color][last_guessed] = null;
+				return old_state;
+			}
+		})
 	} else if (false) {
 		return states[color][row].pop();
 	}
@@ -119,6 +152,11 @@ function refineBoard (board, color, callback) {
 	}
 	
 	callback(newBoard);
+}
+
+// return last element of the array
+function getLast (array) {
+	return array[array.length - 1];
 }
 
 // returns random value from {0,...,num - 1}
@@ -231,7 +269,6 @@ function guesser (seed, color, callback) {
 			guesses[color][row].push(column);
 			states[color][row].push(seed);
 		}
-		diagnoseProblem(newGuess, color, result);
 	});
 	callback(newGuess, guesses, states);
 }
