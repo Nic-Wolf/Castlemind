@@ -23,7 +23,7 @@ function initSquares (callback) {
 
 function completeBoard (seed) {
 	var newBoard;
-	checkConsistency (seed, function (result) {
+	checkConsistency (seed, presentColor, function (result) {
 		newBoard = result;
 	});
 	refineBoard(seed, presentColor, function (result) {
@@ -33,9 +33,30 @@ function completeBoard (seed) {
 	return newBoard;
 }
 
-function checkConsistency (board, callback) {
+function checkConsistency (board, color, callback) {
+	var consistent = true;
+	// determine whether there is a row with no possible column for the
+	// present color
+	// set consistent to false if there exists a row with the following:
+	// there is no place for the present color
+	// there is no square in the row that is already that color
+	setPossibles(board, color, function (result) {
+		if(result.some( function (possible, row) {
+			return possible.length === 0 && !board.some( function (element) {
+				return element.value[0] === row && element.colorKey === color;
+			});
+		})) {
+			consistent = false;
+		}
+	});
 
-	callback(board);
+	// if the board is consistent, pass the board to the callback.
+	// otherwise, revert to the previous board state
+	if (consistent) {
+		callback(board);
+	} else {
+		callback(states.pop());
+	}
 }
 
 function refineBoard (board, color, callback) {
@@ -81,20 +102,20 @@ function assignColorByRow (board, row, color, callback) {
 	callback(board);
 }
 
-function setPossibles (seed, color, callback) {
+function setPossibles (board, color, callback) {
 	// possibles contains one array for each row
 	// the sub arrays represent the possible values in the given
 	var possibles = [];
 	// row that could be the given color
 	for (row = 0; row < size; row++) {
-		var possible = colunmPossible(seed, row, color);
+		var possible = colunmPossible(board, row, color);
 		// console.log('the squares in row ' + row + ' that may be color ' + color + ' are: ' + possible);
 		possibles.push(possible);
 	}
 	callback(possibles);
 }
 
-function colunmPossible (seed, row, color) {
+function colunmPossible (board, row, color) {
 	// columns is the list of columns
 	var columns = [];
 	var n;
@@ -103,14 +124,15 @@ function colunmPossible (seed, row, color) {
 	}
 
 	// possible is the list of columns in 'row' that could be 'color'
-	// for the given seed
+	// for the given board
 	var possible = [];
 	columns.forEach( function (col) {
-		if (!seed.some( function (element) {
-			var firstMatch = element.value[0] === row;
-			var secondMatch = element.value[1] === col;
-			var exactMatch = firstMatch && secondMatch;
-			return exactMatch || ((firstMatch || secondMatch) && element.colorKey === color);
+		if (!board.some( function (element) {
+			var rowMatch = element.value[0] === row;
+			var columnMatch = element.value[1] === col;
+			var exactMatch = rowMatch && columnMatch;
+			var colorMatch = element.colorKey === color;
+			return exactMatch || ((rowMatch || columnMatch) && colorMatch);
 		})) {
 			possible.push(col);
 		}
