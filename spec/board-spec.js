@@ -9,8 +9,8 @@ initSquares(function (result) {
 	squares = result;
 });
 
-describe('makeSquares', function () {
-	it('should have a function called initSquares that makes the top row and first column', function() {
+describe('initSquares', function () {
+	it('should make the top row and first column', function() {
 		initSquares(function (result) {
 			expect(result[0]).toEqual({
 				value: [0, 0],
@@ -26,7 +26,9 @@ describe('makeSquares', function () {
 			});
 		});
 	});
-	it('should have a function called refineBoard that produces a board with only one of each color in each row', function () {
+});
+describe('refineBoard', function () {
+	it('should produce a board with only one of each color in each row', function () {
 		refineBoard(squares, function (result) {
 			result.forEach(function (elem1) {
 				result.forEach(function (elem2) {
@@ -38,7 +40,7 @@ describe('makeSquares', function () {
 			});
 		});
 	});
-	it('should have a function called refineBoard that produces a board with only one of each color in each column', function () {
+	it('should produce a board with only one of each color in each column', function () {
 		refineBoard(squares, function (result) {
 			result.forEach(function (elem1) {
 				result.forEach(function (elem2) {
@@ -50,21 +52,23 @@ describe('makeSquares', function () {
 			});
 		});
 	});
-	it('should have a function called refineBoard that produces a more complete board', function () {
+	it('should produce a more complete board', function () {
 		refineBoard(squares, function (result) {
 			expect(result.length).toBeGreaterThan(squares.length);
 		});
 	});
-
-	it('should have a function called guesser stores the old board, the list of guesses, and applies the new guess', function () {
+});
+describe('guesser', function () {
+	it('should store the old board, the list of guesses, and applies the new guess', function () {
 		guesser(squares, 0, function () {
 			expect(arguments[0].length).toEqual(10);
 			expect(Object.keys(arguments[1]).length).toBeGreaterThan(0);
 			expect(arguments[2][0]).toEqual(squares);
 		});
 	});
-	
-	it('should have a function called completeBoard that produces a board with only one of each color in each row', function () {
+});
+describe('completeBoard', function () {
+	it('should produce a board with only one of each color in each row', function () {
 		var finalBoard = completeBoard(squares);
 		finalBoard.forEach(function (elem1) {
 			finalBoard.forEach(function (elem2) {
@@ -88,6 +92,7 @@ describe('makeSquares', function () {
 	});
 	it('should have a function called completeBoard that produces a complete board', function () {
 		var finalBoard = completeBoard(squares);
+		console.log(finalBoard);
 		expect(finalBoard.length).toEqual(25);
 	});
 });

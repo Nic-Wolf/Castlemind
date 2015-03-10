@@ -3,11 +3,6 @@ var guesses = {};
 var states = [];
 var presentColor = 0;
 
-// returns random value from {0,...,num - 1}
-function randInt (num) {
-	return Math.floor(Math.random() * num);
-}
-
 function initSquares (callback) {
 	guesses = {};
 	states = [];
@@ -15,58 +10,74 @@ function initSquares (callback) {
 	var row;
 	var col;
 	for (row = 0; row < size; row++){
-		makeSquare([row, 0], row, function (result) {
-			squares.push(result);
-		});
+		squares.push(makeSquare([row, 0], row));
 	}
 
 
 	for (col = 1; col < size; col++){
-		makeSquare([0, col], col, function (result) {
-			squares.push(result);
-		});
+		squares.push(makeSquare([0, col], col));
 	}
 
 	callback(squares);
 }
 
-function makeSquare (coordinates, color, callback) {
-	var square = {};
-	square.value = coordinates;
-	square.colorKey = color;
-	callback(square);
+function completeBoard (seed) {
+	var newBoard;
+	checkConsistency (seed, function (result) {
+		newBoard = result;
+	});
+	refineBoard(seed, function (result) {
+		newBoard = result;
+	});
+
+	return newBoard;
 }
 
-function refineBoard (seed, callback) {
-	var initial = seed.length;
-	var newBoard = seed;
+function checkConsistency (board, callback) {
+	callback(board);
+}
 
-	assignColorByRow(0, presentColor);
+function refineBoard (board, callback) {
+	var newBoard = board;
 
-	function assignColorByRow (row, color) {
-		// if for a given row and a given color there is only one possible
-		// column, make a square in that column with that color and push it
-		// to the squares array
-		setPossibles(seed, color, function (result) {
-			result.forEach( function (elem, index) {
-				if (elem.length === 1) {
-					makeSquare([index, elem[0]], color, function (result) {
-						newBoard.push(result);
-					});
-				}
-			});
-		});
-	}
+	assignColorByRow(newBoard, 0, presentColor, function (result) {
+		newBoard = result;
+	});
 
-	if (newBoard.length === initial && newBoard.length < 13) {
+	if (newBoard.length === board.length) {
 		guesser(newBoard, presentColor, function (result) {
 			newBoard = result;
 		});
-		refineBoard(newBoard, callback);
-	} else {
-		console.log(newBoard);
-		callback(newBoard);
 	}
+	
+	callback(newBoard);
+}
+
+// returns random value from {0,...,num - 1}
+function randInt (num) {
+	return Math.floor(Math.random() * num);
+}
+
+function makeSquare (coordinates, color) {
+	var square = {};
+	square.value = coordinates;
+	square.colorKey = color;
+	return square;
+}
+
+function assignColorByRow (board, row, color, callback) {
+	// if for a given row and a given color there is only one possible
+	// column, make a square in that column with that color and push it
+	// to the squares array
+	setPossibles(board, color, function (result) {
+		result.forEach( function (elem, index) {
+			if (elem.length === 1) {
+				board.push(makeSquare([index, elem[0]], color));
+			}
+		});
+	});
+
+	callback(board);
 }
 
 function setPossibles (seed, color, callback) {
@@ -123,16 +134,10 @@ function guesser (seed, color, callback) {
 		var randomValue = randInt(result[row].length);
 		var column = result[row][randomValue];
 		var coordinates = [row, column];
-		makeSquare(coordinates, color, function (res) {
-			newGuess.push(res);
-			guesses[coordinates] = color;
-		});
+		newGuess.push(makeSquare(coordinates, color));
+		guesses[coordinates] = color;
 	});
 	callback(newGuess, guesses, states);
-}
-
-function completeBoard (seed) {
-	return seed;
 }
 module.exports.completeBoard = completeBoard;
 module.exports.refineBoard = refineBoard;
