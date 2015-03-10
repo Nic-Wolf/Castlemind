@@ -41,14 +41,14 @@ square is complete
 		and proceed to (*) (guesser)
 
 (2) Have all guesses been made for the last row? (diagnoseProblem)
-	if yes, remove all guesses for the last row,
-		revert state to last row, and proceed to (*)
-	if no, proceed to (a)
+	if yes, proceed to (a)
+	if no, revert and proceed to (*)
 
 	(a) Have all guesses been made for this color? (unhandled)
 	if yes, remove all guesses for this color, decrement color,
 		revert state to last color, and proceed to (*)
-	if no, revert and proceed to (*)
+	if no, remove all guesses for the last row,
+		revert state to last row, and proceed to (*)
 **********************************************************************/
 function completeBoard (seed) {
 	var newBoard;
@@ -77,7 +77,7 @@ function checkConsistency (board, color, callback) {
 				return element.value[0] === row && element.colorKey === color;
 			});
 		})) {
-			diagnoseProblem(color, result);
+			diagnoseProblem(board, color, result);
 
 			result = board;
 		} else {
@@ -89,13 +89,19 @@ function checkConsistency (board, color, callback) {
 	});
 }
 
-function diagnoseProblem (color, result) {
+function diagnoseProblem (board, color, possibles) {
 	// this is where I handle (2)
-	// if all guesses have been made for this color, 
-	if (!result.some(function(elem) {
-		return elem.length !== 0;
-	})) {
-		
+	// check if there are no possibles left for the last guessed row
+	var rows_guessed = Object.keys(guesses[color]);
+	var last_guessed = Number(rows_guessed[rows_guessed.length - 1]);
+	console.log('last_guessed is ' + last_guessed);
+	console.log('possibles[last_guessed] is ' + possibles[last_guessed]);
+	if (possibles[last_guessed].length === 0) {
+		// look at the last state for the previous color.
+		// Check for possibles based on that old state and the current guesses
+		setPossibles()
+	} else if (false) {
+		return states[color][row].pop();
 	}
 }
 
@@ -225,6 +231,7 @@ function guesser (seed, color, callback) {
 			guesses[color][row].push(column);
 			states[color][row].push(seed);
 		}
+		diagnoseProblem(newGuess, color, result);
 	});
 	callback(newGuess, guesses, states);
 }
