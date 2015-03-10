@@ -22,6 +22,7 @@ function initSquares (callback) {
 }
 
 function completeBoard (seed) {
+	console.log(guesses);
 	var newBoard;
 	checkConsistency (seed, presentColor, function (result) {
 		newBoard = result;
@@ -134,7 +135,15 @@ function colunmPossible (board, row, color) {
 			var colorMatch = element.colorKey === color;
 			return exactMatch || ((rowMatch || columnMatch) && colorMatch);
 		})) {
-			possible.push(col);
+			// check the list of guesses before pushing the col
+			if (!guesses[[row, col]]) {
+				possible.push(col);
+			} else if (guesses[[row, col]].indexOf(color) === -1) {
+				possible.push(col);
+			} else if (false) {
+				console.log('caught old guess for color ' + color + ' and coordinates ' + [row, col]);
+				console.log(guesses)
+			}
 		}
 	});
 	return possible;
@@ -158,7 +167,11 @@ function guesser (seed, color, callback) {
 		var column = result[row][randomValue];
 		var coordinates = [row, column];
 		newGuess.push(makeSquare(coordinates, color));
-		guesses[coordinates] = color;
+		if(!guesses[coordinates]) {
+			guesses[coordinates] = [color];
+		} else if (guesses[coordinates].indexOf(color) === -1) {
+			guesses[coordinates].push(color);
+		}
 	});
 	callback(newGuess, guesses, states);
 }
