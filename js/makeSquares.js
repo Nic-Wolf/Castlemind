@@ -3,6 +3,9 @@ var guesses = {};
 var states = [];
 var presentColor = 0;
 
+/**********************************************************************
+Set up the board to make a normalized latin square
+**********************************************************************/
 function initSquares (callback) {
 	guesses = {};
 	states = [];
@@ -21,6 +24,29 @@ function initSquares (callback) {
 	callback(squares);
 }
 
+/**********************************************************************
+The rest of this code should follow this pattern until the latin
+square is complete
+(*) Check for contradictions
+	if no, proceed to (1)
+	if yes, proceed to (2)
+(1) Is there only one possible value for this row?
+	if yes, fill in value and proceed to (a)
+	if no, proceed to (b)
+	
+		(a) are there rows left that don't have this color?
+		if yes, proceed to (*)
+		if no, increment color and proceed to (*)
+		(b) store state, guess square in the present row, update guesses,
+			and proceed to (*)
+
+(2) Are possibilities left for this row
+	if yes, revert and go to (*)
+	if no, proceed to (a)
+		(a) Are possibles left for this color
+		if yes, revert and go to (2)
+		if no, revert and repeat (a)
+**********************************************************************/
 function completeBoard (seed) {
 	console.log(guesses);
 	var newBoard;
