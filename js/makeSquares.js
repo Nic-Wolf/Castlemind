@@ -1,6 +1,6 @@
 var size = 5;
 var guesses = {};
-var states = [];
+var states = {};
 var presentColor = 0;
 
 /**********************************************************************
@@ -8,7 +8,7 @@ Set up the board to make a normalized latin square
 **********************************************************************/
 function initSquares (callback) {
 	guesses = {};
-	states = [];
+	states = {};
 	var squares = [];
 	var row;
 	var col;
@@ -33,19 +33,24 @@ square is complete
 (1) Is there only one possible value for this row?
 	if yes, fill in value and proceed to (a)
 	if no, proceed to (b)
-	
-		(a) are there rows left that don't have this color?
-		if yes, proceed to (*)
-		if no, increment color and proceed to (*)
-		(b) store state, guess square in the present row, update guesses,
-			and proceed to (*)
 
-(2) Are possibles left for this color
-	if yes, revert and go to (*)
-	if no, revert and repeat (2)
+	(a) are there rows left that don't have this color?
+	if yes, proceed to (*)
+	if no, increment color and proceed to (*)
+	(b) store state, guess square in the present row, update guesses,
+		and proceed to (*)
+
+(2) Have all guesses been made for this color?
+	if yes, remove all guesses for this color, decrement color,
+		revert state to last color, and proceed to (*)
+	if no, proceed to (a)
+
+	(a) Have all guesses been made for the last row?
+	if yes, remove all guesses for the last row, revert state to last,
+		row, and proceed to (*)
+	if no, revert and proceed to (*)
 **********************************************************************/
 function completeBoard (seed) {
-	console.log(guesses);
 	var newBoard;
 	checkConsistency (seed, presentColor, function (result) {
 		newBoard = result;
@@ -72,8 +77,9 @@ function checkConsistency (board, color, callback) {
 				return element.value[0] === row && element.colorKey === color;
 			});
 		})) {
-			// if there is an inconsistency proceed to (2)
-			result = states.pop();
+			// this is where I handle (2)
+
+			result = board;
 		} else {
 			result = board;
 		}
@@ -150,6 +156,10 @@ function colunmPossible (board, row, color) {
 	// for the given board
 	var possible = [];
 	columns.forEach( function (col) {
+		// this conditional checks
+		//	that the present square hasn't been assigned
+		//	that the current color doens't already exist in the present
+		//		column or row
 		if (!board.some( function (element) {
 			var rowMatch = element.value[0] === row;
 			var columnMatch = element.value[1] === col;
@@ -157,15 +167,7 @@ function colunmPossible (board, row, color) {
 			var colorMatch = element.colorKey === color;
 			return exactMatch || ((rowMatch || columnMatch) && colorMatch);
 		})) {
-			// check the list of guesses before pushing the col
-			if (!guesses[[row, color]]) {
-				possible.push(col);
-			} else if (guesses[[row, color]].indexOf(col) === -1) {
-				possible.push(col);
-			} else if (false) {
-				console.log('caught old guess for color ' + color + ' and coordinates ' + [row, col]);
-				console.log(guesses)
-			}
+			possible.push(col);
 		}
 	});
 	return possible;
@@ -173,7 +175,6 @@ function colunmPossible (board, row, color) {
 
 function guesser (seed, color, callback) {
 	// store the old board and make a clone
-	states.push(seed);
 	var newGuess = JSON.parse(JSON.stringify(seed));
 
 	// determine what possibilities remain for the present color
@@ -190,13 +191,20 @@ function guesser (seed, color, callback) {
 		var coordinates = [row, column];
 		newGuess.push(makeSquare(coordinates, color));
 		// guesses is an object that tracks what guesses have been made
-		// the key is the row and color pair and the value is an array
+		// the key is the color and the value is an object
+		// the key of this object is the row and its value is an array
 		// the array should contain all of the previous guesses with the
 		// current guess last
-		if(!guesses[[row, color]]) {
-			guesses[[row, color]] = [column];
-		} else if (guesses[[row, color]].indexOf(column) === -1) {
-			guesses[[row, color]].push(column);
+		if(!guesses[color]) {
+			guesses[color] = {};
+			guesses[color][row] = [column];
+			states[color] = [seed];
+		} else if(!guesses[color][row]) {
+			guesses[color][row] = [column];
+			states[color].push(seed);
+		} else if (guesses[color][row].indexOf(column) === -1) {
+			guesses[color][row].push(column);
+			states[color].push(seed);
 		}
 	});
 	callback(newGuess, guesses, states);
