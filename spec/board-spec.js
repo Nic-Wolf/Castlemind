@@ -29,7 +29,7 @@ describe('initSquares', function () {
 });
 describe('refineBoard', function () {
 	it('should produce a board with only one of each color in each row', function () {
-		refineBoard(squares, function (result) {
+		refineBoard(squares, 0, function (result) {
 			result.forEach(function (elem1) {
 				result.forEach(function (elem2) {
 					var samesquare = elem1.value === elem2.value;
@@ -41,7 +41,7 @@ describe('refineBoard', function () {
 		});
 	});
 	it('should produce a board with only one of each color in each column', function () {
-		refineBoard(squares, function (result) {
+		refineBoard(squares, 0, function (result) {
 			result.forEach(function (elem1) {
 				result.forEach(function (elem2) {
 					var samesquare = elem1.value === elem2.value;
@@ -53,7 +53,7 @@ describe('refineBoard', function () {
 		});
 	});
 	it('should produce a more complete board', function () {
-		refineBoard(squares, function (result) {
+		refineBoard(squares, 0, function (result) {
 			expect(result.length).toBeGreaterThan(squares.length);
 		});
 	});

@@ -26,7 +26,7 @@ function completeBoard (seed) {
 	checkConsistency (seed, function (result) {
 		newBoard = result;
 	});
-	refineBoard(seed, function (result) {
+	refineBoard(seed, presentColor, function (result) {
 		newBoard = result;
 	});
 
@@ -34,18 +34,19 @@ function completeBoard (seed) {
 }
 
 function checkConsistency (board, callback) {
+
 	callback(board);
 }
 
-function refineBoard (board, callback) {
+function refineBoard (board, color, callback) {
 	var newBoard = board;
 
-	assignColorByRow(newBoard, 0, presentColor, function (result) {
+	assignColorByRow(newBoard, 0, color, function (result) {
 		newBoard = result;
 	});
 
 	if (newBoard.length === board.length) {
-		guesser(newBoard, presentColor, function (result) {
+		guesser(newBoard, color, function (result) {
 			newBoard = result;
 		});
 	}
