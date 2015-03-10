@@ -27,27 +27,27 @@ function initSquares (callback) {
 /**********************************************************************
 The rest of this code should follow this pattern until the latin
 square is complete
-(*) Check for contradictions
+(*) Check for contradictions (checkConsistency)
 	if no, proceed to (1)
 	if yes, proceed to (2)
-(1) Is there only one possible value for this row?
+(1) Is there only one possible value for this row? (assignColorByRow)
 	if yes, fill in value and proceed to (a)
 	if no, proceed to (b)
 
-	(a) are there rows left that don't have this color?
+	(a) are there rows left that don't have this color? (unhandled)
 	if yes, proceed to (*)
 	if no, increment color and proceed to (*)
 	(b) store state, guess square in the present row, update guesses,
-		and proceed to (*)
+		and proceed to (*) (guesser)
 
-(2) Have all guesses been made for this color?
-	if yes, remove all guesses for this color, decrement color,
-		revert state to last color, and proceed to (*)
+(2) Have all guesses been made for the last row? (diagnoseProblem)
+	if yes, remove all guesses for the last row,
+		revert state to last row, and proceed to (*)
 	if no, proceed to (a)
 
-	(a) Have all guesses been made for the last row?
-	if yes, remove all guesses for the last row, revert state to last,
-		row, and proceed to (*)
+	(a) Have all guesses been made for this color? (unhandled)
+	if yes, remove all guesses for this color, decrement color,
+		revert state to last color, and proceed to (*)
 	if no, revert and proceed to (*)
 **********************************************************************/
 function completeBoard (seed) {
@@ -77,7 +77,7 @@ function checkConsistency (board, color, callback) {
 				return element.value[0] === row && element.colorKey === color;
 			});
 		})) {
-			// this is where I handle (2)
+			diagnoseProblem(color, result);
 
 			result = board;
 		} else {
@@ -87,6 +87,16 @@ function checkConsistency (board, color, callback) {
 		// run the callback on the result regardless
 		callback(result)
 	});
+}
+
+function diagnoseProblem (color, result) {
+	// this is where I handle (2)
+	// if all guesses have been made for this color, 
+	if (!result.some(function(elem) {
+		return elem.length !== 0;
+	})) {
+		
+	}
 }
 
 function refineBoard (board, color, callback) {
@@ -167,7 +177,15 @@ function colunmPossible (board, row, color) {
 			var colorMatch = element.colorKey === color;
 			return exactMatch || ((rowMatch || columnMatch) && colorMatch);
 		})) {
-			possible.push(col);
+			// make sure the present row color col combination hasn't already
+			// been guessed
+			if (!guesses[color]) {
+				possible.push(col);
+			} else if (!guesses[color][row]) {
+				possible.push(col);
+			} else if (guesses[color][row].indexOf(col) === -1) {
+				possible.push(col);
+			}
 		}
 	});
 	return possible;
@@ -198,13 +216,14 @@ function guesser (seed, color, callback) {
 		if(!guesses[color]) {
 			guesses[color] = {};
 			guesses[color][row] = [column];
-			states[color] = [seed];
+			states[color] = {};
+			states[color][row] = [seed];
 		} else if(!guesses[color][row]) {
 			guesses[color][row] = [column];
-			states[color].push(seed);
+			states[color][row] = [seed];
 		} else if (guesses[color][row].indexOf(column) === -1) {
 			guesses[color][row].push(column);
-			states[color].push(seed);
+			states[color][row].push(seed);
 		}
 	});
 	callback(newGuess, guesses, states);

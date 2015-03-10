@@ -61,7 +61,7 @@ describe('guesser', function () {
 		guesser(squares, 0, function () {
 			expect(arguments[0].length).toEqual(10);
 			expect(Object.keys(arguments[1]).length).toBeGreaterThan(0);
-			expect(arguments[2][0][0]).toEqual(squares);
+			expect(arguments[2][0][1][0]).toEqual(squares);
 			console.log(arguments[1]);
 			console.log(arguments[2]);
 		});
