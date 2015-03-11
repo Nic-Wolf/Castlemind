@@ -9,7 +9,7 @@ initSquares(function (result) {
 var size = (squares.length + 1) / 2;
 
 var finalBoard;
-completeBoard(squares, function (result) {
+completeBoard(function (result) {
 	finalBoard = result;
 });
 

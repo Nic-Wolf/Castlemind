@@ -1,4 +1,4 @@
-var size = 5;
+var SIZE = 5;
 var presentColor = 0;
 
 /**********************************************************************
@@ -9,35 +9,14 @@ function initSquares (callback) {
 	var squares = [];
 	var row;
 	var col;
-	for (row = 0; row < size; row++){
+	for (row = 0; row < SIZE; row++){
 		squares.push(makeSquare([row, 0], row));
 	}
 
 
-	for (col = 1; col < size; col++){
+	for (col = 1; col < SIZE; col++){
 		squares.push(makeSquare([0, col], col));
 	}
-
-	callback(squares);
-}
-
-function testInit (callback) {
-	presentColor = 0;
-	var squares = [];
-	var row;
-	var col;
-	for (row = 0; row < size; row++){
-		squares.push(makeSquare([row, 0], row));
-	}
-
-
-	for (col = 1; col < size; col++){
-		squares.push(makeSquare([0, col], col));
-	}
-
-	squares.push(makeSquare([1,2],0));
-	squares.push(makeSquare([2,1],0));
-	squares.push(makeSquare([3,3],0));
 
 	callback(squares);
 }
@@ -58,27 +37,41 @@ function testInit (callback) {
 // 	(b) guess square in the present row,
 // 		and proceed to (*) (guesser)
 // ********************************************************************* //
-function completeBoard (seed, callback) {
-	if (seed.length === size * size) {
+function completeBoard (callback, seed) {
+	if(!seed) {
+		initSquares(function (squares) {
+			completeBoard(callback, squares);
+		});
+	} else if (seed.length === SIZE * SIZE) {
+		makePermutation(SIZE);
 		callback(seed);
 	} else {
 		checkConsistency (seed, presentColor, callback, function (consistent) {
 			if (consistent !== seed) {
-				completeBoard(consistent, callback);
+				completeBoard(callback, consistent);
 			} else {
 				checkIfColorDone(seed, presentColor, function (isDone) {
 					if (isDone) {	
 						presentColor++;
-						completeBoard(seed, callback);
+						completeBoard(callback, seed);
 					} else {
 						refineBoard(seed, presentColor, function (refined) {
-							completeBoard(refined, callback);
+							completeBoard(callback, refined);
 						});
 					}
 				});
 			}
 		});
 	}
+}
+
+function makePermutation (num) {
+	var start = [];
+	var n;
+	for (n = 0; n < num; n++) {
+		start.push(n + 0);
+	}
+	console.log(start);
 }
 
 function checkIfColorDone (board, color, callback) {
@@ -158,7 +151,7 @@ function setPossibles (board, color, callback) {
 	var possibles = [];
 	var rows = [];
 	var row;
-	for (row = 0; row < size; row++) {
+	for (row = 0; row < SIZE; row++) {
 		var possible = columnPossible(board, row, color);
 		possibles.push(possible);
 	}
@@ -169,7 +162,7 @@ function columnPossible (board, row, color) {
 	// columns is the list of all columns
 	var columns = [];
 	var n;
-	for (n = 0; n < size; n++) {
+	for (n = 0; n < SIZE; n++) {
 		columns[n] = n;
 	}
 
@@ -236,7 +229,6 @@ function guesser (seed, color, callback) {
 }
 
 module.exports.completeBoard = completeBoard;
-module.exports.testInit = testInit;
 module.exports.refineBoard = refineBoard;
 module.exports.guesser = guesser;
 module.exports.initSquares = initSquares;
