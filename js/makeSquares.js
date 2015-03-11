@@ -56,26 +56,33 @@ function completeBoard (seed, callback) {
 		newBoard = result;
 	});
 
-	checkIfColorDone(newBoard, presentColor);
-
-	if (newBoard.length < size * size) {
-		refineBoard(newBoard, presentColor, function (result) {
-			newBoard = result;
-		});
-		completeBoard(newBoard, callback);
-	} else {
-		callback(newBoard);
-	}
+	checkIfColorDone(newBoard, presentColor, function (res) {
+		if (newBoard.length === size * size) {
+			callback(newBoard);
+		} else if (res) {	
+			presentColor++;
+			completeBoard(newBoard, callback);
+		} else {
+			refineBoard(newBoard, presentColor, function (result) {
+				newBoard = result;
+			});
+			completeBoard(newBoard, callback);
+		}
+	});
 }
 
-function checkIfColorDone (board, color) {
+function checkIfColorDone (board, color, callback) {
+	var result;
 	// this is where I handle (1)(a)
 	setPossibles(board, color, function (result) {
 		// check if there is no row with possible values
 		if (!result.some( function (elem) {
 			return elem.length !== 0;
 		})) {
-			presentColor++;
+			console.log('true');
+			callback(true);
+		} else {
+			callback(false);
 		}
 	});
 }
@@ -101,13 +108,15 @@ function checkConsistency (board, color, callback) {
 		}
 
 		// run the callback on the result regardless
-		callback(res)
+		callback(res);
 	});
 }
 
 function diagnoseProblem (board, color, possibles) {
 	// this is where I handle (2)
 	// check if there are no possibles left for the last guessed row
+	console.log(guesses);
+	console.log(color);
 	var rows_guessed = Object.keys(guesses[color]);
 	var last_guessed = Number(getLast(rows_guessed));
 	console.log('last_guessed is ' + last_guessed);
@@ -135,7 +144,7 @@ function diagnoseProblem (board, color, possibles) {
 				guesses[color][last_guessed] = null;
 				return old_state;
 			}
-		})
+		});
 	} else if (false) {
 		return states[color][row].pop();
 	}
