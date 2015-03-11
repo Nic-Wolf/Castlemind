@@ -26,10 +26,6 @@ function initSquares (callback) {
 }
 
 function testInit (callback) {
-	guesses = {
-		'0':{'1':[2], '2':[1], '3':[3]}
-	};
-	states = {};
 	presentColor = 0;
 	var squares = [];
 	var row;
@@ -43,43 +39,29 @@ function testInit (callback) {
 		squares.push(makeSquare([0, col], col));
 	}
 
-	states[0] = {};
-	states[0][1] = [squares];
 	squares.push(makeSquare([1,2],0));
-	states[0][2] = [squares];
 	squares.push(makeSquare([2,1],0));
-	states[0][3] = [squares];
 	squares.push(makeSquare([3,3],0));
 
 	callback(squares);
 }
 
-/**********************************************************************
-The rest of this code should follow this pattern until the latin
-square is complete
-(*) Check for contradictions (checkConsistency)
-	if no, proceed to (1)
-	if yes, proceed to (2)
-(1) Is there only one possible value for this row? (assignColorByRow)
-	if yes, fill in value and proceed to (a)
-	if no, proceed to (b)
+// ********************************************************************* //
+// The rest of this code should follow this pattern until the latin
+// square is complete
+// (*) Check for contradictions (checkConsistency)
+// 	if no, proceed to (1)
+// 	if yes, start the whole thing over.
+// (1) Is there only one possible value for this row? (assignColorByRow)
+// 	if yes, fill in value and proceed to (a)
+// 	if no, proceed to (b)
 
-	(a) are there rows left that don't have this color? (checkIfColorDone)
-	if yes, proceed to (*)
-	if no, increment color and proceed to (*)
-	(b) store state, guess square in the present row, update guesses,
-		and proceed to (*) (guesser)
-
-(2) Have all guesses been made for the last row? (diagnoseProblem)
-	if yes, proceed to (a)
-	if no, revert and proceed to (*)
-
-	(a) Have all guesses been made for this color? (diagnoseProblem)
-	if yes, remove all guesses and states for this color, decrement color,
-		revert state to last color, and proceed to (*)
-	if no, remove all guesses and states for the last row,
-		revert state to last row, and proceed to (*)
-**********************************************************************/
+// 	(a) are there rows left that don't have this color? (checkIfColorDone)
+// 	if yes, proceed to (*)
+// 	if no, increment color and proceed to (*)
+// 	(b) guess square in the present row,
+// 		and proceed to (*) (guesser)
+// ********************************************************************* //
 function completeBoard (seed, callback) {
 	if (seed.length === size * size) {
 		callback(seed);
@@ -161,11 +143,6 @@ function refineBoard (board, color, callback) {
 	callback(newBoard);
 }
 
-// return last element of the array
-function getLast (array) {
-	return array[array.length - 1];
-}
-
 // returns random value from {0,...,num - 1}
 function randInt (num) {
 	return Math.floor(Math.random() * num);
@@ -241,7 +218,6 @@ function assignColorByRow (board, row, color, callback) {
 		result.forEach( function (elem, index) {
 			if (elem.length === 1 && first) {
 				board.push(makeSquare([index, elem[0]], color));
-				storeState(board, index, elem[0], color);
 				first = false;
 			}
 		});
@@ -267,29 +243,8 @@ function guesser (seed, color, callback) {
 		var randomValue = randInt(result[row].length);
 		var column = result[row][randomValue];
 		newGuess.push(makeSquare([row, column], color));
-		storeState(seed, row, column, color);
 	});
-	callback(newGuess, guesses, states);
-}
-
-function storeState (seed, row, column, color) {
-	// guesses is an object that tracks what guesses have been made
-	// the key is the color and the value is an object
-	// the key of this object is the row and its value is an array
-	// the array should contain all of the previous guesses with the
-	// current guess last
-	if(!guesses[color]) {
-		guesses[color] = {};
-		guesses[color][row] = [column];
-		states[color] = {};
-		states[color][row] = [seed];
-	} else if(!guesses[color][row]) {
-		guesses[color][row] = [column];
-		states[color][row] = [seed];
-	} else if (guesses[color][row].indexOf(column) === -1) {
-		guesses[color][row].push(column);
-		states[color][row].push(seed);
-	}
+	callback(newGuess);
 }
 
 module.exports.completeBoard = completeBoard;
