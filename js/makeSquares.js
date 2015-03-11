@@ -25,6 +25,43 @@ function initSquares (callback) {
 	callback(squares);
 }
 
+function testInit (callback) {
+	guesses = {
+		'0':{'1':[2], '2':[1], '3':[3]},
+		'1':{'2':[2,4]},
+		'2':null,
+		'3':null
+	};
+	states = {};
+	presentColor = 0;
+	var squares = [];
+	var row;
+	var col;
+	for (row = 0; row < size; row++){
+		squares.push(makeSquare([row, 0], row));
+	}
+
+
+	for (col = 1; col < size; col++){
+		squares.push(makeSquare([0, col], col));
+	}
+
+	states[0] = {};
+	states[0][1] = [squares];
+	squares.push(makeSquare([1,2],0));
+	states[0][2] = [squares];
+	squares.push(makeSquare([2,1],0));
+	states[0][3] = [squares];
+	squares.push(makeSquare([3,3],0));
+	squares.push(makeSquare([4,4],0));
+	states[1] = {};
+	states[1][2] = [squares, squares];
+	states[2] = null;
+	states[3] = null;
+
+	callback(squares);
+}
+
 /**********************************************************************
 The rest of this code should follow this pattern until the latin
 square is complete
@@ -319,7 +356,7 @@ function guesser (seed, color, callback) {
 	callback(newGuess, guesses, states);
 }
 module.exports.completeBoard = completeBoard;
-module.exports.setPossibles = setPossibles;
+module.exports.testInit = testInit;
 module.exports.refineBoard = refineBoard;
 module.exports.guesser = guesser;
 module.exports.initSquares = initSquares;

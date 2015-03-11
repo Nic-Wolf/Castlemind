@@ -1,11 +1,11 @@
 var completeBoard = require('../js/makeSquares.js').completeBoard;
-var initSquares = require('../js/makeSquares.js').initSquares;
+var testInit = require('../js/makeSquares.js').testInit;
 
 var squares;
-initSquares(function (result) {
+testInit(function (result) {
 	squares = result;
 });
-var size = (squares.length + 1) / 2;
+var size = 5;
 var finalBoard;
 completeBoard(squares, function (result) {
 	finalBoard = result;
