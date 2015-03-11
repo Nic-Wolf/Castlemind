@@ -27,10 +27,7 @@ function initSquares (callback) {
 
 function testInit (callback) {
 	guesses = {
-		'0':{'1':[2], '2':[1], '3':[3]},
-		'1':{'2':[2,4]},
-		'2':null,
-		'3':null
+		'0':{'1':[2], '2':[1], '3':[3]}
 	};
 	states = {};
 	presentColor = 0;
@@ -53,11 +50,6 @@ function testInit (callback) {
 	squares.push(makeSquare([2,1],0));
 	states[0][3] = [squares];
 	squares.push(makeSquare([3,3],0));
-	squares.push(makeSquare([4,4],0));
-	states[1] = {};
-	states[1][2] = [squares, squares];
-	states[2] = null;
-	states[3] = null;
 
 	callback(squares);
 }
@@ -142,8 +134,8 @@ function checkConsistency (board, color, cb, callback) {
 			});
 		})) {
 			var res = diagnoseProblem(board, color, result);
-			console.log(res);
-			console.log(guesses);
+			// console.log(res);
+			// console.log(guesses);
 			callback(res);
 		} else {
 			callback(board);
@@ -152,6 +144,10 @@ function checkConsistency (board, color, cb, callback) {
 }
 
 function diagnoseProblem (board, color, possibles) {
+	console.log('diagnoseProblem started with color ' + color);
+	console.log(board);
+	console.log(guesses);
+	console.log(states);
 	var res;
 	// this is where I handle (2)
 	// check if there are no possibles left for the last guessed row
@@ -162,56 +158,70 @@ function diagnoseProblem (board, color, possibles) {
 		last_guessed = Number(getLast(rows_guessed));
 	}
 	if (!possibles[last_guessed]) {
+		console.log('revert to color ' + (color - 1));
 		return revertColor(color - 1, function (result) {
 			return result;
 		});
 	} else if (possibles[last_guessed].length === 0) {
+		console.log('proceeding to (a)');
 		// this is where I handle (a)
 		// look at the first state for this color.
 		// Check for possibles based on that old state and the current guesses
 		var old_state = states[color][rows_guessed[0]][0];
-		setPossibles(old_state, color, function (result) {
-			// if there are no possibles, then there are no valid guesses left for this color
-			// check if there are no rows with possible values
-			if (!result.some( function (elem) {
-				return elem.length !== 0;
-			})) {
-				return revertColor(color - 1, function (result) {
-					return result;
-				});
-			} else {
-				return revertRow(last_guessed - 1, color, function (result) {
-					return result;
-				});
-			}
+		var result;
+		setPossibles(old_state, color, function (possible) {
+			result = possible;
 		});
+		// if there are no possibles, then there are no valid guesses left for this color
+		// check if there are no rows with possible values
+		if (!result.some( function (elem) {
+			return elem.length !== 0;
+		})) {
+			console.log('revert to color ' + color - 1);
+			// return revertColor(color - 1, function (result) {
+			// 	return result;
+			// });
+		} else {
+			var res = revertRow(last_guessed - 1, color, function (result) {
+				return result;
+			});
+			console.log('returning');
+			console.log(res);
+			return res;
+		}
 	} else {
-		return states[color][row].pop();
+		console.log('step back one guess');
+		// return states[color][row].pop();
 	}
 }
 
 function revertColor (color, callback) {
 	console.log('reverting to color ' + color);
-	states[color + 1] = null;
-	guesses[color + 1] = null;
+	delete states[color + 1];
+	delete guesses[color + 1];
 	presentColor = color;
 	if (guesses[color]) {
 		var rows_guessed = Object.keys(guesses[color]);
 		var old_state = getLast(states[color][getLast(rows_guessed)]);
 		return callback(old_state);
 	} else {
-		return revertColor(color - 1, callback);
+		console.log('no state stored for color ' + color);
+		// return revertColor(color - 1, callback);
 	}
 }
 
 function revertRow (row, color, callback) {
 	console.log('reverting to row ' + row);
-	states[color][row + 1] = null;
-	guesses[color][row + 1] = null;
+	delete states[color][row + 1];
+	delete guesses[color][row + 1];
 	if (states[color][row]) {
 		old_state = getLast(states[color][row]);
 		return callback(old_state);
+	} else if (row === 0) {
+		var result = revertColor(color - 1, callback);
+		return result;
 	} else {
+		console.log('there is no guess for row ' + row);
 		return revertRow(row - 1, color, callback);
 	}
 }
@@ -247,24 +257,6 @@ function makeSquare (coordinates, color) {
 	square.value = coordinates;
 	square.colorKey = color;
 	return square;
-}
-
-function assignColorByRow (board, row, color, callback) {
-	// if for a given row and a given color there is only one possible
-	// column, make a square in that column with that color and push it
-	// to the squares array
-	// only do this once
-	var first = true;
-	setPossibles(board, color, function (result) {
-		result.forEach( function (elem, index) {
-			if (elem.length === 1 && first) {
-				board.push(makeSquare([index, elem[0]], color));
-				first = false;
-			}
-		});
-	});
-
-	callback(board);
 }
 
 function setPossibles (board, color, callback) {
@@ -318,6 +310,26 @@ function columnPossible (board, row, color) {
 	return possible;
 }
 
+function assignColorByRow (board, row, color, callback) {
+	// if for a given row and a given color there is only one possible
+	// column, make a square in that column with that color and push it
+	// to the squares array
+	// only do this once
+	var first = true;
+	setPossibles(board, color, function (result) {
+		result.forEach( function (elem, index) {
+			if (elem.length === 1 && first) {
+				board.push(makeSquare([index, elem[0]], color));
+				storeState(board, index, elem[0], color);
+				first = false;
+			}
+		});
+	});
+	
+
+	callback(board);
+}
+
 function guesser (seed, color, callback) {
 	// store the old board and make a clone
 	var newGuess = JSON.parse(JSON.stringify(seed));
@@ -335,26 +347,31 @@ function guesser (seed, color, callback) {
 		var column = result[row][randomValue];
 		var coordinates = [row, column];
 		newGuess.push(makeSquare(coordinates, color));
-		// guesses is an object that tracks what guesses have been made
-		// the key is the color and the value is an object
-		// the key of this object is the row and its value is an array
-		// the array should contain all of the previous guesses with the
-		// current guess last
-		if(!guesses[color]) {
-			guesses[color] = {};
-			guesses[color][row] = [column];
-			states[color] = {};
-			states[color][row] = [seed];
-		} else if(!guesses[color][row]) {
-			guesses[color][row] = [column];
-			states[color][row] = [seed];
-		} else if (guesses[color][row].indexOf(column) === -1) {
-			guesses[color][row].push(column);
-			states[color][row].push(seed);
-		}
+		storeState(seed, row, column, color);
 	});
 	callback(newGuess, guesses, states);
 }
+
+function storeState (seed, row, column, color) {
+	// guesses is an object that tracks what guesses have been made
+	// the key is the color and the value is an object
+	// the key of this object is the row and its value is an array
+	// the array should contain all of the previous guesses with the
+	// current guess last
+	if(!guesses[color]) {
+		guesses[color] = {};
+		guesses[color][row] = [column];
+		states[color] = {};
+		states[color][row] = [seed];
+	} else if(!guesses[color][row]) {
+		guesses[color][row] = [column];
+		states[color][row] = [seed];
+	} else if (guesses[color][row].indexOf(column) === -1) {
+		guesses[color][row].push(column);
+		states[color][row].push(seed);
+	}
+}
+
 module.exports.completeBoard = completeBoard;
 module.exports.testInit = testInit;
 module.exports.refineBoard = refineBoard;
