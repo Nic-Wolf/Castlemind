@@ -1,4 +1,4 @@
-var size = 3;
+var size = 5;
 var guesses = {};
 var states = {};
 var presentColor = 0;
@@ -113,15 +113,24 @@ function checkConsistency (board, color, callback) {
 }
 
 function diagnoseProblem (board, color, possibles) {
+	var res;
 	// this is where I handle (2)
 	// check if there are no possibles left for the last guessed row
 	console.log(guesses);
 	console.log(color);
-	var rows_guessed = Object.keys(guesses[color]);
-	var last_guessed = Number(getLast(rows_guessed));
+	var rows_guessed;
+	var last_guessed;
+	if (guesses[color]) {
+		rows_guessed = Object.keys(guesses[color]);
+		last_guessed = Number(getLast(rows_guessed));
+	}
 	console.log('last_guessed is ' + last_guessed);
 	console.log('possibles[last_guessed] is ' + possibles[last_guessed]);
-	if (possibles[last_guessed].length === 0) {
+	if (!possibles[last_guessed]) {
+		return revertColor(color - 1, function (result) {
+			return result;
+		});
+	} else if (possibles[last_guessed].length === 0) {
 		// this is where I handle (a)
 		// look at the first state for this color.
 		// Check for possibles based on that old state and the current guesses
@@ -132,12 +141,9 @@ function diagnoseProblem (board, color, possibles) {
 			if (!result.some( function (elem) {
 				return elem.length !== 0;
 			})) {
-				rows_guessed = Object.keys(guesses[color - 1]);
-				old_state = getLast(states[color - 1][getLast(rows_guessed)]);
-				states[color] = null;
-				guesses[color] = null;
-				presentColor = color - 1;
-				return old_state;
+				return revertColor(color - 1, function (result) {
+					return result;
+				});
 			} else {
 				old_state = getLast(states[color][last_guessed - 1]);
 				states[color][last_guessed] = null;
@@ -145,8 +151,21 @@ function diagnoseProblem (board, color, possibles) {
 				return old_state;
 			}
 		});
-	} else if (false) {
+	} else {
 		return states[color][row].pop();
+	}
+}
+
+function revertColor (color, callback) {
+	states[color + 1] = null;
+	guesses[color + 1] = null;
+	presentColor = color;
+	if (guesses[color]) {
+		var rows_guessed = Object.keys(guesses[color]);
+		var old_state = getLast(states[color][getLast(rows_guessed)]);
+		return callback(old_state);
+	} else {
+		return revertColor(color - 1, callback);
 	}
 }
 
