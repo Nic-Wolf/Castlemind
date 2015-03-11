@@ -1,4 +1,4 @@
-var size = 5;
+var size = 4;
 var guesses = {};
 var states = {};
 var presentColor = 0;
@@ -9,6 +9,7 @@ Set up the board to make a normalized latin square
 function initSquares (callback) {
 	guesses = {};
 	states = {};
+	presentColor = 0;
 	var squares = [];
 	var row;
 	var col;
@@ -51,24 +52,26 @@ square is complete
 		revert state to last row, and proceed to (*)
 **********************************************************************/
 function completeBoard (seed, callback) {
-	var newBoard;
-	checkConsistency (seed, presentColor, function (result) {
-		newBoard = result;
-	});
-
-	checkIfColorDone(newBoard, presentColor, function (res) {
-		if (newBoard.length === size * size) {
-			callback(newBoard);
-		} else if (res) {	
-			presentColor++;
-			completeBoard(newBoard, callback);
-		} else {
-			refineBoard(newBoard, presentColor, function (result) {
-				newBoard = result;
-			});
-			completeBoard(newBoard, callback);
-		}
-	});
+	if (seed.length === size * size) {
+		callback(seed);
+	} else {
+		checkConsistency (seed, presentColor, callback, function (consistent) {
+			if (consistent !== seed) {
+				completeBoard(consistent, callback);
+			} else {
+				checkIfColorDone(seed, presentColor, function (isDone) {
+					if (isDone) {	
+						presentColor++;
+						completeBoard(seed, callback);
+					} else {
+						refineBoard(seed, presentColor, function (refined) {
+							completeBoard(refined, callback);
+						});
+					}
+				});
+			}
+		});
+	}
 }
 
 function checkIfColorDone (board, color, callback) {
@@ -87,8 +90,7 @@ function checkIfColorDone (board, color, callback) {
 	});
 }
 
-function checkConsistency (board, color, callback) {
-	var res;
+function checkConsistency (board, color, cb, callback) {
 	// this is where I handle (*)
 	// determine whether there is a row with no possible column given the
 	// present color
@@ -102,13 +104,13 @@ function checkConsistency (board, color, callback) {
 				return element.value[0] === row && element.colorKey === color;
 			});
 		})) {
-			res = diagnoseProblem(board, color, result);
+			var res = diagnoseProblem(board, color, result);
+			console.log(res);
+			console.log(guesses);
+			callback(res);
 		} else {
-			res = board;
+			callback(board);
 		}
-
-		// run the callback on the result regardless
-		callback(res);
 	});
 }
 
@@ -116,16 +118,12 @@ function diagnoseProblem (board, color, possibles) {
 	var res;
 	// this is where I handle (2)
 	// check if there are no possibles left for the last guessed row
-	console.log(guesses);
-	console.log(color);
 	var rows_guessed;
 	var last_guessed;
 	if (guesses[color]) {
 		rows_guessed = Object.keys(guesses[color]);
 		last_guessed = Number(getLast(rows_guessed));
 	}
-	console.log('last_guessed is ' + last_guessed);
-	console.log('possibles[last_guessed] is ' + possibles[last_guessed]);
 	if (!possibles[last_guessed]) {
 		return revertColor(color - 1, function (result) {
 			return result;
@@ -157,6 +155,7 @@ function diagnoseProblem (board, color, possibles) {
 }
 
 function revertColor (color, callback) {
+	console.log('reverting to color ' + color);
 	states[color + 1] = null;
 	guesses[color + 1] = null;
 	presentColor = color;
@@ -206,10 +205,13 @@ function assignColorByRow (board, row, color, callback) {
 	// if for a given row and a given color there is only one possible
 	// column, make a square in that column with that color and push it
 	// to the squares array
+	// only do this once
+	var first = true;
 	setPossibles(board, color, function (result) {
 		result.forEach( function (elem, index) {
-			if (elem.length === 1) {
+			if (elem.length === 1 && first) {
 				board.push(makeSquare([index, elem[0]], color));
+				first = false;
 			}
 		});
 	});
@@ -222,14 +224,16 @@ function setPossibles (board, color, callback) {
 	// the sub arrays represent the possible values in the given
 	// row that could be the given color
 	var possibles = [];
+	var rows = [];
+	var row;
 	for (row = 0; row < size; row++) {
-		var possible = colunmPossible(board, row, color);
+		var possible = columnPossible(board, row, color);
 		possibles.push(possible);
 	}
 	callback(possibles);
 }
 
-function colunmPossible (board, row, color) {
+function columnPossible (board, row, color) {
 	// columns is the list of all columns
 	var columns = [];
 	var n;
@@ -304,6 +308,7 @@ function guesser (seed, color, callback) {
 	callback(newGuess, guesses, states);
 }
 module.exports.completeBoard = completeBoard;
+module.exports.setPossibles = setPossibles;
 module.exports.refineBoard = refineBoard;
 module.exports.guesser = guesser;
 module.exports.initSquares = initSquares;

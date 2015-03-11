@@ -23,7 +23,7 @@ describe('completeBoard', function () {
 			});
 		});
 	});
-	it('should have a function called completeBoard that produces a board with only one of each color in each column', function () {
+	it('should produce a board with only one of each color in each column', function () {
 		finalBoard.forEach(function (elem1) {
 			finalBoard.forEach(function (elem2) {
 				var samesquare = elem1.value === elem2.value;
