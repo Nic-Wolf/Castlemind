@@ -45,12 +45,22 @@ function completeBoard (callback, seed) {
 	} else if (seed.length === SIZE * SIZE) {
 		var permRow = makePermutation(SIZE);
 		var permCol = makePermutation(SIZE - 1).concat([4]);
-		var result = seed.map(function (elem) {
+		var scrambled = seed.map(function (elem) {
 			var oldRow = elem.value[0];
 			var oldCol = elem.value[1];
 			var newRow = permRow[oldRow];
 			var newCol = permCol[oldCol];
 			return makeSquare([newRow, newCol], elem.colorKey);
+		});
+		
+		var indexes = [];
+		scrambled.forEach(function(elem, index) {
+			indexes[index] = elem.value[0] * SIZE + elem.value[1];
+		});
+
+		var result = [];
+		indexes.forEach(function (elem, index) {
+			result[elem] = scrambled[index];
 		});
 		callback(result);
 	} else {
