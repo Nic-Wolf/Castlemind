@@ -1,5 +1,4 @@
 /old
-/node_modules
-/castleExpress/node-modules
+node_modules
 npm_debug.log
 .DS_Store
