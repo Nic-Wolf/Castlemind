@@ -43,8 +43,16 @@ function completeBoard (callback, seed) {
 			completeBoard(callback, squares);
 		});
 	} else if (seed.length === SIZE * SIZE) {
-		makePermutation(SIZE);
-		callback(seed);
+		var permRow = makePermutation(SIZE);
+		var permCol = makePermutation(SIZE - 1).concat([4]);
+		var result = seed.map(function (elem) {
+			var oldRow = elem.value[0];
+			var oldCol = elem.value[1];
+			var newRow = permRow[oldRow];
+			var newCol = permCol[oldCol];
+			return makeSquare([newRow, newCol], elem.colorKey);
+		});
+		callback(result);
 	} else {
 		checkConsistency (seed, presentColor, callback, function (consistent) {
 			if (consistent !== seed) {
@@ -66,12 +74,25 @@ function completeBoard (callback, seed) {
 }
 
 function makePermutation (num) {
-	var start = [];
+	var remaining = [];
 	var n;
 	for (n = 0; n < num; n++) {
-		start.push(n + 0);
+		remaining.push(n + 0);
 	}
-	console.log(start);
+	var i;
+	var result = [];
+	for(n = 0; n < num; n++) {
+		i = randInt(remaining.length);
+		result = result.concat([remaining[i]]);
+		remaining = remaining.reduce(function(prev, curr) {
+			if (result.indexOf(curr) === -1) {
+				return prev.concat([curr]);
+			} else {
+				return prev;
+			}
+		}, []);
+	}
+	return result;
 }
 
 function checkIfColorDone (board, color, callback) {
