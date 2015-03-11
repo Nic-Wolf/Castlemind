@@ -1,16 +1,18 @@
 var express    = require('express');
 var router     = express.Router();
-var squareGrid = require('../makeSquares.js');
+var completeBoard = require('../makeSquares.js').completeBoard;
+var pathMaker = require('../makePath.js').pathMaker;
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-	squareGrid.completeBoard(function(squares) {
+	completeBoard(function(squares) {
 
+		squares[someArray[0][a]].state = "A";
 		res.render('index', { 
 			title: 'Castlemind Main View', 
-			squares: squares,
+			squares: squares
 		});
 	});
 
