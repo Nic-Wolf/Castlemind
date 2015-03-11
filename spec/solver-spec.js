@@ -5,7 +5,11 @@ var squares;
 initSquares(function (result) {
 	squares = result;
 });
-var finalBoard = completeBoard(squares);
+var size = (squares.length + 1) / 2;
+var finalBoard;
+completeBoard(squares, function (result) {
+	finalBoard = result;
+});
 
 describe('completeBoard', function () {
 	it('should produce a board with only one of each color in each row', function () {
@@ -31,6 +35,6 @@ describe('completeBoard', function () {
 	});
 	it('should have a function called completeBoard that produces a complete board', function () {
 		console.log(finalBoard);
-		expect(finalBoard.length).toEqual(25);
+		expect(finalBoard.length).toEqual(size * size);
 	});
 });

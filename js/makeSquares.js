@@ -1,4 +1,4 @@
-var size = 5;
+var size = 3;
 var guesses = {};
 var states = {};
 var presentColor = 0;
@@ -50,19 +50,22 @@ square is complete
 	if no, remove all guesses and states for the last row,
 		revert state to last row, and proceed to (*)
 **********************************************************************/
-function completeBoard (seed) {
+function completeBoard (seed, callback) {
 	var newBoard;
 	checkConsistency (seed, presentColor, function (result) {
 		newBoard = result;
 	});
 
-	checkIfColorDone (newBoard, presentColor);
+	checkIfColorDone(newBoard, presentColor);
 
-	refineBoard(newBoard, presentColor, function (result) {
-		newBoard = result;
-	});
-
-	return newBoard;
+	if (newBoard.length < size * size) {
+		refineBoard(newBoard, presentColor, function (result) {
+			newBoard = result;
+		});
+		completeBoard(newBoard, callback);
+	} else {
+		callback(newBoard);
+	}
 }
 
 function checkIfColorDone (board, color) {
@@ -139,7 +142,7 @@ function diagnoseProblem (board, color, possibles) {
 }
 
 function refineBoard (board, color, callback) {
-	var newBoard = board;
+	var newBoard = [].concat(board);
 
 	assignColorByRow(newBoard, 0, color, function (result) {
 		newBoard = result;
