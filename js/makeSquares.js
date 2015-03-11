@@ -1,14 +1,10 @@
 var size = 5;
-var guesses = {};
-var states = {};
 var presentColor = 0;
 
 /**********************************************************************
 Set up the board to make a normalized latin square
 **********************************************************************/
 function initSquares (callback) {
-	guesses = {};
-	states = {};
 	presentColor = 0;
 	var squares = [];
 	var row;
@@ -194,15 +190,7 @@ function columnPossible (board, row, color) {
 		})) {
 			// make sure the present row color col combination hasn't already
 			// been guessed
-			if (!guesses[color]) {
-				possible.push(col);
-			} else if (!guesses[color][row]) {
-				// console.log('no guesses for color ' + color + ' and row ' + row);
-				possible.push(col);
-			} else if (guesses[color][row].indexOf(col) === -1) {
-				// console.log('column ' + col + ' not yet guessed for color ' + color + ' and row ' + row);
-				possible.push(col);
-			}
+			possible.push(col);
 		}
 	});
 	return possible;
