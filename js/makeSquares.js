@@ -1,4 +1,4 @@
-var size = 4;
+var size = 5;
 var guesses = {};
 var states = {};
 var presentColor = 0;
@@ -143,10 +143,9 @@ function diagnoseProblem (board, color, possibles) {
 					return result;
 				});
 			} else {
-				old_state = getLast(states[color][last_guessed - 1]);
-				states[color][last_guessed] = null;
-				guesses[color][last_guessed] = null;
-				return old_state;
+				return revertRow(last_guessed - 1, color, function (result) {
+					return result;
+				});
 			}
 		});
 	} else {
@@ -165,6 +164,18 @@ function revertColor (color, callback) {
 		return callback(old_state);
 	} else {
 		return revertColor(color - 1, callback);
+	}
+}
+
+function revertRow (row, color, callback) {
+	console.log('reverting to row ' + row);
+	states[color][row + 1] = null;
+	guesses[color][row + 1] = null;
+	if (states[color][row]) {
+		old_state = getLast(states[color][row]);
+		return callback(old_state);
+	} else {
+		return revertRow(row - 1, color, callback);
 	}
 }
 
