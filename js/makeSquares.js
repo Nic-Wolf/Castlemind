@@ -1,4 +1,4 @@
-var size = 5;
+var size = 7;
 var presentColor = 0;
 
 /**********************************************************************
@@ -17,27 +17,6 @@ function initSquares (callback) {
 	for (col = 1; col < size; col++){
 		squares.push(makeSquare([0, col], col));
 	}
-
-	callback(squares);
-}
-
-function testInit (callback) {
-	presentColor = 0;
-	var squares = [];
-	var row;
-	var col;
-	for (row = 0; row < size; row++){
-		squares.push(makeSquare([row, 0], row));
-	}
-
-
-	for (col = 1; col < size; col++){
-		squares.push(makeSquare([0, col], col));
-	}
-
-	squares.push(makeSquare([1,2],0));
-	squares.push(makeSquare([2,1],0));
-	squares.push(makeSquare([3,3],0));
 
 	callback(squares);
 }
@@ -236,7 +215,6 @@ function guesser (seed, color, callback) {
 }
 
 module.exports.completeBoard = completeBoard;
-module.exports.testInit = testInit;
 module.exports.refineBoard = refineBoard;
 module.exports.guesser = guesser;
 module.exports.initSquares = initSquares;
