@@ -3,17 +3,21 @@ function randInt (n) {
 	return Math.floor(Math.random() * n);
 }
 
-// generate a pair of distinct integers from {0,...,n - 1}
-function pickTwo (size) {
-	var first = randInt(n);
-	var second = randInt(n - 1);
-	if (second < first) {
-		return {'a': first, 'b': second};
-	} else {
-		return {'a': first, 'b': second + 1};
-	}
+// remove the elements of B from A
+function difference (A, B) {
+	var result = [];
+	A.forEach(function (elem) {
+		if (B.indexOf(elem) === -1) {
+			result.push(elem);
+		}
+	});
+	return result;
 }
-
+// ******************************************** //
+// getAdjacent generates an array containing
+// the indexes of every square adjacent to 
+// the input coordinates
+// ******************************************** //
 function getAdjacent (coordinates, size) {
 	var length = Math.sqrt(size);
 	var rows = [];
@@ -51,16 +55,32 @@ function getAdjacent (coordinates, size) {
 	});
 
 	return adjacents;
-}
-
-
+} // End getAdjacent
 
 function makePath (squares) {
 	var size = squares.length;
+	var length = Math.sqrt(size);
 	var result = [];
-	result[0] = pickTwo(size);
-
-	return result;
+	var path = [];
+	path.push({"index": randInt(size)});
+	var current = squares[path[0].index];
+	var possible;
+	var n;
+	for (n = 1; n <= length; n++) {
+		possible = difference(getAdjacent(current.value, size), path);
+		if (possible.length > 0) {
+			path.push({"index": possible[randInt(possible.length)]});
+			previous = current;
+			current = squares[path[n].index];
+			if (previous.value[0] === current.value[0] || previous.value[1] === current.value[1]) {
+				path[n - 1].direction = 'orthogonal';
+			} else {
+				path[n - 1].direction = 'diagonal';
+			}
+		}
+	}
+	console.log(path);
+	return path;
 }
 
 module.exports.makePath = makePath;

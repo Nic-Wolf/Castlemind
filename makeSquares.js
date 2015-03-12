@@ -113,7 +113,6 @@ function checkIfColorDone (board, color, callback) {
 		if (!result.some( function (elem) {
 			return elem.length !== 0;
 		})) {
-			console.log('true');
 			callback(true);
 		} else {
 			callback(false);

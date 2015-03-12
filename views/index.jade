@@ -5,3 +5,6 @@ block content
 	#divGrid
 		each square in squares
 			.square(value=square.value, class='color-'+square.colorKey)= square.value
+	div
+		each place in path
+			p= place.direction
