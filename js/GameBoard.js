@@ -46,6 +46,37 @@ function init() {
 		}
 	};
 
+// practice code for highlighting squares
+	
+	var square = {};
+square.highlight = function (orientation) {
+	this.onclick = function fillIn() {
+		if(orientation = "orthogonal") {
+			"this.state" = "highlighted";
+			document.getElementById("square").style.color = "yellow";
+			return square;
+
+		else(orientation = "diogonal") {
+			this.state = "highlighted";
+			document.getElementById("square").style.color = "yellow";
+			return square;
+			}
+		}
+	}
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
 	// // Check the grid for congruent colors.
 	// for (var test = 1; test < 4; test++) { // test the grid 3 separate times to ensure a correct state.
 	// 	console.log("Grid test " + test + " of 3...");		
