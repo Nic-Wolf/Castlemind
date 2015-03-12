@@ -2,6 +2,7 @@ extends layout
 
 block content
 	h1= title
+	script(src="/javascripts/makeGame.js")
 	#divGrid
 		each square in squares
 			.square(value=square.value, class='color-'+square.colorKey)= square.value
