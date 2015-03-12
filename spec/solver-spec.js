@@ -1,5 +1,5 @@
-var completeBoard = require('../js/makeSquares.js').completeBoard;
-var initSquares = require('../js/makeSquares.js').initSquares;
+var completeBoard = require('../makeSquares.js').completeBoard;
+var initSquares = require('../makeSquares.js').initSquares;
 
 var squares;
 initSquares(function (result) {

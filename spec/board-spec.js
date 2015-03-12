@@ -1,6 +1,6 @@
-var refineBoard = require('../js/makeSquares.js').refineBoard;
-var guesser = require('../js/makeSquares.js').guesser;
-var initSquares = require('../js/makeSquares.js').initSquares;
+var refineBoard = require('../makeSquares.js').refineBoard;
+var guesser = require('../makeSquares.js').guesser;
+var initSquares = require('../makeSquares.js').initSquares;
 
 var squares;
 initSquares(function (result) {
