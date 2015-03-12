@@ -57,8 +57,29 @@ During UI design, we will also focus on refactoring for deployment and scalabili
 
 Stage 3 Project Structure:
 ```
-/
-TBA
+./app.js                // main node server
+./makeSquares.js        // logic for latin squares
+./package.json
+./bin/ 
+--- www.bin             // Express binaries
+./public/               // files sent to the frontend
+--- javascripts/
+------ eventHandlers.js // set up click events and UI changes
+--- stylesheets/
+------ style.css        // main styles for layout and game board
+./routes/
+--- index.js            // takes the data from makeSquares.js, puts in view layer
+--- users.js            // currently unused.
+./spec/                 // testing
+--- board-spec.js
+--- solver-spec.js
+--- support/
+------ jasmine.json
+./views/                // Express templates
+--- error.jade
+--- index.jade
+--- layout.jade
+
 ````
 
 ---
