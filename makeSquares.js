@@ -44,7 +44,7 @@ function completeBoard (callback, seed) {
 		});
 	} else if (seed.length === SIZE * SIZE) {
 		var permRow = makePermutation(SIZE);
-		var permCol = makePermutation(SIZE - 1).concat([4]);
+		var permCol = makePermutation(SIZE - 1).concat([SIZE - 1]);
 		var scrambled = seed.map(function (elem) {
 			var oldRow = elem.value[0];
 			var oldCol = elem.value[1];
