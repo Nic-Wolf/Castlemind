@@ -131,7 +131,6 @@ var presentColor = 0;
 				}
 			}, []);
 		}
-		console.log("makePermutation(): " + result);
 		return result;
 	}//end makePermutation()
 
