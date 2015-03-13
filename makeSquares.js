@@ -300,3 +300,6 @@ var presentColor = 0;
 // Exports //
 module.exports.completeBoard = completeBoard;
 module.exports.initSquares   = initSquares;
+// Exports needed for jasmine tests //
+module.exports.refineBoard = refineBoard;
+module.exports.guesser   = guesser;
