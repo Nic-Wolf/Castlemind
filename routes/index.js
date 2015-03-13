@@ -6,28 +6,17 @@ var makePath = require('../makePath.js').makePath;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
-	completeBoard(function(squares) {
-
-		var path = makePath(squares);
-		res.render('index', { 
-			title: 'Castlemind Main View', 
-			squares: squares,
-			path: path
-		});
-	});
-
+	res.render('index', {title: 'Castlemind Main View'});
 });
 
 router.get('/api/game', function(req, res, next) {
 
 	completeBoard(function(squares) {
-
 		var path = makePath(squares);
+
 		res.json({"board": squares, "path": path});
 	});
-
-})
+});
 
 module.exports = router;
 
