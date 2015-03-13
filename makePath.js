@@ -63,13 +63,16 @@ function makePath (squares) {
 	var result = [];
 	var path = [];
 	path.push({"index": randInt(size)});
+	var pathNumbers = [];
+	pathNumbers.push(path[0].index);
 	var current = squares[path[0].index];
 	var possible;
 	var n;
 	for (n = 1; n <= length; n++) {
-		possible = difference(getAdjacent(current.value, size), path);
+		possible = difference(getAdjacent(current.value, size), pathNumbers);
 		if (possible.length > 0) {
 			path.push({"index": possible[randInt(possible.length)]});
+			pathNumbers.push(path[n].index);
 			previous = current;
 			current = squares[path[n].index];
 			if (previous.value[0] === current.value[0] || previous.value[1] === current.value[1]) {
@@ -79,7 +82,6 @@ function makePath (squares) {
 			}
 		}
 	}
-	console.log(path);
 	return path;
 }
 
