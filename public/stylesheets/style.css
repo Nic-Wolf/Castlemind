@@ -19,6 +19,8 @@ a {
 	margin: 1px;
 	float: left;
 	text-align: center;
+	font-size: 2.0em;
+	font-weight: bold;
 }
 
 .color-0 { background-color: #ff0000; }
