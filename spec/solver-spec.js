@@ -12,6 +12,7 @@ var finalBoard;
 completeBoard(function (result) {
 	finalBoard = result;
 });
+console.log(finalBoard);
 
 describe('completeBoard', function () {
 	it('should produce a board with only one of each color in each row', function () {
