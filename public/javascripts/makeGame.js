@@ -30,9 +30,14 @@ function init() {
 		spnNodeList[data.path[0].index].innerHTML = "A"; // find the div with the index of the starting point index
 		spnNodeList[data.path[data.path.length-1].index].innerHTML = "B";
 
-		// Setup a cheater that shows the path
-		for (var i = 1; i < 5; i++) {
-			spnNodeList[data.path[i].index].innerHTML += i;
+		// Display the hints
+		var hints = document.getElementById('hints');
+		for (var i = 0; i < 5; i++) {
+			var newHint = document.createElement('div');
+			newHint.className = 'hint';
+			var string = data.path[i].direction;
+			newHint.innerHTML = string;
+			hints.appendChild(newHint);
 		}
 
 	};
