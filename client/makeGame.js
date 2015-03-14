@@ -1,5 +1,3 @@
-window.onload = init;
-
 function init() {
 	// Page Variables //
 	var divGrid = document.getElementById('divGrid');
@@ -50,3 +48,8 @@ function newSquare(squareData) {
 
 	return square;
 }//end newSquare()
+
+module.exports = {
+  init: init
+};
+
