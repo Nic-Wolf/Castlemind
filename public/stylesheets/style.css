@@ -7,6 +7,11 @@ a {
   color: #00B7FF;
 }
 
+#btnNewGame {
+	margin-bottom: 20px;
+	font-size: 1.25em;
+}
+
 #divGrid {
 	width: 260px;
 	height: 260px;
@@ -34,6 +39,7 @@ a {
 }
 
 #divUserMoves {
+	margin-top: 20px;
 	width: 260px;
 	height: 52px;
 	background: #777;
