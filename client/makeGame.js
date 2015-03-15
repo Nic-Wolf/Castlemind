@@ -1,7 +1,11 @@
-function init() {
+
+
+function initBoard() {
 	// Page Variables //
 	var divGrid = document.getElementById('divGrid');
 	var divUserMoves = document.getElementById('divUserMoves');
+	// Set variable to reference the new squares in the DOM
+	var spnNodeList = document.getElementsByTagName("span");
 
 	// Get data from express app //
 	var xhr = new XMLHttpRequest();
@@ -13,9 +17,6 @@ function init() {
 			var square = newSquare(data.board[i]);
 			divGrid.appendChild(square);
 		}
-
-		// Set variable to reference the new squares in the DOM
-		var spnNodeList = document.getElementsByTagName("span");
 
 		// Set Starting and Ending Points
 		spnNodeList[data.path[0].index].innerHTML = "A"; // find the div with the index of the starting point index
@@ -30,7 +31,7 @@ function init() {
 	xhr.open('get', '/api/game');
 	xhr.send();
 
-}//end init()
+}//end initBoard()
 
 
 // Create new Squares
@@ -44,42 +45,30 @@ function newSquare(squareData) {
 			assignUserSquare(square);
 			square.className += " clicked";
 			square.clicked = true;
+			destinationReached(square);
 		} else {
-		alert("You're out of moves!");
-	}
-		
-	}
+			alert("You're out of moves!");
+		}
+	}//end onclick()
 
 	return square;
 }//end newSquare()
 
+
+function destinationReached(square) {
+	console.log(square.value);
+	if (square.innerHTML === "B") {
+		alert("you win!");
+	}
+}
+
 function assignUserSquare(square) {
-	// if (divUserMoves.childElementCount < 5) {
-		var userChoice = document.createElement('span');
-		userChoice.value = square.value;
-		userChoice.className = square.className;
-		divUserMoves.appendChild(userChoice);
-	// } else {
-	// 	alert("You're out of moves!");
-	// }
+	var userChoice = document.createElement('span');
+	userChoice.value = square.value;
+	userChoice.className = square.className;
+	divUserMoves.appendChild(userChoice);
 }//end assignUserSquare()
 
-
-var clickCount = 5;
-
-function newRound(spnNodeList) {
-	var count = 0;
-
-	for (var i = 0; i < spnNodeList.length; i++) {
-
-		if (spnNodeList[i].clicked === true) {
-			count++
-			if (count >= 5) {
-				alert("You're out of moves!");
-			}
-		}
-	}
-}//end newRound()
 
 function clicked(square) {
 	square.className += " clicked";
@@ -88,15 +77,21 @@ function clicked(square) {
 
 }//end clicked()
 
-// Setup an onclick for the squares. this will need:
-  // to assign a style class that "greys out" the square once it is clicked.
-  // to assign a style to the adjacent squares which show the user that they can be clicked
-  // to assign onclick to the adjacent squares
 
+function resetBoard(parentElement) {
+	// Destroy the board if it's been assembled before
+	// Using "while" here to force sync.
+	while (parentElement.childElementCount != 0) {
+		for (var i = 0; i < parentElement.childElementCount; i++) {
+			parentElement.removeChild(parentElement.children[i]);
+		}
+	}
+}//end reset()
 
 
 module.exports = {
-  init: init
+  initBoard: initBoard,
+  resetBoard: resetBoard
 };
 
 
