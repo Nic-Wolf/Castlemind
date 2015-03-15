@@ -1,9 +1,12 @@
 #CastleMind
 
-[Nic Wolf](https://github.com/Nic-Wolf)          - Prototyping & Front End
+[Nic Wolf](https://github.com/Nic-Wolf) - Prototyping & Front End
+
 [David Hasenjaeger](https://github.com/GerryFudd) - Testing & Back End
-[Aaron Ollis](https://github.com/aollis)       - Refactoring & Animation
-& Special Thanks to:
+
+[Aaron Ollis](https://github.com/aollis) - Refactoring & Animation
+
+& Special Thanks to: 
 [RJ Zaworski](https://github.com/rjz)
 
 ##Description
