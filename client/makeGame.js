@@ -3,6 +3,7 @@
 function initBoard() {
 	// Page Variables //
 	var divGrid = document.getElementById('divGrid');
+	var divHints = document.getElementById('divHints');
 	var divUserMoves = document.getElementById('divUserMoves');
 	// Set variable to reference the new squares in the DOM
 	var spnNodeList = document.getElementsByTagName("span");
@@ -23,8 +24,14 @@ function initBoard() {
 		spnNodeList[data.path[data.path.length-1].index].innerHTML = "B";
 
 		// Setup a "cheater" that shows the path
-		for (var i = 1; i < 5; i++) {
-			spnNodeList[data.path[i].index].innerHTML += i;
+		// for (var i = 1; i < 5; i++) {
+		// 	spnNodeList[data.path[i].index].innerHTML += i;
+		// }
+		// Populate the hints
+		var pathElem;
+		for (var i = 0; i < 5; i++) {
+			pathElem = data.path[i];
+			assignHintSquare(data.board[pathElem.index].colorKey,pathElem.direction[0]);
 		}
 
 	};
@@ -67,6 +74,13 @@ function assignUserSquare(square) {
 	userChoice.value = square.value;
 	userChoice.className = square.className;
 	divUserMoves.appendChild(userChoice);
+}//end assignUserSquare()
+
+function assignHintSquare(colorKey, direction) {
+	var hint = document.createElement('span');
+	hint.innerHTML = direction;
+	hint.className = 'square';
+	divHints.appendChild(hint);
 }//end assignUserSquare()
 
 

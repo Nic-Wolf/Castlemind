@@ -10,6 +10,7 @@ function init() {
 	
 	btnNewGame.onclick = function() {
 		resetBoard(divUserMoves);
+		resetBoard(divHints);
 		resetBoard(divGrid);
 		
 		initBoard();

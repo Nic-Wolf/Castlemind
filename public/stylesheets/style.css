@@ -45,3 +45,11 @@ a {
 	background: #777;
 	border: 4px solid black;
 }
+
+#divHints {
+	margin-top: 20px;
+	width: 260px;
+	height: 52px;
+	background: #777;
+	border: 4px solid black;
+}
