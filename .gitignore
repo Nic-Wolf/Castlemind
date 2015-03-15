@@ -1,4 +1,6 @@
 /old
 node_modules
 npm-debug.log
+public/javascripts/bundle.js
 .DS_Store
+*.swp

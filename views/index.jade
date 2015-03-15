@@ -1,7 +1,10 @@
 extends layout
 
+block scripts
+	script(src="/javascripts/bundle.js")
+
 block content
 	h1= title
-	script(src="/javascripts/makeGame.js")
+	button#btnNewGame New Game
 	#divGrid
-	#hints
+	#divUserMoves
