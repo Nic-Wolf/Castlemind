@@ -1,4 +1,4 @@
-
+var solution;
 
 function initBoard() {
 	// Page Variables //
@@ -12,6 +12,9 @@ function initBoard() {
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function() {
 		var data = JSON.parse(xhr.responseText);
+
+		// Set the solution for the game
+		solution = data.path;
 
 		// Build the grid
 		for (var i = 0; i < data.board.length; i++) {
@@ -48,13 +51,32 @@ function newSquare(squareData) {
 	square.className = 'square color-' + squareData.colorKey;
 	square.clicked = false;
 	square.onclick = function() {
-		if (divUserMoves.childElementCount < 5) {
-			assignUserSquare(square);
-			square.className += " clicked";
-			square.clicked = true;
-			destinationReached(square);
-		} else {
-			alert("You're out of moves!");
+		assignUserSquare(square);
+		square.className += " clicked";
+		square.clicked = true;
+		// destinationReached(square);
+		if (divUserMoves.childElementCount === 5) {
+			console.log(typeof(divUserMoves.children));
+			var n;
+			var moves = [];
+			for (n = 0; n < 5; n++) {
+				moves.push(divUserMoves.children[n]);
+			}
+			if(!moves.some(function (elem, index) {
+				console.log(elem.className + ' vs ' + solution[index].solution);
+				console.log(Number(elem.className.slice(-1)) + ' vs ' + solution[index].solution);
+				return Number(elem.className.slice(-1)) !== solution[index].solution;
+			})) {
+				alert('You win!');
+			} else {
+				n = 0;
+				while (Number(moves[n].className.slice(-1)) === solution[n].solution) {
+					divHints.children[n].className = moves[n].className;
+					n++;
+				}
+				alert('Try gain!');
+			}
+			resetBoard(divUserMoves);
 		}
 	}//end onclick()
 
@@ -88,7 +110,6 @@ function clicked(square) {
 	square.className += " clicked";
 	square.clicked = true;
 	divUserMoves.appendChild(square);
-
 }//end clicked()
 
 
