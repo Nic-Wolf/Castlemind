@@ -11,13 +11,14 @@ function initBoard() {
 	// Get data from express app //
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function() {
+		var i;
 		var data = JSON.parse(xhr.responseText);
 
 		// Set the solution for the game
 		solution = data.path;
 
 		// Build the grid
-		for (var i = 0; i < data.board.length; i++) {
+		for (i = 0; i < data.board.length; i++) {
 			var square = newSquare(data.board[i]);
 			divGrid.appendChild(square);
 		}
@@ -32,7 +33,7 @@ function initBoard() {
 		// }
 		// Populate the hints
 		var pathElem;
-		for (var i = 0; i < 5; i++) {
+		for (i = 0; i < 5; i++) {
 			pathElem = data.path[i];
 			assignHintSquare(data.board[pathElem.index].colorKey,pathElem.direction[0]);
 		}
@@ -80,7 +81,7 @@ function newSquare(squareData) {
 			unClick();
 			resetBoard(divUserMoves);
 		}
-	}//end onclick()
+	};//end onclick()
 
 	return square;
 }//end newSquare()
@@ -127,7 +128,7 @@ function unClick () {
 function resetBoard(parentElement) {
 	// Destroy the board if it's been assembled before
 	// Using "while" here to force sync.
-	while (parentElement.childElementCount != 0) {
+	while (parentElement.childElementCount !== 0) {
 		for (var i = 0; i < parentElement.childElementCount; i++) {
 			parentElement.removeChild(parentElement.children[i]);
 		}
