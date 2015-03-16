@@ -41,17 +41,46 @@ function getAdjacent (coordinates, size) {
 		if (relHeight < 0) {
 			relHeight = -relHeight;
 		}
-		if (relHeight <= 1) {
+
+		// add adjacents on the same row
+		if (relHeight === 0) {
 			row.forEach(function (number, colNumber) {
 				var horDist = colNumber - coordinates[1];
 				if (horDist < 0) {
 					horDist = -horDist;
 				}
-				if (horDist === 1 || (horDist === 0 && relHeight !== 0)) {
+				if (horDist === 1 || horDist === 3) {
 					adjacents.push(number);
 				}
 			});
 		}
+
+		// add adjacents on the rows 1 above and below
+		if (relHeight === 1) {
+			row.forEach(function (number, colNumber) {
+				var horDist = colNumber - coordinates[1];
+				if (horDist < 0) {
+					horDist = -horDist;
+				}
+				if (horDist <= 1) {
+					adjacents.push(number);
+				}
+			});
+		}
+
+		// add adjacents 3 above and 3 below
+		if (relHeight === 3) {
+			row.forEach(function (number, colNumber) {
+				var horDist = colNumber - coordinates[1];
+				if (horDist < 0) {
+					horDist = -horDist;
+				}
+				if (horDist === 0 || horDist === 3) {
+					adjacents.push(number);
+				}
+			});
+		}
+
 	});
 
 	return adjacents;
@@ -76,13 +105,26 @@ function makePath (squares) {
 			previous = current;
 			current = squares[path[n].index];
 			if (previous.value[0] === current.value[0] || previous.value[1] === current.value[1]) {
-				path[n - 1].direction = 'orthogonal';
+				if ([0, 1].some( function (num) {
+					return Math.abs(previous.value[num] - current.value[num]) === 1;
+				})) {
+					path[n - 1].direction = 'orthogonal';
+				} else {
+					path[n - 1].direction = 'long orthogonal';
+				}
 			} else {
-				path[n - 1].direction = 'diagonal';
+				if ([0, 1].some( function (num) {
+					return Math.abs(previous.value[num] - current.value[num]) === 1;
+				})) {
+					path[n - 1].direction = 'diagonal';
+				} else {
+					path[n - 1].direction = 'long diagonal';
+				}
 			}
 			path[n - 1].solution = current.colorKey;
 		}
 	}
+	console.log(path);
 	return path;
 }
 
