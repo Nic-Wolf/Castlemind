@@ -74,6 +74,7 @@ function newSquare(squareData) {
 					divHints.children[n].className = moves[n].className;
 					n++;
 				}
+				unClick();
 				alert('Try gain!');
 			}
 			resetBoard(divUserMoves);
@@ -82,7 +83,6 @@ function newSquare(squareData) {
 
 	return square;
 }//end newSquare()
-
 
 function destinationReached(square) {
 	console.log(square.value);
@@ -111,6 +111,16 @@ function clicked(square) {
 	square.clicked = true;
 	divUserMoves.appendChild(square);
 }//end clicked()
+
+function unClick () {
+	for (n = 0; n < divGrid.childElementCount; n++) {
+		console.log(divGrid.children[n]);
+		divGrid.children[n].clicked = false;
+		var name = divGrid.children[n].className.split(' ').slice(0, 2).join(' ');
+		console.log(name);
+		divGrid.children[n].className = name;
+	}
+}
 
 
 function resetBoard(parentElement) {
