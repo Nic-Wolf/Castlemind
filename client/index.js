@@ -1,6 +1,11 @@
 var initBoard  = require('./makeGame').initBoard;
 var resetBoard = require('./makeGame').resetBoard;
 
+var gameApp = angular.module('gameApp', []);
+
+gameApp.controller('gameController', function() {
+	this.message = 'hello';
+
 window.onload = init;
 
 function init() {
@@ -18,4 +23,5 @@ function init() {
 
 }//end init()
 
+});// end gameController
 

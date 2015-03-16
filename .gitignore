@@ -1,5 +1,6 @@
 /old
 node_modules
+bower_components
 npm-debug.log
 public/javascripts/bundle.js
 .DS_Store

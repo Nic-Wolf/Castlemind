@@ -1,9 +1,11 @@
 extends layout
 
 block scripts
+	script(src="/components/angular/angular.js")
 	script(src="/javascripts/bundle.js")
 
 block content
+	p {{gCtrl.message}}
 	h1= title
 	button#btnNewGame New Game
 	#divGrid
