@@ -69,14 +69,15 @@ function newSquare(squareData) {
 			})) {
 				alert('You win!');
 			} else {
-				n = 0;
-				while (Number(moves[n].className.slice(-1)) === solution[n].solution) {
-					divHints.children[n].className = moves[n].className;
-					n++;
-				}
-				unClick();
 				alert('Try gain!');
 			}
+			
+			n = 0;
+			while (Number(moves[n].className.slice(-1)) === solution[n].solution) {
+				divHints.children[n].className = moves[n].className;
+				n++;
+			}
+			unClick();
 			resetBoard(divUserMoves);
 		}
 	}//end onclick()
