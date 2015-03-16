@@ -31,10 +31,14 @@ function initBoard() {
 		// 	spnNodeList[data.path[i].index].innerHTML += i;
 		// }
 		// Populate the hints
-		var pathElem;
+		var hintColor;
+		var hintText;
 		for (var i = 0; i < 5; i++) {
-			pathElem = data.path[i];
-			assignHintSquare(data.board[pathElem.index].colorKey,pathElem.direction[0]);
+			hintColor = data.board[data.path[i].index].colorKey;
+			hintText = data.path[i].direction.split(' ').reduce(function (prev, curr) {
+				return prev + curr[0];
+			}, '');
+			assignHintSquare(hintColor,hintText);
 		}
 
 	};
