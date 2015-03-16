@@ -80,6 +80,7 @@ function makePath (squares) {
 			} else {
 				path[n - 1].direction = 'diagonal';
 			}
+			path[n - 1].solution = current.colorKey;
 		}
 	}
 	return path;

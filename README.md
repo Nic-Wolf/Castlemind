@@ -8,6 +8,28 @@ Castlemind is a simple game, designed to promote good problem-solving skills in 
 
 An initial prototype for the game was designed by Chris Kelly, for youth enrichment courses he taught, and after some debate, decided that a virtual experience would be an excellent, and more easily distributed solution to mass-production of the physical product.
 
+## Installation
+
+Install gulp for building the client:
+
+    $ npm install -g gulp
+
+Then, install dependencies:
+
+    $ npm install
+
+Run tests:
+
+    $ npm test
+
+Build the client (will run watch task):
+
+    $ gulp
+
+And start the server at [http://localhost:3000](http://localhost:3000):
+
+    $ npm start
+
 ---
 ###Development
 The development lifecycle of this project wil consist of 4 stages, each taking approximately 2 weeks for completion

@@ -10,7 +10,7 @@
 	 and assigns each a unique coodinate and color.
 
 	 TODOS:
-		 - 
+		 - set the size of the board when the complete board function is called
 */
 
 
@@ -131,7 +131,6 @@ var presentColor = 0;
 				}
 			}, []);
 		}
-		console.log("makePermutation(): " + result);
 		return result;
 	}//end makePermutation()
 
