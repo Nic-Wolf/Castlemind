@@ -1,12 +1,12 @@
 var solution;
+var squareCount = 0;
 
 function initBoard() {
 	// Page Variables //
-	var divGrid = document.getElementById('divGrid');
-	var divHints = document.getElementById('divHints');
+	var divGrid      = document.getElementById('divGrid');
+	var divHints     = document.getElementById('divHints');
 	var divUserMoves = document.getElementById('divUserMoves');
-	// Set variable to reference the new squares in the DOM
-	var spnNodeList = document.getElementsByTagName("span");
+	var spnNodeList  = document.getElementsByTagName("span");
 
 	// Get data from express app //
 	var xhr = new XMLHttpRequest();
@@ -35,11 +35,13 @@ function initBoard() {
 		// Populate the hints
 		var hintColor;
 		var hintText;
+
 		for (var i = 0; i < 5; i++) {
 			hintColor = data.board[data.path[i].index].colorKey;
 			hintText = data.path[i].direction.split(' ').reduce(function (prev, curr) {
 				return prev + curr[0];
 			}, '');
+		
 			assignHintSquare(hintColor,hintText);
 		}
 
@@ -56,54 +58,61 @@ function newSquare(squareData) {
 	square.value = squareData.value;
 	square.className = 'square color-' + squareData.colorKey;
 	square.clicked = false;
+	square.hasIndex = squareCount;
+	squareCount++;
+
 	square.onclick = function() {
 		assignUserSquare(square);
-		square.className += " clicked";
-		square.clicked = true;
-		// destinationReached(square);
-		if (divUserMoves.childElementCount === 5) {
-			console.log(typeof(divUserMoves.children));
-			var n;
-			var moves = [];
-			for (n = 0; n < 5; n++) {
-				moves.push(divUserMoves.children[n]);
-			}
-			if(!moves.some(function (elem, index) {
-				console.log(elem.className + ' vs ' + solution[index].solution);
-				console.log(Number(elem.className.slice(-1)) + ' vs ' + solution[index].solution);
-				return Number(elem.className.slice(-1)) !== solution[index].solution;
-			})) {
-				alert('You win!');
-			} else {
-				alert('Try gain!');
-			}
-			
-			n = 0;
-			while (Number(moves[n].className.slice(-1)) === solution[n].solution) {
-				divHints.children[n].className = moves[n].className;
-				n++;
-			}
-			unClick();
-			resetBoard(divUserMoves);
+		console.log(square.hasIndex);
+		// Don't dull the final square.. it's kinda redundant.
+		if (square.innerHTML != "B") {
+			square.className += " clicked";
+			square.clicked = true;
 		}
+		console.log(divUserMoves);
+		console.log(solution[4].index);
+		checkMove();
 	};//end onclick()
 
 	return square;
 }//end newSquare()
 
-function destinationReached(square) {
-	console.log(square.value);
-	if (square.innerHTML === "B") {
-		alert("you win!");
+
+function checkMove() {
+	if (divUserMoves.childElementCount === 5) {
+		var n;
+		var moves = [];
+		// Push hints to the move list
+		for (n = 0; n < 5; n++) {
+			moves.push(divUserMoves.children[n]);
+		}
+
+		n = 0;
+		while (Number(moves[n].className.slice(-1)) === solution[n].solution) {
+			divHints.children[n].className = moves[n].className;
+			n++;
+		}
+
+		// if the grid index of the 5th clicked square === the index value of the last item in the solution array
+		if (divUserMoves.children[4].hasIndex === solution[solution.length-1].index) {
+			alert('You win!');
+		} else {
+			alert('Try again!');
+			unClick();
+			resetBoard(divUserMoves);
+		}
 	}
-}
+}//end checkMove()
+
 
 function assignUserSquare(square) {
 	var userChoice = document.createElement('span');
 	userChoice.value = square.value;
 	userChoice.className = square.className;
+	userChoice.hasIndex = square.hasIndex;
 	divUserMoves.appendChild(userChoice);
 }//end assignUserSquare()
+
 
 function assignHintSquare(colorKey, direction) {
 	var hint = document.createElement('span');
@@ -113,14 +122,9 @@ function assignHintSquare(colorKey, direction) {
 }//end assignUserSquare()
 
 
-function clicked(square) {
-	square.className += " clicked";
-	square.clicked = true;
-	divUserMoves.appendChild(square);
-}//end clicked()
-
-function unClick () {
+function unClick() {
 	var name;
+
 	for (var n = 0; n < divGrid.childElementCount; n++) {
 		name = divGrid.children[n].className.split(' ').slice(0, 2).join(' ');
 		
@@ -129,7 +133,7 @@ function unClick () {
 			divGrid.children[n].className = name;
 		}
 	}
-}
+}//end unClick()
 
 
 function resetBoard(parentElement) {
@@ -147,15 +151,4 @@ module.exports = {
   initBoard: initBoard,
   resetBoard: resetBoard
 };
-
-
-
-
-
-
-
-
-
-
-
 
