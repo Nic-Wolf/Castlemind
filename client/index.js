@@ -35,7 +35,10 @@ gameApp.controller('gameController', ['$http', function($http) {
 				return result;
 			});
 			self.squares[self.solution[0].index].textContent = 'A';
+			self.squares[self.solution[0].index].class += ' a';
+			delete self.squares[self.solution[0].index].click;
 			self.squares[self.solution[self.solution.length - 1].index].textContent = 'B';
+			self.squares[self.solution[self.solution.length - 1].index].class += ' b';
 			self.moves = [];
 			self.hints = self.solution.slice(0, 5).map(function (elem) {
 				var string = elem.direction.split(' ').reduce(function (prev, curr) {
@@ -51,9 +54,11 @@ gameApp.controller('gameController', ['$http', function($http) {
 	function click () {
 		var move = {};
 		move.class = this.class;
-		move.value = Number(this.class[this.class.length - 1]);
+		move.value = Number(this.class.split('-')[1][0]);
 		self.moves.push(move);
-		this.class += ' clicked';
+		if (this.class.indexOf(' b') === -1) {
+			this.class += ' clicked';
+		}
 
 		if (self.moves.length === 5) {
 
@@ -73,7 +78,7 @@ gameApp.controller('gameController', ['$http', function($http) {
 // If the guess is only partially correct, it resets the guess.
 function resetGuess (moves, hints, squares, solution, callback) {
 	squares.forEach( function (elem, ind) {
-		if (elem.class.split(' ').indexOf('clicked') !== -1) {
+		if (elem.class.indexOf('clicked') !== -1) {
 			squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
 		}
 	});
