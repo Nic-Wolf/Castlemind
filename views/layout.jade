@@ -1,8 +1,8 @@
 doctype html
-html
+html(ng-app="gameApp")
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     block scripts
-  body
+  body(ng-controller="gameController as gCtrl")
     block content
