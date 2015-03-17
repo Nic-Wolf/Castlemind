@@ -25,16 +25,19 @@ gameApp.controller('gameController', ['$http', function($http) {
 		});
 
 		function setSquares (data, status, headers, config) {
-			console.log(self);
 			solution = data.path;
-			self.squares = data.board;
-			self.squares = self.squares.map(function (elem) {
+			squares = data.board;
+			squares = squares.map(function (elem) {
 				var result = elem;
 				result.class = "square color-" + elem.colorKey;
+				result.clicker = function () {
+					this.class += ' clicked';
+				};
 				return result;
 			});
-			self.squares[solution[0].index].textContent = 'A';
-			self.squares[solution[solution.length - 1].index].textContent = 'B';
+			squares[solution[0].index].textContent = 'A';
+			squares[solution[solution.length - 1].index].textContent = 'B';
+			self.squares = squares;
 		}
 		// initBoard();
 	};
