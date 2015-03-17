@@ -2,6 +2,7 @@ doctype html
 html(ng-app="gameApp")
   head
     title= title
+    link(rel='stylesheet', href='/components/bootstrap/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     block scripts
   body(ng-controller="gameController as gCtrl")
