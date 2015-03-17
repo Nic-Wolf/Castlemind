@@ -5,15 +5,20 @@ block scripts
 	script(src="/javascripts/bundle.js")
 
 block content
-	h1= title
-	h3 {{gCtrl.message}}
-	button(ng-click="gCtrl.newGame()") New Game
-	#divGrid
-		span(ng-repeat="square in gCtrl.squares")
-			span(class="{{square.class}}",ng-click="square.click()") {{square.textContent}}
-	#divHints
-		span(ng-repeat="hint in gCtrl.hints")
-			span(class="{{hint.class}}") {{hint.textContent}}
-	#divUserMoves
-		span(ng-repeat="move in gCtrl.moves")
-			span(class="{{move.class}}")
+	#container(class="container")
+		#sidebar(class="col-md-4")
+			h3 {{gCtrl.message}}
+			button(ng-click="gCtrl.newGame()") New Game
+			h3 Current Sequence
+			#divHints
+				span(ng-repeat="hint in gCtrl.hints")
+					span(class="{{hint.class}}") {{hint.textContent}}
+			h3 Your Guess
+			#divUserMoves
+				span(ng-repeat="move in gCtrl.moves")
+					span(class="{{move.class}}")
+		#main(class="col-md-8")
+			h1= title
+			#divGrid
+				span(ng-repeat="square in gCtrl.squares")
+					span(class="{{square.class}}",ng-click="square.click()") {{square.textContent}}
