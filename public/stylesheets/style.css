@@ -7,7 +7,7 @@ a {
   color: #00B7FF;
 }
 
-#btnNewGame {
+button {
 	margin-bottom: 20px;
 	font-size: 1.25em;
 }

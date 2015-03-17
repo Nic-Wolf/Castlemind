@@ -5,9 +5,10 @@ block scripts
 	script(src="/javascripts/bundle.js")
 
 block content
-	p {{gCtrl.message}}
 	h1= title
-	button#btnNewGame New Game
+	button(ng-click="gCtrl.newGame()") New Game
 	#divGrid
+		span(ng-repeat="square in gCtrl.squares")
+			span(class="{{square.class}}") {{square.textContent}}
 	#divHints
 	#divUserMoves

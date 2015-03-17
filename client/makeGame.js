@@ -27,10 +27,6 @@ function initBoard() {
 		spnNodeList[data.path[0].index].innerHTML = "A"; // find the div with the index of the starting point index
 		spnNodeList[data.path[data.path.length-1].index].innerHTML = "B";
 
-		// Setup a "cheater" that shows the path
-		// for (var i = 1; i < 5; i++) {
-		// 	spnNodeList[data.path[i].index].innerHTML += i;
-		// }
 		// Populate the hints
 		var hintColor;
 		var hintText;
@@ -74,7 +70,7 @@ function newSquare(squareData) {
 			})) {
 				alert('You win!');
 			} else {
-				alert('Try gain!');
+				alert('Try again!');
 			}
 			
 			n = 0;
