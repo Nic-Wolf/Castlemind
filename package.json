@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "test": "`npm bin`/jasmine",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "postinstall": "bower install"
   },
   "dependencies": {
     "body-parser": "~1.12.0",
