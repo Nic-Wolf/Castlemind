@@ -1,3 +1,10 @@
+/*
+TODOS - 
+	1. make the first clickable regions only available around A.
+	2. add a checker to keep users from clicking in the wrong direction
+	3. for god's sake, give aaron something to do.
+*/
+
 var solution;
 var squareCount = 0;
 
@@ -64,13 +71,8 @@ function newSquare(squareData) {
 	square.onclick = function() {
 		assignUserSquare(square);
 		console.log(square.hasIndex);
-		// Don't dull the final square.. it's kinda redundant.
-		if (square.innerHTML != "B") {
-			square.className += " clicked";
-			square.clicked = true;
-		}
-		console.log(divUserMoves);
-		console.log(solution[4].index);
+		square.className += " clicked";
+		square.clicked = true;
 		checkMove();
 	};//end onclick()
 
@@ -96,6 +98,7 @@ function checkMove() {
 		// if the grid index of the 5th clicked square === the index value of the last item in the solution array
 		if (divUserMoves.children[4].hasIndex === solution[solution.length-1].index) {
 			alert('You win!');
+			squareCount = 0;
 		} else {
 			alert('Try again!');
 			unClick();
