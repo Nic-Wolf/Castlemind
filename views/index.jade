@@ -10,7 +10,7 @@ block content
 	button(ng-click="gCtrl.newGame()") New Game
 	#divGrid
 		span(ng-repeat="square in gCtrl.squares")
-			span(class="{{square.class}}",ng-click="square.clicker()") {{square.textContent}}
+			span(class="{{square.class}}",ng-click="square.click()") {{square.textContent}}
 	#divHints
 		span(ng-repeat="hint in gCtrl.hints")
 			span(class="{{hint.class}}") {{hint.textContent}}

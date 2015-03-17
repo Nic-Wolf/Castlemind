@@ -4,14 +4,16 @@ gameApp.controller('gameController', ['$http', function($http) {
 	var self = this;
 
 	this.message = 'hello';
-
-	var divGrid      = document.getElementById('divGrid');
-	var divUserMoves = document.getElementById('divUserMoves');
-	var btnNewGame   = document.getElementById('btnNewGame');
 	
+	// ******************************************************* //
+	// newGame gets a gameboard and path from the server
+	// The controller is assigned the following values
+	//		squares: the array of squares in the board
+	//		solution: the path that the player is trying to guess
+	//		moves: the moves that the player has guessed
+	//		hints: the values that are displayed to the player
+	// ******************************************************* //
 	this.newGame = function() {
-		var solution;
-		var squares;
 		self.message = "You are playing a game!";
 		$http.get('/api/game').
 		success(setSquares).
@@ -19,18 +21,21 @@ gameApp.controller('gameController', ['$http', function($http) {
 			console.log(data);
 		});
 
-		function setSquares (data, status, headers, config) {
+		// ******************************************************* //
+		// setSquares assigns each square a class and a click method
+		// The beginning and ending points are given text values
+		// The hints are given text values based on the solution
+		// ******************************************************* //
+		function setSquares (data) {
 			self.solution = data.path;
-			squares = data.board;
-			squares = squares.map(function (elem) {
+			self.squares = data.board.map(function (elem) {
 				var result = elem;
 				result.class = "square color-" + elem.colorKey;
-				result.clicker = clicker;
+				result.click = click;
 				return result;
 			});
-			squares[self.solution[0].index].textContent = 'A';
-			squares[self.solution[self.solution.length - 1].index].textContent = 'B';
-			self.squares = squares;
+			self.squares[self.solution[0].index].textContent = 'A';
+			self.squares[self.solution[self.solution.length - 1].index].textContent = 'B';
 			self.moves = [];
 			self.hints = self.solution.slice(0, 5).map(function (elem) {
 				var string = elem.direction.split(' ').reduce(function (prev, curr) {
@@ -38,11 +43,12 @@ gameApp.controller('gameController', ['$http', function($http) {
 				}, '');
 				return {textContent: string, "class": 'square'};
 			});
-		}
-	};
+		} // end setSquares
+	}; // end newGame
 
-	function clicker () {
-		
+	// click adds a new object to moves and changes the class of the clicked square.
+	// If all the moves have been made, run resetGuess.
+	function click () {
 		var move = {};
 		move.class = this.class;
 		move.value = Number(this.class[this.class.length - 1]);
@@ -50,27 +56,39 @@ gameApp.controller('gameController', ['$http', function($http) {
 		this.class += ' clicked';
 
 		if (self.moves.length === 5) {
-			self.squares.forEach( function (elem, ind) {
-				if (elem.class.split(' ').indexOf('clicked') !== -1) {
-					self.squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
-				}
+
+			resetGuess(self.moves, self.hints, self.squares, self.solution,
+				function(moves, hints, squares, message) {
+
+				self.moves = moves;
+				self.hints = hints;
+				self.squares = squares;
+				self.message = message;
 			});
-			if (!self.moves.some( function (elem, ind) {
-				var result = elem.value !== self.solution[ind].solution;
-				if (!result) {
-					console.log('guess was ' + elem.value);
-					console.log('solution was ' + self.solution[ind].solution);
-					self.hints[ind].class = self.squares[self.solution[ind + 1].index].class;
-				}
-				return result;
-			})) {
-				self.message = "You win!";
-			} else {
-				self.message = "Keep trying!";
-			}
-			self.moves = [];
 		}
 	}
-
 }]);// end gameController
+
+// resetGuess displays what part of the guess was correct.
+// If the guess is only partially correct, it resets the guess.
+function resetGuess (moves, hints, squares, solution, callback) {
+	squares.forEach( function (elem, ind) {
+		if (elem.class.split(' ').indexOf('clicked') !== -1) {
+			squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
+		}
+	});
+	if (!moves.some( function (elem, ind) {
+		var result = elem.value !== solution[ind].solution;
+		if (!result) {
+			hints[ind].class = squares[solution[ind + 1].index].class;
+		}
+		return result;
+	})) {
+		message = "You win!";
+	} else {
+		moves = [];
+		message = "Keep trying!";
+	}
+	callback(moves, hints, squares, message);
+}// end resetGuess
 
