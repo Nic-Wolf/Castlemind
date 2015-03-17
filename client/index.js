@@ -4,6 +4,7 @@ var resetBoard = require('./makeGame').resetBoard;
 var gameApp = angular.module('gameApp', []);
 
 gameApp.controller('gameController', ['$http', function($http) {
+	var self = this;
 
 	this.message = 'hello';
 
@@ -14,7 +15,6 @@ gameApp.controller('gameController', ['$http', function($http) {
 	this.newGame = function() {
 		var solution;
 		var squares;
-		var self = this;
 		resetBoard(divUserMoves);
 		resetBoard(divHints);
 		resetBoard(divGrid);
@@ -30,16 +30,22 @@ gameApp.controller('gameController', ['$http', function($http) {
 			squares = squares.map(function (elem) {
 				var result = elem;
 				result.class = "square color-" + elem.colorKey;
-				result.clicker = function () {
-					this.class += ' clicked';
-				};
+				result.clicker = clicker;
 				return result;
 			});
 			squares[solution[0].index].textContent = 'A';
 			squares[solution[solution.length - 1].index].textContent = 'B';
 			self.squares = squares;
+			self.moves = [];
+			self.hints = [];
 		}
-		// initBoard();
+	};
+
+	function clicker () {
+		var move = {};
+		move.class = this.class;
+		self.moves.push(move);
+		this.class += ' clicked';
 	};
 
 }]);// end gameController

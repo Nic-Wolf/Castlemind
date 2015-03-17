@@ -12,3 +12,5 @@ block content
 			span(class="{{square.class}}",ng-click="square.clicker()") {{square.textContent}}
 	#divHints
 	#divUserMoves
+		span(ng-repeat="move in gCtrl.moves")
+			span(class="{{move.class}}")
