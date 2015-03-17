@@ -23,14 +23,15 @@ function initBoard() {
 			divGrid.appendChild(square);
 		}
 
-		// Set Starting and Ending Points
-		spnNodeList[data.path[0].index].innerHTML = "A"; // find the div with the index of the starting point index
-		spnNodeList[data.path[data.path.length-1].index].innerHTML = "B";
+		// Set Starting Point
+		spnNodeList[data.path[0].index].innerHTML = "A";
+		spnNodeList[data.path[0].index].className += " a";
+		spnNodeList[data.path[0].index].onclick = ""; // Remove click functionality
 
-		// Setup a "cheater" that shows the path
-		// for (var i = 1; i < 5; i++) {
-		// 	spnNodeList[data.path[i].index].innerHTML += i;
-		// }
+		// Set Ending Point
+		spnNodeList[data.path[data.path.length-1].index].innerHTML = "B";
+		spnNodeList[data.path[data.path.length-1].index].className += " b";
+
 		// Populate the hints
 		var hintColor;
 		var hintText;
@@ -119,12 +120,14 @@ function clicked(square) {
 }//end clicked()
 
 function unClick () {
-	for (n = 0; n < divGrid.childElementCount; n++) {
-		console.log(divGrid.children[n]);
-		divGrid.children[n].clicked = false;
-		var name = divGrid.children[n].className.split(' ').slice(0, 2).join(' ');
-		console.log(name);
-		divGrid.children[n].className = name;
+	var name;
+	for (var n = 0; n < divGrid.childElementCount; n++) {
+		name = divGrid.children[n].className.split(' ').slice(0, 2).join(' ');
+		
+		if (divGrid.children[n].innerHTML !== "A" && divGrid.children[n].innerHTML !== "B") {
+			divGrid.children[n].clicked = false;
+			divGrid.children[n].className = name;
+		}
 	}
 }
 
