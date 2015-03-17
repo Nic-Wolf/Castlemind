@@ -54,7 +54,7 @@ gameApp.controller('gameController', ['$http', function($http) {
 	function click () {
 		var move = {};
 		move.class = this.class;
-		move.value = Number(this.class.split('-')[1][0]);
+		move.value = this.colorKey;
 		self.moves.push(move);
 		if (this.class.indexOf(' b') === -1) {
 			this.class += ' clicked';
