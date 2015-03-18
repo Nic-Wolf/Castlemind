@@ -20,7 +20,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		$http.get('/api/game').
 		success(setSquares).
 		error(function(data, status, headers, config){
-			console.log(data);
+			//console.log(data);
 		});
 	}; // end newGame
 
@@ -37,24 +37,31 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		});
 
 		self.solution = data.path;
+		console.log(self.solution);
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
 			result.class = "square color-" + elem.colorKey;
 			result.click = click;
 			return result;
 		});
-		self.squares[self.solution[0].index].textContent = 'A';
+		
 		self.squares[self.solution[0].index].class += ' a';
 		delete self.squares[self.solution[0].index].click;
-		self.squares[self.solution[self.solution.length - 1].index].textContent = 'B';
+
 		self.squares[self.solution[self.solution.length - 1].index].class += ' b';
 		self.moves = [];
+		
+
+		//self.hints = self.solution
+
+
 		self.hints = self.solution.slice(0, 5).map(function (elem) {
 			var string = elem.direction.split(' ').reduce(function (prev, curr) {
 				return prev + curr[0];
 			}, '');
-			return {textContent: string, "class": 'square'};
+			return {"class": 'square ' + string};
 		});
+		console.log(self.hints);
 	} // end setSquares
 
 	// click adds a new object to moves and changes the class of the clicked square.
