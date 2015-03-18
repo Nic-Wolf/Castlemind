@@ -124,7 +124,6 @@ function makePath (squares) {
 			path[n - 1].solution = current.colorKey;
 		}
 	}
-	console.log(path);
 	return path;
 }
 

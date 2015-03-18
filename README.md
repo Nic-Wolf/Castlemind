@@ -1,7 +1,14 @@
 #CastleMind
+
 [Nic Wolf](https://github.com/Nic-Wolf)
-&
+
 [David Hasenjaeger](https://github.com/GerryFudd)
+
+[Aaron Ollis](https://github.com/aollis)
+
+& Special Thanks to:
+
+[RJ Zaworski](https://github.com/rjz)
 
 ##Description
 Castlemind is a simple game, designed to promote good problem-solving skills in children, from roughly 6 to 10 years of age.
@@ -112,5 +119,5 @@ At this point, the project will be complete, and our development work will be fi
 
 ---
 ###License & Usage
-This project is being developed under the MIT license.
+This project is being developed under MIT license.
 The original game concept and its design are &copy;2015 Chris Kelly.
