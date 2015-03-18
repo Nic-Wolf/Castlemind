@@ -2,8 +2,6 @@ var manageState = require('./manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 gameApp.controller('gameController', ['$http', '$cookies', function($http, $cookies) {
 	var self = this;
@@ -46,6 +44,9 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			result.click = click;
 			return result;
 		});
+
+		console.log(self.squares);
+
 		self.squares[self.solution[0].index].textContent = 'A';
 		self.squares[self.solution[0].index].class += ' a';
 		delete self.squares[self.solution[0].index].click;
@@ -84,35 +85,51 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			});
 		}
 
-//highlight function, have to decide if it should simply insert a color or image etc...//	
-
-		function highlight () {
-			$(".square").value.change(function() {
-				$(".square").value = background-color: #FFO;
-			});
-				
-		}
-
-		if(user has clicked) {
-				$(".square").select(function() {
-				$(".square").value.highlight();
-				});
-		}
-
-//also make a function to remove highlight//
-		function removeHighlight () {
-			var originalColor = get original square value when board was first generated
-			$(".square").value.change(function() {
-			$(".square").value = originalColor;
+		self.squares.forEach(function(square, index) {
+			var direction = self.solution[self.moves.length].direction
+				if(direction === "original") {
+					var rowDif = math.abs(this.value.{0} - square.value[0])
+				}
 		});
-		}
 
-		if(board is reset) {
-			$(".square").select(function() {
-			$(".square").value.removeHighlight();
-			});
-		};		
+
 	}
+
+
+
+
+
+
+
+// //highlight function, have to decide if it should simply insert a color or image etc...//	
+
+// 		function highlight () {
+// 			$(".square").value.change(function() {
+// 				$(".square").value = background-color: #FFO;
+// 			});
+				
+// 		}
+
+// 		if(user has clicked) {
+// 				$(".square").select(function() {
+// 				$(".square").value.highlight();
+// 				});
+// 		}
+
+// //also make a function to remove highlight//
+// 		function removeHighlight () {
+// 			var originalColor = get original square value when board was first generated
+// 			$(".square").value.change(function() {
+// 			$(".square").value = originalColor;
+// 		});
+// 		}
+
+// 		if(board is reset) {
+// 			$(".square").select(function() {
+// 			$(".square").value.removeHighlight();
+// 			});
+// 		};		
+// 	}
 
 
 
