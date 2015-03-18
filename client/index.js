@@ -43,9 +43,6 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			result.click = click;
 			return result;
 		});
-		
-		self.squares[self.solution[0].index].class += ' a';
-		delete self.squares[self.solution[0].index].click;
 
 		self.squares[self.solution[self.solution.length - 1].index].class += ' b';
 		self.moves = [];
@@ -55,8 +52,12 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			var string = elem.direction.split(' ').reduce(function (prev, curr) {
 				return prev + curr[0];
 			}, '');
-			return {"class": 'square', "image": '../img/' + string + '.png'};
+			return {"class": 'square hasImage', "image": '../img/' + string + '.png'};
 		});
+		
+		self.squares[self.solution[0].index].content = self.hints[0].image;
+		self.squares[self.solution[0].index].class += ' hasImage a';
+		delete self.squares[self.solution[0].index].click;
 		console.log(self.hints);
 	} // end setSquares
 
