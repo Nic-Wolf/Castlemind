@@ -96,8 +96,6 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 
 	}
-
-
 		
 	function init () {
 		if (false/*$cookies.playing*/) {
