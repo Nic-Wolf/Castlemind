@@ -2,6 +2,9 @@ var manageState = require('./manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 gameApp.controller('gameController', ['$http', '$cookies', function($http, $cookies) {
 	var self = this;
 
@@ -80,7 +83,42 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 				self.message = message;
 			});
 		}
+
+//highlight function, have to decide if it should simply insert a color or image etc...//	
+
+		function highlight () {
+			$(".square").value.change(function() {
+				$(".square").value = background-color: #FFO;
+			});
+				
+		}
+
+		if(user has clicked) {
+				$(".square").select(function() {
+				$(".square").value.highlight();
+				});
+		}
+
+//also make a function to remove highlight//
+		function removeHighlight () {
+			var originalColor = get original square value when board was first generated
+			$(".square").value.change(function() {
+			$(".square").value = originalColor;
+		});
+		}
+
+		if(board is reset) {
+			$(".square").select(function() {
+			$(".square").value.removeHighlight();
+			});
+		};		
 	}
+
+
+
+
+		
+	
 
 	function init () {
 		if ($cookies.playing) {
