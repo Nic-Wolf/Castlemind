@@ -20,7 +20,6 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		$http.get('/api/game').
 		success(setSquares).
 		error(function(data, status, headers, config){
-			//console.log(data);
 		});
 	}; // end newGame
 
@@ -51,10 +50,6 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		self.squares[self.solution[self.solution.length - 1].index].class += ' b';
 		self.moves = [];
 		
-
-		//self.hints = self.solution
-
-
 		self.hints = self.solution.slice(0, 5).map(function (elem) {
 			var string = elem.direction.split(' ').reduce(function (prev, curr) {
 				return prev + curr[0];
