@@ -64,15 +64,15 @@ button {
 .color-4 { background-color: #0000ff; }
 
 .a {
-	color: black;
-	background-color: #ffffff; !important
-	-webkit-box-sizing: border-box;
+	background-color: #ffffff;
+	background: url("../img/start.jpg") no-repeat;
+	background-size: contain;
 }
 
 .b {
-	color: white;
-	background-color: #111111; !important
-	-webkit-box-sizing: border-box;
+	background-color: #111111;
+	background: url("../img/end.jpg") no-repeat;
+	background-size: contain;
 }
 
 .clicked {
