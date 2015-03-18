@@ -10,11 +10,8 @@ block content
 	h3 {{gCtrl.message}}
 	button(ng-click="gCtrl.newGame()") New Game
 	#divGrid
-		span(ng-repeat="square in gCtrl.squares")
-			span(class="{{square.class}}",ng-click="square.click()") {{square.textContent}}
+		div(ng-repeat="square in gCtrl.squares",class="{{square.class}}",ng-click="square.click()") {{square.textContent}}
 	#divHints
-		span(ng-repeat="hint in gCtrl.hints")
-			span(class="{{hint.class}}") {{hint.textContent}}
+		div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}") {{hint.textContent}}
 	#divUserMoves
-		span(ng-repeat="move in gCtrl.moves")
-			span(class="{{move.class}}")
+		div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
