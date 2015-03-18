@@ -71,6 +71,14 @@ button {
 	font-weight: bold;
 }
 
+#divHints .square {
+	padding-bottom: 0;
+}
+
+.square img {
+	width: 100%;
+}
+
 .color-0 { background-color: #ff0000; }
 .color-1 { background-color: #ffff00; }
 .color-2 { background-color: #00ff00; }
@@ -86,23 +94,6 @@ button {
 .b {
 	background-color: #111111;
 	background: url("../img/end.jpg") no-repeat;
-	background-size: contain;
-}
-
-.o {
-	background: url("../img/ortho.png") no-repeat;
-	background-size: contain;
-}
-.lo {
-	background: url("../img/long-ortho.png") no-repeat;
-	background-size: contain;
-}
-.d {
-	background: url("../img/diag.png") no-repeat;
-	background-size: contain;
-}
-.ld {
-	background: url("../img/long-diag.png") no-repeat;
 	background-size: contain;
 }
 
