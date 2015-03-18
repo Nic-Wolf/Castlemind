@@ -14,7 +14,7 @@ h1 {
 }
 
 h3 {
-
+	margin: 0 auto;
 }
 
 button {
@@ -48,17 +48,7 @@ button {
 }
 
 @media screen and (max-width: 715px) {
-	#container {
-		width: 280px;
-	}
-	#main {
-		margin: 30px 0 0 10px;
-		width: 58%;
-		float: left;
-	}
-	#divGrid {
-		margin: 0;
-	}
+
 }
 
 #divGrid {
@@ -135,3 +125,56 @@ button {
 	background: #777;
 	border: 4px solid black;
 }
+
+@media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px)  {
+	button {
+		display: block;
+		margin: 0 auto;
+		padding: 0.25em;
+		width: 40%;
+		font-size: 2.0em;
+		border-radius: 13px;
+	}
+
+	#container {
+		width: 100%
+	}
+	#sidebar {
+		display: block;
+		margin: auto;
+		padding: 0;
+		width: 90%;
+	}
+	#divHints {
+		margin: auto;
+		padding-bottom: 20.5%;
+		width: 100%;
+	}
+	#divUserMoves {
+		margin: auto;
+		padding-bottom: 20.5%;
+		width: 100%;
+	}
+
+
+
+	#main {
+		float: none;
+		margin: 30px auto;
+		width: 90%;
+	}
+	#divGrid {
+		margin: auto;
+		width: 100%;
+		padding-bottom: 98.8%;
+	}
+}
+
+
+
+
+
+
+
+
+
