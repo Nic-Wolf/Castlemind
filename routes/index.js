@@ -16,7 +16,7 @@ router.get('/api/game', function(req, res, next) {
 		var path = makePath(squares);
 
 		res.json({"board": squares, "path": path});
-	});
+	}, 5);
 });
 
 module.exports = router;
