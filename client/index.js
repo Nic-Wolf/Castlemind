@@ -44,14 +44,10 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			result.click = click;
 			return result;
 		});
-<<<<<<< HEAD
 
 		console.log(self.squares);
 
 		self.squares[self.solution[0].index].textContent = 'A';
-=======
-		
->>>>>>> 0ad6126c170715d27b1272dc0838f822bc92de9c
 		self.squares[self.solution[0].index].class += ' a';
 		delete self.squares[self.solution[0].index].click;
 
