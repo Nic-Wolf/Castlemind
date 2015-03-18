@@ -32,14 +32,13 @@ button {
 
 #main {
 	float: left;
+	padding: 0;
 }
-
-/* GAME BOARD */
 
 #divGrid {
 	margin: auto;
 	width: 90%;
-	padding-bottom: 90%;
+	padding-bottom: 89.8%;
 	min-width: 260px;
 	min-height: 260px;
 	background: #333;
@@ -47,7 +46,7 @@ button {
 }
 
 .square {
-	width: 19%;
+	width: 18.8%;
 	padding-bottom: 19%;
 	margin-left: 1%;
 	margin-top: 1%;
@@ -74,6 +73,24 @@ button {
 	background: url("../img/end.jpg") no-repeat;
 	background-size: contain;
 }
+
+.o {
+	background: url("../img/ortho.png") no-repeat;
+	background-size: contain;
+}
+.lo {
+	background: url("../img/long-ortho.png") no-repeat;
+	background-size: contain;
+}
+.d {
+	background: url("../img/diag.png") no-repeat;
+	background-size: contain;
+}
+.ld {
+	background: url("../img/long-diag.png") no-repeat;
+	background-size: contain;
+}
+
 
 .clicked {
 	opacity: 0.33;
