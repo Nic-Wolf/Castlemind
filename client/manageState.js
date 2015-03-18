@@ -56,7 +56,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 	if (!moves.some( function (elem, ind) {
 		var result = elem.value !== solution[ind].solution;
 		if (!result) {
-			hints[ind].class = squares[solution[ind + 1].index].class;
+			hints[ind].class += " color-" + squares[solution[ind + 1].index].colorKey; 
 		}
 		return result;
 	})) {

@@ -5,7 +5,7 @@ var gameApp = angular.module('gameApp', ['ngCookies']);
 gameApp.controller('gameController', ['$http', '$cookies', function($http, $cookies) {
 	var self = this;
 
-	this.message = 'hello';
+	this.message = "Welcome! Press New Game to Begin!";
 	
 	// ******************************************************* //
 	// newGame gets a gameboard and path from the server
@@ -75,17 +75,17 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			manageState.resetGuess(
 				self.moves, self.hints, self.squares, self.solution,
 				function(moves, hints, squares, message) {
-
-				self.moves = moves;
-				self.hints = hints;
-				self.squares = squares;
-				self.message = message;
-			});
+					self.moves = moves;
+					self.hints = hints;
+					self.squares = squares;
+					self.message = message;
+				}
+			);
 		}
 	}
 
 	function init () {
-		if ($cookies.playing) {
+		if (false/*$cookies.playing*/) {
 			manageState.deStringState(
 				$cookies.state, $cookies.solution, function (squares, solution) {
 				setSquares({"board": squares, "path": solution});

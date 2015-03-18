@@ -10,11 +10,11 @@ block content
 		#sidebar(class="col-md-4")
 			h3 {{gCtrl.message}}
 			button(ng-click="gCtrl.newGame()") New Game
-			h3 Current Sequence
+			h3 Path Hints
 			#divHints
 				span(ng-repeat="hint in gCtrl.hints")
 					span(class="{{hint.class}}") {{hint.textContent}}
-			h3 Your Guess
+			h3 Your Guesses
 			#divUserMoves
 				span(ng-repeat="move in gCtrl.moves")
 					span(class="{{move.class}}")
