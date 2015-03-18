@@ -49,6 +49,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 		self.squares[self.solution[self.solution.length - 1].index].class += ' b';
 		self.moves = [];
+		$cookies.moves = '';
 		
 		self.hints = self.solution.slice(0, 5).map(function (elem) {
 			var string = elem.direction.split(' ').reduce(function (prev, curr) {
@@ -66,6 +67,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		move.class = this.class;
 		move.value = this.colorKey;
 		self.moves.push(move);
+		$cookies.moves += self.squares.indexOf(this) + '#';
 		if (this.class.indexOf(' b') === -1) {
 			this.class += ' clicked';
 		}
@@ -84,11 +86,23 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		}
 	}
 
+	this.reset = function () {
+		delete $cookies.playing;
+		delete self.squares;
+		delete self.solution;
+		delete self.hints;
+		delete self.moves;
+	}
+
 	function init () {
-		if (false/*$cookies.playing*/) {
+		if ($cookies.playing) {
 			manageState.deStringState(
-				$cookies.state, $cookies.solution, function (squares, solution) {
+				$cookies.state, $cookies.solution, $cookies.moves,
+				function (squares, solution, moves) {
 				setSquares({"board": squares, "path": solution});
+				moves.forEach(function (move) {
+					self.squares[move].click();
+				})
 			});
 		}
 	}

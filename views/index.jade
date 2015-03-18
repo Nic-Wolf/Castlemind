@@ -20,3 +20,5 @@ block content
 		#main
 			#divGrid
 				div(ng-repeat="square in gCtrl.squares",class="{{square.class}}",ng-click="square.click()") {{square.textContent}}
+
+	button(ng-click="gCtrl.reset()") Reset!
