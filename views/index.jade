@@ -13,7 +13,8 @@ block content
 			button(ng-click="gCtrl.newGame()") New Game
 			h3 Path Hints
 			#divHints
-				div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}") {{hint.textContent}}
+				div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")
+					img(src="{{hint.image}}",alt="")
 			h3 User Guesses
 			#divUserMoves
 				div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")

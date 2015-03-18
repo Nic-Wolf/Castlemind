@@ -55,7 +55,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			var string = elem.direction.split(' ').reduce(function (prev, curr) {
 				return prev + curr[0];
 			}, '');
-			return {"class": 'square ' + string};
+			return {"class": 'square', "image": '../img/' + string + '.png'};
 		});
 		console.log(self.hints);
 	} // end setSquares
