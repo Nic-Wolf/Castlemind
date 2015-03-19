@@ -21,6 +21,6 @@ block content
 		#main
 			#divGrid
 				div(ng-repeat="square in gCtrl.squares",class="{{square.class}}",ng-click="square.click()") 
-					img(ng-show="{{square.content}}",src="{{square.content}}",alt="")
+					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
 
 	button(ng-click="gCtrl.reset()") Reset!

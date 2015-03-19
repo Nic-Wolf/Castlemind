@@ -60,6 +60,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 	squares.forEach( function (elem, ind) {
 		if (elem.class.indexOf('clicked') !== -1) {
 			squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
+			squares[ind].imgClass = "ng-hide";
 		}
 	});
 	if (!moves.some( function (elem, ind) {

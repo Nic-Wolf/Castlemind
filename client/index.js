@@ -40,6 +40,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
 			result.class = "square color-" + elem.colorKey;
+			result.imgClass = "ng-hide";
 			result.click = click;
 			return result;
 		});
@@ -52,10 +53,11 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			var string = elem.direction.split(' ').reduce(function (prev, curr) {
 				return prev + curr[0];
 			}, '');
-			return {"class": 'square hasImage', "image": '../img/' + string + '.png'};
+			return {"class": 'square hasImage', "image": './img/' + string + '.png'};
 		});
 		
-		self.squares[self.solution[0].index].content = self.hints[0].image;
+		self.squares[self.solution[0].index].imgClass = "";
+		self.squares[self.solution[0].index].image = self.hints[0].image;
 		self.squares[self.solution[0].index].class += ' hasImage a';
 		delete self.squares[self.solution[0].index].click;
 		console.log(self.hints);
@@ -66,6 +68,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 	function click () {
 		console.log(self.moves);
 		if (self.moves.length < 5) {
+
 			var move = {};
 			move.class = this.class;
 			move.value = this.colorKey;
@@ -74,6 +77,12 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			if (this.class.indexOf(' b') === -1) {
 				this.class += ' clicked';
 			}
+		}
+
+		if (self.moves.length < 5) {
+			this.class += ' hasImage';
+			this.image = self.hints[self.moves.length].image;
+			this.imgClass = "";
 		}
 
 		if (self.moves.length === 5) {
