@@ -35,8 +35,10 @@ button {
 }
 
 #sidebar {
-	padding: 0 0 0 3%;
-	width: 300px;
+	margin: 0 0 0 3%;
+	padding: 0;
+	width: 30%;
+	max-width: 300px;
 	display: inline-block;
 }
 
@@ -45,10 +47,6 @@ button {
 	padding: 0;
 	width: 60%;
 	max-width: 800px;
-}
-
-@media screen and (max-width: 715px) {
-
 }
 
 #divGrid {
@@ -130,24 +128,26 @@ button {
 	#container {
 		width: 100%
 	}
+
 	#sidebar {
 		display: block;
 		margin: auto;
 		padding: 0;
 		width: 90%;
+		max-width: 90%;
 	}
+
 	#divHints {
 		margin: auto;
 		padding-bottom: 20.5%;
 		width: 100%;
 	}
+
 	#divUserMoves {
 		margin: auto;
 		padding-bottom: 20.5%;
 		width: 100%;
 	}
-
-
 
 	#main {
 		float: none;
@@ -161,7 +161,12 @@ button {
 	}
 }
 
+@media screen and (min-width: 615px) {
+	#container {
+		width: 100%;
+	}
 
+}
 
 
 

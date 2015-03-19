@@ -9,7 +9,6 @@ block content
 	h1= title
 	#container(class="container")
 		#sidebar(class="col-md-4")
-			h3 {{gCtrl.message}}
 			button(ng-click="gCtrl.newGame()") New Game
 			h3 Path Hints
 			#divHints
@@ -18,6 +17,7 @@ block content
 			h3 User Guesses
 			#divUserMoves
 				div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
+			h3 {{gCtrl.message}}
 		#main
 			#divGrid
 				div(ng-repeat="square in gCtrl.squares",class="{{square.class}}",ng-click="square.click()") {{square.textContent}}
