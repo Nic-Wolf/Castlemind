@@ -45,15 +45,6 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			result.click = click;
 			return result;
 		});
-<<<<<<< HEAD
-
-		console.log(self.squares);
-
-		self.squares[self.solution[0].index].textContent = 'A';
-		self.squares[self.solution[0].index].class += ' a';
-		delete self.squares[self.solution[0].index].click;
-=======
->>>>>>> master
 
 		self.squares[self.solution[self.solution.length - 1].index].class += ' b';
 		self.moves = [];
