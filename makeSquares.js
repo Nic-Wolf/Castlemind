@@ -15,7 +15,7 @@
 
 
 // GLOBAL VARIABLES //
-var SIZE         = 5;
+var size;
 var presentColor = 0;
 
 
@@ -29,11 +29,11 @@ var presentColor = 0;
 		// Init guesses and states for each square
 		presentColor = 0;
 		// Draw Rows
-		for (row = 0; row < SIZE; row++){
+		for (row = 0; row < size; row++){
 			squares.push(makeSquare([row, 0], row));
 		}
 		// Draw Columns
-		for (col = 1; col < SIZE; col++){
+		for (col = 1; col < size; col++){
 			squares.push(makeSquare([0, col], col));
 		}
 
@@ -59,16 +59,17 @@ var presentColor = 0;
 
 
 	// Recursively rebuild the game board until it is valid.
-	function completeBoard (callback, seed) {
+	function completeBoard (callback, inputSize, seed) {
 		if(!seed) {
+			size = inputSize;
 			initSquares(function (squares) {
-				completeBoard(callback, squares);
+				completeBoard(callback, size, squares);
 			});
-		} else if (seed.length === SIZE * SIZE) {
+		} else if (seed.length === size * size) {
 			// If seed is now a normalized latin square,
 			// permute all of the rows and permute all but one column
-			var permRow = makePermutation(SIZE);
-			var permCol = makePermutation(SIZE - 1).concat([SIZE - 1]);
+			var permRow = makePermutation(size);
+			var permCol = makePermutation(size - 1).concat([size - 1]);
 			
 			var scrambled = seed.map(function (elem) {
 				var oldRow = elem.value[0];
@@ -81,7 +82,7 @@ var presentColor = 0;
 			// Make an array that represents what index each square should be at
 			var indexes = [];
 			scrambled.forEach(function(elem, index) {
-				indexes[index] = elem.value[0] * SIZE + elem.value[1];
+				indexes[index] = elem.value[0] * size + elem.value[1];
 			});
 
 			// Put the squares into an order that is easier to display
@@ -94,15 +95,15 @@ var presentColor = 0;
 		} else {
 			checkConsistency (seed, presentColor, callback, function (consistent) {
 				if (consistent !== seed) {
-					completeBoard(callback, consistent);
+					completeBoard(callback, size, consistent);
 				} else {
 					checkIfColorDone(seed, presentColor, function (isDone) {
 						if (isDone) {	
 							presentColor++;
-							completeBoard(callback, seed);
+							completeBoard(callback, size, seed);
 						} else {
 							refineBoard(seed, presentColor, function (refined) {
-								completeBoard(callback, refined);
+								completeBoard(callback, size, refined);
 							});
 						}
 					});
@@ -166,7 +167,7 @@ var presentColor = 0;
 					return element.value[0] === row && element.colorKey === color;
 				});
 			})) {
-				initSquares (function (squares) {
+				initSquares(function (squares) {
 					callback(squares);
 				});
 			} else {
@@ -186,7 +187,7 @@ var presentColor = 0;
 			var possibles = [];
 			var rows = [];
 			var row;
-			for (row = 0; row < SIZE; row++) {
+			for (row = 0; row < size; row++) {
 				var possible = columnPossible(board, row, color);
 				possibles.push(possible);
 			}
@@ -198,7 +199,7 @@ var presentColor = 0;
 			// Store all the columns in an array
 			var columns = [];
 			
-			for (var n = 0; n < SIZE; n++) {
+			for (var n = 0; n < size; n++) {
 				columns[n] = n;
 			}
 			// setup a list of columns in 'row' that could be 'color'
