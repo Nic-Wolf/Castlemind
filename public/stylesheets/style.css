@@ -128,3 +128,7 @@ button {
 	background: #777;
 	border: 4px solid black;
 }
+
+.highlight {
+	background-color: orange;
+}
