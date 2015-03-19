@@ -89,8 +89,15 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 		// self.squares.forEach(function(square, index) {
 		// 	var direction = self.solution[self.moves.length].direction
-		// 		if(direction === "original") {
-		// 			var rowDif = math.abs(this.value.{0} - square.value[0])
+		// 		if(direction === "orthogonal") {
+		// 			var rowDif = math.abs(this.value.[0] - square.value[0])
+		// 			var columnDiff = math.abs(this.value[1] - square.value[1])
+					
+
+		// 		}
+
+		// 		if(direction === "diagonal") {
+
 		// 		}
 		// });
 
