@@ -15,7 +15,7 @@ function stringState (data, callback) {
 } // end stringState
 
 // deStringState converts strings into the original board data
-function deStringState (boardString, solutionString, callback) {
+function deStringState (boardString, solutionString, moveString, callback) {
 	var board = [];
 	var boardArray = boardString.split('');
 	boardArray.forEach(function (elem, ind) {
@@ -26,6 +26,7 @@ function deStringState (boardString, solutionString, callback) {
 			board.push(square);
 		}
 	});
+
 	var solution = [];
 	var solutionArray = solutionString.split('#');
 	solutionArray.forEach( function (elem, ind) {
@@ -42,7 +43,15 @@ function deStringState (boardString, solutionString, callback) {
 		console.log(newMove);
 		solution.push(newMove);
 	});
-	callback(board, solution);
+	if (moveString.length > 0) {
+		var moves = moveString.split('#');
+		moves = moves.slice(0,moves.length - 1).map(function(elem){
+			return Number(elem)
+		});
+	} else {
+		moves = [];
+	}
+	callback(board, solution, moves);
 } // end deStringState
 
 // resetGuess displays what part of the guess was correct.
@@ -56,7 +65,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 	if (!moves.some( function (elem, ind) {
 		var result = elem.value !== solution[ind].solution;
 		if (!result) {
-			hints[ind].class = squares[solution[ind + 1].index].class;
+			hints[ind].class += " color-" + squares[solution[ind + 1].index].colorKey; 
 		}
 		return result;
 	})) {

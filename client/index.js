@@ -2,13 +2,11 @@ var manageState = require('./manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 gameApp.controller('gameController', ['$http', '$cookies', function($http, $cookies) {
 	var self = this;
 
-	this.message = 'hello';
+	this.message = "Welcome! Press New Game to Begin!";
 	
 	// ******************************************************* //
 	// newGame gets a gameboard and path from the server
@@ -23,7 +21,6 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		$http.get('/api/game').
 		success(setSquares).
 		error(function(data, status, headers, config){
-			console.log(data);
 		});
 	}; // end newGame
 
@@ -40,24 +37,31 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		});
 
 		self.solution = data.path;
+		console.log(self.solution);
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
 			result.class = "square color-" + elem.colorKey;
 			result.click = click;
 			return result;
 		});
+
+		console.log(self.squares);
+
 		self.squares[self.solution[0].index].textContent = 'A';
 		self.squares[self.solution[0].index].class += ' a';
 		delete self.squares[self.solution[0].index].click;
-		self.squares[self.solution[self.solution.length - 1].index].textContent = 'B';
+
 		self.squares[self.solution[self.solution.length - 1].index].class += ' b';
 		self.moves = [];
+		$cookies.moves = '';
+		
 		self.hints = self.solution.slice(0, 5).map(function (elem) {
 			var string = elem.direction.split(' ').reduce(function (prev, curr) {
 				return prev + curr[0];
 			}, '');
-			return {textContent: string, "class": 'square'};
+			return {"class": 'square', "image": '../img/' + string + '.png'};
 		});
+		console.log(self.hints);
 	} // end setSquares
 
 	// click adds a new object to moves and changes the class of the clicked square.
@@ -67,6 +71,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		move.class = this.class;
 		move.value = this.colorKey;
 		self.moves.push(move);
+		$cookies.moves += self.squares.indexOf(this) + '#';
 		if (this.class.indexOf(' b') === -1) {
 			this.class += ' clicked';
 		}
@@ -76,55 +81,63 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			manageState.resetGuess(
 				self.moves, self.hints, self.squares, self.solution,
 				function(moves, hints, squares, message) {
-
-				self.moves = moves;
-				self.hints = hints;
-				self.squares = squares;
-				self.message = message;
-			});
+					self.moves = moves;
+					self.hints = hints;
+					self.squares = squares;
+					self.message = message;
+				}
+			);
 		}
 
-//highlight function, have to decide if it should simply insert a color or image etc...//	
+		self.squares.forEach(function(square, index) {
+			var direction = self.solution[self.moves.length].direction
+			var rowDif = math.abs(this.value.[0] - square.value[0])
+			var columnDiff = math.abs(this.value[1] - square.value[1])
 
-		function highlight () {
-			$(".square").value.change(function() {
-				$(".square").value = background-color: #FFO;
-			});
-				
-		}
+				if(direction === "orthogonal", rowDif = 1, columnDiff = 1) {
+					self.squares.highlight([0] + [1]);
 
-		if(user has clicked) {
-				$(".square").select(function() {
-				$(".square").value.highlight();
-				});
-		}
+				}
 
-//also make a function to remove highlight//
-		function removeHighlight () {
-			var originalColor = get original square value when board was first generated
-			$(".square").value.change(function() {
-			$(".square").value = originalColor;
+				if(direction === "diagonal", rowDif = 1, columnDiff = 1) {
+					self.squares.highlight([0] + [1]);
+
+				}
+//wasn't sure how to highlight both squares in the case of 3 step moves//
+				if(direction === "long orthogonal", rowDif = 3, columnDiff = 3) {
+					self.squares.highlight([0] + [1] of first square and [0] + [1] of second square)
+
+				}
+
+				if(direction === "long diagonal", rowDif = 3, columnDiff = 3){
+					self.squares.highlight([0] + [1] of first square and [0] + [1] of second square)
+
+				}
+
+				else {
+					self.squares.remove(highlight());
+				}
 		});
-		}
 
-		if(board is reset) {
-			$(".square").select(function() {
-			$(".square").value.removeHighlight();
-			});
-		};		
 	}
 
-
-
-
-		
-	
+	this.reset = function () {
+		delete $cookies.playing;
+		delete self.squares;
+		delete self.solution;
+		delete self.hints;
+		delete self.moves;
+	}
 
 	function init () {
 		if ($cookies.playing) {
 			manageState.deStringState(
-				$cookies.state, $cookies.solution, function (squares, solution) {
+				$cookies.state, $cookies.solution, $cookies.moves,
+				function (squares, solution, moves) {
 				setSquares({"board": squares, "path": solution});
+				moves.forEach(function (move) {
+					self.squares[move].click();
+				})
 			});
 		}
 	}

@@ -25,6 +25,7 @@ Overall Layout Design Ideas:
 
 	--Hints could have animations(buzz), number of hints being displayed decreases as each move is made(fade away).
 	-Hints can be displayed above board, previous moves below.
+	
 
 	Previous Moves
 -When a color square is added to previous moves, a quick animation will take place that affects both the added square and the previous moves container itself. 
