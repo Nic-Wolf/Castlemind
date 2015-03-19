@@ -89,33 +89,25 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			);
 		}
 
+// 		var direction = self.solution[self.moves.length].direction
 // 		self.squares.forEach(function(square, index) {
-// 			var direction = self.solution[self.moves.length].direction
-// 			var rowDif = math.abs(this.value.[0] - square.value[0])
+// 			var rowDif = math.abs(this.value[0] - square.value[0])
 // 			var columnDiff = math.abs(this.value[1] - square.value[1])
+//				square.class = square.class.split(' highlight').join('');
+// 				if(direction === "orthogonal") {
+//					if ((rowDif === 1 && columnDiff === 0) || (rowDif === 0 && columnDiff === 1)) {
+//						square.class += ' highlight';
+//					}
+// 				} else if(direction === "diagonal" && rowDif === 1 && columnDiff === 1) {
+// 					square.class += ' highlight';
 
-// 				if(direction === "orthogonal", rowDif = 1, columnDiff = 1) {
-// 					self.squares.highlight([0] + [1]);
+// 				} else if(direction === "long orthogonal") {
+//					if ((rowDif === 3 && columnDiff === 0) || (rowDif === 3 && columnDiff === 0)) {
+// 						square.class += ' highlight';
+//					}
+// 				} else if(direction === "long diagonal" && rowDif === 3 && columnDiff === 3) {
+// 					square.class += ' highlight';
 
-// 				}
-
-// 				if(direction === "diagonal", rowDif = 1, columnDiff = 1) {
-// 					self.squares.highlight([0] + [1]);
-
-// 				}
-// //wasn't sure how to highlight both squares in the case of 3 step moves//
-// 				if(direction === "long orthogonal", rowDif = 3, columnDiff = 3) {
-// 					self.squares.highlight([0] + [1] of first square and [0] + [1] of second square)
-
-// 				}
-
-// 				if(direction === "long diagonal", rowDif = 3, columnDiff = 3){
-// 					self.squares.highlight([0] + [1] of first square and [0] + [1] of second square)
-
-// 				}
-
-// 				else {
-// 					self.squares.remove(highlight());
 // 				}
 // 		});
 
