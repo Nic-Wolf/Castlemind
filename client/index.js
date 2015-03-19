@@ -41,15 +41,19 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
 			result.class = "square color-" + elem.colorKey;
+			result.imgClass = "ng-hide";
 			result.click = click;
 			return result;
 		});
+<<<<<<< HEAD
 
 		console.log(self.squares);
 
 		self.squares[self.solution[0].index].textContent = 'A';
 		self.squares[self.solution[0].index].class += ' a';
 		delete self.squares[self.solution[0].index].click;
+=======
+>>>>>>> master
 
 		self.squares[self.solution[self.solution.length - 1].index].class += ' b';
 		self.moves = [];
@@ -59,24 +63,40 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			var string = elem.direction.split(' ').reduce(function (prev, curr) {
 				return prev + curr[0];
 			}, '');
-			return {"class": 'square', "image": '../img/' + string + '.png'};
+			return {"class": 'square hasImage', "image": './img/' + string + '.png'};
 		});
+		self.hints[0].class = 'square hasImage a';
+		
+		self.squares[self.solution[0].index].class += ' a';
+		self.squares[self.solution[0].index].click();
+		delete self.squares[self.solution[0].index].click;
 		console.log(self.hints);
 	} // end setSquares
 
 	// click adds a new object to moves and changes the class of the clicked square.
 	// If all the moves have been made, run resetGuess.
 	function click () {
-		var move = {};
-		move.class = this.class;
-		move.value = this.colorKey;
-		self.moves.push(move);
-		$cookies.moves += self.squares.indexOf(this) + '#';
-		if (this.class.indexOf(' b') === -1) {
-			this.class += ' clicked';
+		console.log(self.moves);
+		
+		if (self.moves.length < 5) {
+
+			var move = {};
+			move.class = this.class;
+			move.value = this.colorKey;
+			self.moves.push(move);
+			$cookies.moves += self.squares.indexOf(this) + '#';
+			if (this.class.indexOf(' b') === -1 && this.class.indexOf(' a') === -1) {
+				this.class += ' clicked';
+			}
 		}
 
-		if (self.moves.length === 5) {
+		if (self.moves.length < 5) {
+			this.class += ' hasImage';
+			this.image = self.hints[self.moves.length - 1].image;
+			this.imgClass = "";
+		}
+
+		if (self.moves.length === 5 && this.class.indexOf(' b') !== -1) {
 
 			manageState.resetGuess(
 				self.moves, self.hints, self.squares, self.solution,
@@ -127,7 +147,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 				$cookies.state, $cookies.solution, $cookies.moves,
 				function (squares, solution, moves) {
 				setSquares({"board": squares, "path": solution});
-				moves.forEach(function (move) {
+				moves.slice(1).forEach(function (move) {
 					self.squares[move].click();
 				})
 			});

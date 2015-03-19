@@ -20,6 +20,7 @@ block content
 				div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
 		#main
 			#divGrid
-				div(ng-repeat="square in gCtrl.squares",class="{{square.class}}",ng-click="square.click()") {{square.textContent}}
+				div(ng-repeat="square in gCtrl.squares",class="{{square.class}}",ng-click="square.click()") 
+					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
 
 	button(ng-click="gCtrl.reset()") Reset!
