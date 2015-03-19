@@ -70,6 +70,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		
 		if (self.moves.length < 5) {
 
+
 			var move = {};
 			move.class = this.class;
 			move.value = this.colorKey;
@@ -78,9 +79,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			if (this.class.indexOf(' b') === -1 && this.class.indexOf(' a') === -1) {
 				this.class += ' clicked';
 			}
-		}
 
-		if (self.moves.length < 5) {
 			this.class += ' hasImage';
 			this.image = self.hints[self.moves.length - 1].image;
 			this.imgClass = "";
