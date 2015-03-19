@@ -55,6 +55,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			}, '');
 			return {"class": 'square hasImage', "image": './img/' + string + '.png'};
 		});
+		self.hints[0].class = 'square hasImage a';
 		
 		self.squares[self.solution[0].index].imgClass = "";
 		self.squares[self.solution[0].index].image = self.hints[0].image;

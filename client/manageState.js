@@ -63,10 +63,12 @@ function resetGuess (moves, hints, squares, solution, callback) {
 			squares[ind].imgClass = "ng-hide";
 		}
 	});
+	// The colors in the hint match the colors on the board
+	// Now the colors in the guess and the hint don't line up
 	if (!moves.some( function (elem, ind) {
 		var result = elem.value !== solution[ind].solution;
-		if (!result) {
-			hints[ind].class += " color-" + squares[solution[ind + 1].index].colorKey; 
+		if (!result && ind > 0) {
+			hints[ind].class += " color-" + squares[solution[ind].index].colorKey; 
 		}
 		return result;
 	})) {
