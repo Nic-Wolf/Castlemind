@@ -64,13 +64,16 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 	// click adds a new object to moves and changes the class of the clicked square.
 	// If all the moves have been made, run resetGuess.
 	function click () {
-		var move = {};
-		move.class = this.class;
-		move.value = this.colorKey;
-		self.moves.push(move);
-		$cookies.moves += self.squares.indexOf(this) + '#';
-		if (this.class.indexOf(' b') === -1) {
-			this.class += ' clicked';
+		console.log(self.moves);
+		if (self.moves.length < 5) {
+			var move = {};
+			move.class = this.class;
+			move.value = this.colorKey;
+			self.moves.push(move);
+			$cookies.moves += self.squares.indexOf(this) + '#';
+			if (this.class.indexOf(' b') === -1) {
+				this.class += ' clicked';
+			}
 		}
 
 		if (self.moves.length === 5) {
