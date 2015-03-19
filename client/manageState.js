@@ -61,20 +61,26 @@ function resetGuess (moves, hints, squares, solution, callback) {
 		if (elem.class.indexOf('clicked') !== -1) {
 			squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
 			squares[ind].imgClass = "ng-hide";
+		} else if (elem.class.indexOf(' b') !== -1) {
+			squares[ind].class = elem.class.split(' ').slice(0, 3).join(' ');
+			squares[ind].imgClass = "ng-hide";
 		}
 	});
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
 	if (!moves.some( function (elem, ind) {
-		var result = elem.value !== solution[ind].solution;
-		if (!result && ind > 0) {
-			hints[ind].class += " color-" + squares[solution[ind].index].colorKey; 
+		var result = true;
+		if (ind === 0) {
+			result = false;
+		} else if (elem.value === solution[ind - 1].solution) {
+			hints[ind].class += " color-" + squares[solution[ind].index].colorKey;
+			result = false;
 		}
 		return result;
 	})) {
 		message = "You win!";
 	} else {
-		moves = [];
+		moves = moves.slice(0, 1);
 		message = "Keep trying!";
 	}
 	callback(moves, hints, squares, message);
