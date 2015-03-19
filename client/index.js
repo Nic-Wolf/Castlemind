@@ -91,14 +91,27 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 		// self.squares.forEach(function(square, index) {
 		// 	var direction = self.solution[self.moves.length].direction
-		// 		if(direction === "orthogonal") {
-		// 			var rowDif = math.abs(this.value.[0] - square.value[0])
-		// 			var columnDiff = math.abs(this.value[1] - square.value[1])
-					
+		// //not sure how to account for every row/column of each square array, just have it set for 0 and 1//
+		// 	var rowDif = math.abs(this.value.[0] - square.value[0])
+		// 	var columnDiff = math.abs(this.value[1] - square.value[1])
+
+		// 		if(direction === "orthogonal", rowDif = 1, columnDiff = 1) {
+		// 			self.squares.highlight(coordinates of square);
+
+	
 
 		// 		}
 
-		// 		if(direction === "diagonal") {
+		// 		if(direction === "diagonal", rowDif = 1, columnDiff = 1) {
+		// 			self.squares.highlight(coordinates of square);
+
+		// 		}
+
+		// 		if(direction === "orthogonal", rowDif = 3, columnDiff = 3) {
+
+		// 		}
+
+		// 		if(direction === "diagonal", rowDif = 3, columnDiff = 3){
 
 		// 		}
 		// });
