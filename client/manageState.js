@@ -61,7 +61,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 		if (elem.class.indexOf('clicked') !== -1) {
 			squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
 			squares[ind].imgClass = "ng-hide";
-		} else if (elem.class.indexOf(' b') !== -1) {
+		} else if (elem.class.indexOf(' b') !== -1 || elem.class.indexOf(' a') !== -1) {
 			squares[ind].class = elem.class.split(' ').slice(0, 3).join(' ');
 			squares[ind].imgClass = "ng-hide";
 		}
@@ -80,7 +80,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 	})) {
 		message = "You win!";
 	} else {
-		moves = moves.slice(0, 1);
+		moves = [];
 		message = "Keep trying!";
 	}
 	callback(moves, hints, squares, message);

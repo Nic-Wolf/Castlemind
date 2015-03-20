@@ -60,7 +60,6 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		
 		self.squares[self.solution[0].index].class += ' a';
 		self.squares[self.solution[0].index].click();
-		delete self.squares[self.solution[0].index].click;
 		console.log(self.hints);
 	} // end setSquares
 
@@ -73,7 +72,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 
 			var move = {};
-			move.class = this.class;
+			move.class = this.class.split(' highlight').join('');
 			move.value = this.colorKey;
 			self.moves.push(move);
 			$cookies.moves += self.squares.indexOf(this) + '#';
@@ -84,19 +83,6 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			this.class += ' hasImage';
 			this.image = self.hints[self.moves.length - 1].image;
 			this.imgClass = "";
-		}
-
-		if (self.moves.length === 5 && this.class.indexOf(' b') !== -1) {
-
-			manageState.resetGuess(
-				self.moves, self.hints, self.squares, self.solution,
-				function(moves, hints, squares, message) {
-					self.moves = moves;
-					self.hints = hints;
-					self.squares = squares;
-					self.message = message;
-				}
-			);
 		}
 
 		var direction = self.solution[self.moves.length -1].direction
@@ -114,7 +100,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 					square.class += ' highlight';
 
 				} else if(direction === "long orthogonal") {
-					if ((rowDif === 3 && columnDiff === 0) || (rowDif === 3 && columnDiff === 0)) {
+					if ((rowDif === 0 && columnDiff === 3) || (rowDif === 3 && columnDiff === 0)) {
 						square.class += ' highlight';
 					}
 				} else if(direction === "long diagonal" && rowDif === 3 && columnDiff === 3) {
@@ -122,6 +108,23 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 				}
 		});
+
+		if (self.moves.length === 5 && this.class.indexOf(' b') !== -1) {
+
+			manageState.resetGuess(
+				self.moves, self.hints, self.squares, self.solution,
+				function(moves, hints, squares, message) {
+					self.moves = moves;
+					self.hints = hints;
+					self.squares = squares;
+					self.message = message;
+					if (moves.length === 0) {
+						console.log('clicking');
+						self.squares[self.solution[0].index].click();
+					}
+				}
+			);
+		}
 
 	}
 
