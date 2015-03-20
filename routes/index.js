@@ -6,7 +6,12 @@ var makePath      = require('../makePath.js').makePath;
 
 // GET Homepage //
 router.get('/', function(req, res, next) {
-	res.render('index', {title: 'Castlemind Main View'});
+	res.render('index', {title: 'Index file'});
+});
+
+// GET Homepage //
+router.get('/game', function(req, res, next) {
+	res.render('game', {title: 'Castlemind Main View'});
 });
 
 // GET Game API //

@@ -134,5 +134,6 @@ button {
 }
 
 .highlight {
-	opacity: 0.3;
+	margin-top: 0.5%;
+	border: 1px solid orange;
 }
