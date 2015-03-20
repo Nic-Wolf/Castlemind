@@ -116,9 +116,11 @@ function incrementMoves (square, hints, moves, squares, callback) {
 		square.class += ' clicked';
 	}
 
-	square.class += ' hasImage';
-	square.image = hints[moves.length - 1].image;
-	square.imgClass = "";
+	if (square.class.indexOf(' b') === -1) {
+		square.class += ' hasImage';
+		square.image = hints[moves.length - 1].image;
+		square.imgClass = "";
+	}
 	callback(square, hints, moves, squares);
 }// end incrementMoves()
 

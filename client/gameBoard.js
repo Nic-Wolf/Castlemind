@@ -55,11 +55,19 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 		self.moves = [];
 		$cookies.moves = '';
 		
-		self.hints = self.solution.slice(0, 5).map(function (elem) {
-			var string = elem.direction.split(' ').reduce(function (prev, curr) {
-				return prev + curr[0];
-			}, '');
-			return {"class": 'square hasImage', "image": './img/' + string + '.png'};
+		self.hints = self.solution.map(function (elem, ind) {
+			if (ind === 5) {
+				return {"class": 'square b', "imgClass": "ng-hide"};
+			} else {
+				var string = elem.direction.split(' ').reduce(function (prev, curr) {
+					return prev + curr[0];
+				}, '');
+				return {
+					"class": 'square hasImage',
+					"image": './img/' + string + '.png',
+					"imgClass": ""
+				};
+				}
 		});
 		self.hints[0].class = 'square hasImage a';
 		
@@ -77,7 +85,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 	function click () {
 		console.log($cookies.moves);
 		
-		if (self.moves.length < 5) {
+		if (self.moves.length < 6) {
 			manageState.incrementMoves(this, self.hints, self.moves, self.squares,
 				function (square, hints, moves, squares) {
 					this.class = square.class;
@@ -118,7 +126,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 			}
 		}
 
-		if (self.moves.length === 5 && this.class.indexOf(' b') !== -1) {
+		if (self.moves.length === 6) {
 
 			manageState.resetGuess(
 				self.moves, self.hints, self.squares, self.solution,
