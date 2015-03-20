@@ -1,0 +1,19 @@
+button(ng-click="gCtrl.reset()") Reset!
+button(ng-click="gCtrl.tutorial()") How do I game?!
+title= title
+h1= title
+#container(class="container")
+	#sidebar(class="col-md-4")
+		h3 {{gCtrl.message}}
+		button(ng-click="gCtrl.newGame()") New Game
+		h3 Path Hints
+		#divHints
+			div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")
+				img(src="{{hint.image}}",alt="")
+		h3 User Guesses
+		#divUserMoves
+			div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
+	#main
+		#divGrid
+			div(ng-repeat="square in gCtrl.squares",class="{{square.class}}",ng-click="square.click()") 
+				img(class="{{square.imgClass}}",src="{{square.image}}",alt="")

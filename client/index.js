@@ -1,111 +1,27 @@
-var manageState = require('./manageState.js');
+'use strict';
 
-var gameApp = angular.module('gameApp', ['ngCookies']);
+var gameBoard = require('./gameBoard.js');
+var tutorial = require('./tutorial.js');
 
-gameApp.controller('gameController', ['$http', '$cookies', function($http, $cookies) {
-	var self = this;
+// routeApp controlls the different views for this page
+var routeApp = angular.module('routeApp', [
+  'ngRoute',
+  'tutApp',
+  'gameApp'
+  ]);
 
-	this.message = "Welcome! Press New Game to Begin!";
-	
-	// ******************************************************* //
-	// newGame gets a gameboard and path from the server
-	// The controller is assigned the following values
-	//		squares: the array of squares in the board
-	//		solution: the path that the player is trying to guess
-	//		moves: the moves that the player has guessed
-	//		hints: the values that are displayed to the player
-	// ******************************************************* //
-	this.newGame = function() {
-		self.message = "You are playing a game!";
-		$http.get('/api/game').
-		success(setSquares).
-		error(function(data, status, headers, config){
-		});
-	}; // end newGame
-
-	// ******************************************************* //
-	// setSquares assigns each square a class and a click method
-	// The beginning and ending points are given text values
-	// The hints are given text values based on the solution
-	// ******************************************************* //
-	function setSquares (data) {
-		$cookies.playing = true;
-		manageState.stringState(data, function (state, solution) {
-			$cookies.state = state;
-			$cookies.solution = solution;
-		});
-
-		self.solution = data.path;
-		console.log(self.solution);
-		self.squares = data.board.map(function (elem) {
-			var result = elem;
-			result.class = "square color-" + elem.colorKey;
-			result.click = click;
-			return result;
-		});
-		
-		self.squares[self.solution[0].index].class += ' a';
-		delete self.squares[self.solution[0].index].click;
-
-		self.squares[self.solution[self.solution.length - 1].index].class += ' b';
-		self.moves = [];
-		$cookies.moves = '';
-		
-		self.hints = self.solution.slice(0, 5).map(function (elem) {
-			var string = elem.direction.split(' ').reduce(function (prev, curr) {
-				return prev + curr[0];
-			}, '');
-			return {"class": 'square', "image": '../img/' + string + '.png'};
-		});
-		console.log(self.hints);
-	} // end setSquares
-
-	// click adds a new object to moves and changes the class of the clicked square.
-	// If all the moves have been made, run resetGuess.
-	function click () {
-		var move = {};
-		move.class = this.class;
-		move.value = this.colorKey;
-		self.moves.push(move);
-		$cookies.moves += self.squares.indexOf(this) + '#';
-		if (this.class.indexOf(' b') === -1) {
-			this.class += ' clicked';
-		}
-
-		if (self.moves.length === 5) {
-
-			manageState.resetGuess(
-				self.moves, self.hints, self.squares, self.solution,
-				function(moves, hints, squares, message) {
-					self.moves = moves;
-					self.hints = hints;
-					self.squares = squares;
-					self.message = message;
-				}
-			);
-		}
-	}
-
-	this.reset = function () {
-		delete $cookies.playing;
-		delete self.squares;
-		delete self.solution;
-		delete self.hints;
-		delete self.moves;
-	}
-
-	function init () {
-		if ($cookies.playing) {
-			manageState.deStringState(
-				$cookies.state, $cookies.solution, $cookies.moves,
-				function (squares, solution, moves) {
-				setSquares({"board": squares, "path": solution});
-				moves.forEach(function (move) {
-					self.squares[move].click();
-				})
-			});
-		}
-	}
-
-	init();
-}]);// end gameController
+routeApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/', {
+        templateUrl: './tutorial',
+        controller: 'tutorialController as tCtrl'
+      }).
+      when('/game', {
+        templateUrl: './game',
+        controller: 'gameController as gCtrl'
+      }).
+      otherwise({
+        redirectTo: '/game'
+      });
+  }]);

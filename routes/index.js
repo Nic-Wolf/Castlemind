@@ -6,7 +6,17 @@ var makePath      = require('../makePath.js').makePath;
 
 // GET Homepage //
 router.get('/', function(req, res, next) {
-	res.render('index', {title: 'Castlemind Main View'});
+	res.render('index');
+});
+
+// GET game page //
+router.get('/game', function(req, res, next) {
+	res.render('game', {title: 'Castlemind Game View'});
+});
+
+// GET tutorial page //
+router.get('/tutorial', function(req, res, next) {
+	res.render('tutorial', {title: 'Castlemind Tutorial'});
 });
 
 // GET Game API //
@@ -16,7 +26,7 @@ router.get('/api/game', function(req, res, next) {
 		var path = makePath(squares);
 
 		res.json({"board": squares, "path": path});
-	});
+	}, 5);
 });
 
 module.exports = router;
