@@ -51,6 +51,7 @@ button {
 
 #divGrid {
 	width: 90%;
+	padding: 0;
 	padding-bottom: 89.8%;
 	min-width: 260px;
 	min-height: 260px;
@@ -170,12 +171,61 @@ button {
 	border: 1px solid orange;
 }
 
-.highlight {
-	width: 18.8%;
-	padding-bottom: 16.5%;
-	border: 5px solid orange;
+.hasImage {
+	padding-bottom: 0.27055%;
+}	
+
+
+
+/*ANIMATIONS*/
+
+/* Ripple Out */
+@-webkit-keyframes highlight {
+  100% {
+    top: -12px;
+    right: -12px;
+    bottom: -12px;
+    left: -12px;
+    opacity: 0;
+  }
 }
 
-.hasImage {
-	padding-bottom: 0%;
-}	
+@keyframes highlight {
+  100% {
+    top: -12px;
+    right: -12px;
+    bottom: -12px;
+    left: -12px;
+    opacity: 0;
+  }
+}
+
+.highlight {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+.highlight:before {
+  content: '';
+  position: absolute;
+  border: #e1e1e1 solid 6px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-animation: highlight 1s infinite;
+  animation: highlight 1s infinite;
+}
+.highlight:hover:before, .highlight:focus:before, .highlight:active:before {
+  -webkit-animation-name: highlight;
+  animation-name: highlight;
+}
+
+
+
