@@ -1,5 +1,3 @@
-'use strict';
-
 var manageState = require('./manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
@@ -68,31 +66,20 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 	// click adds a new object to moves and changes the class of the clicked square.
 	// If all the moves have been made, run resetGuess.
 	function click () {
-		console.log(self.moves);
+		console.log($cookies.moves);
 		
 		if (self.moves.length < 5) {
-
-
-			var move = {};
-			move.class = this.class.split(' highlight').join('');
-			move.value = this.colorKey;
-
-			self.hints = self.hints.map(function(elem) {
-				var result = elem;
-				result.class = elem.class.split(' currentMove').join('');
-				return result;
+			incrementMoves(this, self.hints, self.moves, self.squares,
+				function (square, hints, moves, squares) {
+					this.class = square.class;
+					this.imgClass = square.imgClass;
+					this.image = square.image;
+					self.hints = hints;
+					self.moves = moves;
+					self.squares = squares;
 			});
-			self.hints[self.moves.length].class += ' currentMove';
 
-			self.moves.push(move);
-			$cookies.moves += self.squares.indexOf(this) + '#';
-			if (this.class.indexOf(' b') === -1 && this.class.indexOf(' a') === -1) {
-				this.class += ' clicked';
-			}
-
-			this.class += ' hasImage';
-			this.image = self.hints[self.moves.length - 1].image;
-			this.imgClass = "";
+			$cookies.moves += self.squares.indexOf(this) + '_';
 		}
 
 		var direction = self.solution[self.moves.length -1].direction
@@ -130,6 +117,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 					self.message = message;
 					if (moves.length === 0) {
 						console.log('clicking');
+						$cookies.moves = '';
 						self.squares[self.solution[0].index].click();
 					}
 				}
@@ -161,3 +149,39 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 	init();
 }]);// end gameController
+
+// ****************************************************************** //
+// incrementMoves runs when a click even happens and there is more
+// room on the moves list.  It
+//	...adds a move to the moves list with
+//		class: the chosen color
+//		value: the associated number
+//	...modifies the hits array so that
+//		only the current hint has the class currentMove
+//	...modifies the following properties of the active square
+//		class: hasImage added, clicked added (only if its not first or last)
+//		imgClass: ng-hide removed
+//		image: hint for next move
+// ****************************************************************** //
+function incrementMoves (square, hints, moves, squares, callback) {
+	var move = {};
+	move.class = square.class.split(' highlight').join('');
+	move.value = square.colorKey;
+
+	hints = hints.map(function(elem) {
+		var result = elem;
+		result.class = elem.class.split(' currentMove').join('');
+		return result;
+	});
+	hints[moves.length].class += ' currentMove';
+
+	moves.push(move);
+	if (square.class.indexOf(' b') === -1 && square.class.indexOf(' a') === -1) {
+		square.class += ' clicked';
+	}
+
+	square.class += ' hasImage';
+	square.image = hints[moves.length - 1].image;
+	square.imgClass = "";
+	callback(square, hints, moves, squares);
+}

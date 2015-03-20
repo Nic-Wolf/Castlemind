@@ -2,6 +2,7 @@
 
 var gameBoard = require('./gameBoard.js');
 
+// routeApp controlls the different views for this page
 var routeApp = angular.module('routeApp', [
   'ngRoute',
   'gameApp'
@@ -10,11 +11,11 @@ var routeApp = angular.module('routeApp', [
 routeApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/', {
+      when('/game', {
         templateUrl: './game',
         controller: 'gameController as gCtrl'
       }).
       otherwise({
-        redirectTo: '/'
+        redirectTo: '/game'
       });
   }]);

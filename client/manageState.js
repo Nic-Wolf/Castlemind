@@ -6,7 +6,7 @@ function stringState (data, callback) {
 	}, '');
 	var solution = data.path.reduce( function (prev, curr, ind) {
 		if (ind < data.path.length - 1) {
-			return prev + curr.index + curr.direction + curr.solution + '#';
+			return prev + curr.index + curr.direction + curr.solution + '_';
 		} else {
 			return prev + curr.index;
 		}
@@ -28,7 +28,7 @@ function deStringState (boardString, solutionString, moveString, callback) {
 	});
 
 	var solution = [];
-	var solutionArray = solutionString.split('#');
+	var solutionArray = solutionString.split('_');
 	solutionArray.forEach( function (elem, ind) {
 		console.log(elem);
 		if (ind < solutionArray.length - 1) {
@@ -44,7 +44,7 @@ function deStringState (boardString, solutionString, moveString, callback) {
 		solution.push(newMove);
 	});
 	if (moveString.length > 0) {
-		var moves = moveString.split('#');
+		var moves = moveString.split('_');
 		moves = moves.slice(0,moves.length - 1).map(function(elem){
 			return Number(elem)
 		});
@@ -57,15 +57,6 @@ function deStringState (boardString, solutionString, moveString, callback) {
 // resetGuess displays what part of the guess was correct.
 // If the guess is only partially correct, it resets the guess.
 function resetGuess (moves, hints, squares, solution, callback) {
-	squares.forEach( function (elem, ind) {
-		if (elem.class.indexOf('clicked') !== -1) {
-			squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
-			squares[ind].imgClass = "ng-hide";
-		} else if (elem.class.indexOf(' b') !== -1 || elem.class.indexOf(' a') !== -1) {
-			squares[ind].class = elem.class.split(' ').slice(0, 3).join(' ');
-			squares[ind].imgClass = "ng-hide";
-		}
-	});
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
 	if (!moves.some( function (elem, ind) {
@@ -80,6 +71,15 @@ function resetGuess (moves, hints, squares, solution, callback) {
 	})) {
 		message = "You win!";
 	} else {
+		squares.forEach( function (elem, ind) {
+			if (elem.class.indexOf('clicked') !== -1) {
+				squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
+				squares[ind].imgClass = "ng-hide";
+			} else if (elem.class.indexOf(' b') !== -1 || elem.class.indexOf(' a') !== -1) {
+				squares[ind].class = elem.class.split(' ').slice(0, 3).join(' ');
+				squares[ind].imgClass = "ng-hide";
+			}
+		});
 		moves = [];
 		message = "Keep trying!";
 	}
