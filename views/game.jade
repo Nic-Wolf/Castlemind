@@ -9,7 +9,7 @@ h1= title
 		h3 Path Hints
 		#divHints
 			div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")
-				img(src="{{hint.image}}",alt="")
+				img(src="{{hint.image}}",alt="",class="{{hint.imgClass}}")
 		h3 User Guesses
 		#divUserMoves
 			div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
