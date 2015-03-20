@@ -108,8 +108,9 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 			var rowDiff = Math.abs(thisy.value[0] - square.value[0])
 			var columnDiff = Math.abs(thisy.value[1] - square.value[1])
 			square.class = square.class.split(' highlight').join('');
-
-			if(direction === "orthogonal") {
+			if (square.class.indexOf(' hasImage') !== -1) {
+				// don't highlight already clicked squares
+			} else if(direction === "orthogonal") {
 				if ((rowDiff === 1 && columnDiff === 0) || (rowDiff === 0 && columnDiff === 1)) {
 					square.class += ' highlight';
 				}
