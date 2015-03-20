@@ -86,8 +86,45 @@ function resetGuess (moves, hints, squares, solution, callback) {
 	callback(moves, hints, squares, message);
 }// end resetGuess
 
+// ****************************************************************** //
+// incrementMoves runs when a click even happens and there is more
+// room on the moves list.  It
+//	...adds a move to the moves list with
+//		class: the chosen color
+//		value: the associated number
+//	...modifies the hits array so that
+//		only the current hint has the class currentMove
+//	...modifies the following properties of the active square
+//		class: hasImage added, clicked added (only if its not first or last)
+//		imgClass: ng-hide removed
+//		image: hint for next move
+// ****************************************************************** //
+function incrementMoves (square, hints, moves, squares, callback) {
+	var move = {};
+	move.class = square.class.split(' highlight').join('');
+	move.value = square.colorKey;
+
+	hints = hints.map(function(elem) {
+		var result = elem;
+		result.class = elem.class.split(' currentMove').join('');
+		return result;
+	});
+	hints[moves.length].class += ' currentMove';
+
+	moves.push(move);
+	if (square.class.indexOf(' b') === -1 && square.class.indexOf(' a') === -1) {
+		square.class += ' clicked';
+	}
+
+	square.class += ' hasImage';
+	square.image = hints[moves.length - 1].image;
+	square.imgClass = "";
+	callback(square, hints, moves, squares);
+}// end incrementMoves()
+
 module.exports = {
 	stringState: stringState,
 	deStringState: deStringState,
-	resetGuess: resetGuess
+	resetGuess: resetGuess,
+	incrementMoves: incrementMoves
 }
