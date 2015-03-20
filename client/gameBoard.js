@@ -63,8 +63,12 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		console.log(self.hints);
 	} // end setSquares
 
-	// click adds a new object to moves and changes the class of the clicked square.
-	// If all the moves have been made, run resetGuess.
+	// ************************************************************************* //
+	// click has three main parts
+	//	if there is room in the moves array, run increment moves
+	//	highlight only the squares that are possible moves
+	//	if the guess is complete, check the solution
+	// ************************************************************************* //
 	function click () {
 		console.log($cookies.moves);
 		
@@ -84,27 +88,30 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 		var direction = self.solution[self.moves.length -1].direction
 		var thisy = this;
+		self.squares.forEach(highlight);
 
-		self.squares.forEach(function(square, index) {
-			var rowDif = Math.abs(thisy.value[0] - square.value[0])
+		// highlight adds the highlight class to a square if it is a possible move
+		function highlight (square, index) {
+			var rowDiff = Math.abs(thisy.value[0] - square.value[0])
 			var columnDiff = Math.abs(thisy.value[1] - square.value[1])
-				square.class = square.class.split(' highlight').join('');
-				if(direction === "orthogonal") {
-					if ((rowDif === 1 && columnDiff === 0) || (rowDif === 0 && columnDiff === 1)) {
-						square.class += ' highlight';
-					}
-				} else if(direction === "diagonal" && rowDif === 1 && columnDiff === 1) {
-					square.class += ' highlight';
+			square.class = square.class.split(' highlight').join('');
 
-				} else if(direction === "long orthogonal") {
-					if ((rowDif === 0 && columnDiff === 3) || (rowDif === 3 && columnDiff === 0)) {
-						square.class += ' highlight';
-					}
-				} else if(direction === "long diagonal" && rowDif === 3 && columnDiff === 3) {
+			if(direction === "orthogonal") {
+				if ((rowDiff === 1 && columnDiff === 0) || (rowDiff === 0 && columnDiff === 1)) {
 					square.class += ' highlight';
-
 				}
-		});
+			} else if(direction === "diagonal" && rowDiff === 1 && columnDiff === 1) {
+				square.class += ' highlight';
+
+			} else if(direction === "long orthogonal") {
+				if ((rowDiff === 0 && columnDiff === 3) || (rowDiff === 3 && columnDiff === 0)) {
+					square.class += ' highlight';
+				}
+			} else if(direction === "long diagonal" && rowDiff === 3 && columnDiff === 3) {
+				square.class += ' highlight';
+
+			}
+		}
 
 		if (self.moves.length === 5 && this.class.indexOf(' b') !== -1) {
 
@@ -126,6 +133,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 
 	}
 
+	// reset allows the page to refresh without trying to load a new board
 	this.reset = function () {
 		delete $cookies.playing;
 		delete self.squares;
@@ -134,6 +142,7 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 		delete self.moves;
 	}
 
+	// init restores the board state if there is an active game
 	function init () {
 		if ($cookies.playing) {
 			manageState.deStringState(
