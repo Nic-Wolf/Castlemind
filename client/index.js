@@ -74,6 +74,14 @@ gameApp.controller('gameController', ['$http', '$cookies', function($http, $cook
 			var move = {};
 			move.class = this.class.split(' highlight').join('');
 			move.value = this.colorKey;
+
+			self.hints = self.hints.map(function(elem) {
+				var result = elem;
+				result.class = elem.class.split(' currentMove').join('');
+				return result;
+			});
+			self.hints[self.moves.length].class += ' currentMove';
+
 			self.moves.push(move);
 			$cookies.moves += self.squares.indexOf(this) + '#';
 			if (this.class.indexOf(' b') === -1 && this.class.indexOf(' a') === -1) {
