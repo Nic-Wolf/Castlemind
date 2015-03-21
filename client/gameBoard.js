@@ -84,6 +84,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 	// ************************************************************************* //
 	function click () {
 		console.log($cookies.moves);
+		delete this.click;
 		
 		if (self.moves.length < 6) {
 			manageState.incrementMoves(this, self.hints, self.moves, self.squares,
@@ -139,13 +140,18 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 					if (moves.length === 0) {
 						console.log('clicking');
 						$cookies.moves = '';
+						self.squares = self.squares.map(function (elem) {
+							var result = elem;
+							result.click = click;
+							return result;
+						})
 						self.squares[self.solution[0].index].click();
 					}
 				}
 			);
 		}
 
-	}
+	} // end click()
 
 	// reset allows the page to refresh without trying to load a new board
 	this.reset = function () {
