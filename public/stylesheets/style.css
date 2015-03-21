@@ -86,18 +86,6 @@ button {
 .color-3 { background-color: #ff00ff; }
 .color-4 { background-color: #0000ff; }
 
-.a {
-	background-color: #ffffff;
-	background: url("../img/start.jpg") no-repeat;
-	background-size: contain;
-}
-
-.b {
-	background-color: #111111;
-	background: url("../img/end.jpg") no-repeat;
-	background-size: contain;
-}
-
 .clicked {
 	opacity: 0.33;
 }
@@ -220,7 +208,21 @@ button {
 	padding-bottom: 0.27055%;
 }	
 
+.a {
+	background-color: #ffffff;
+	background: url("../img/start.jpg") no-repeat;
+	background-size: contain;
+}
 
+.b {
+	background-color: #111111;
+	background: url("../img/end.jpg") no-repeat;
+	background-size: contain;
+}
+
+.currentMove.b {
+	padding-bottom: 15%;
+}
 
 /*ANIMATIONS*/
 
