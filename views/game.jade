@@ -14,6 +14,7 @@ h1= title
 		#divUserMoves
 			div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
 	#main
-		#divGrid
-			div(ng-repeat="square in gCtrl.squares",class="{{square.class}}",ng-click="square.click()") 
-				img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
+		table#divGrid
+			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
+				td(ng-repeat="square in gCtrl.squares.slice(row * 5,(row + 1) * 5)",class="{{square.class}}",ng-click="square.click()") 
+					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
