@@ -15,6 +15,8 @@ h1 {
 
 h3 {
 	margin: 0 auto;
+	padding-top: 8%;
+
 }
 
 button {
@@ -26,6 +28,7 @@ button {
 	background-color: lightblue;
 	padding: 30px 0;
 	width: 60%;
+	padding-bottom: 48.5%;
 }
 
 @media screen and (max-width: 1250px) {
@@ -47,6 +50,7 @@ button {
 	padding: 0;
 	width: 60%;
 	max-width: 800px;
+	padding-right: 0.5%;
 }
 
 #divGrid {
@@ -55,8 +59,8 @@ button {
 	padding-bottom: 89.8%;
 	min-width: 260px;
 	min-height: 260px;
-	background: #333;
-	border: 4px solid black;
+	/*background: #333;*/
+	/*border: 4px solid black;*/
 }
 
 .square {
@@ -66,9 +70,6 @@ button {
 	margin-left: 1%;
 	margin-top: 1%;
 	float: left;
-	text-align: center;
-	font-size: 2.0em;
-	font-weight: bold;
 }
 
 .square img {
@@ -119,13 +120,46 @@ button {
 	margin-top: 20px;
 	width: 90%;
 	padding-bottom: 16%;
+	padding-right: 1%;
 	background: #777;
 	border: 4px solid black;
 }
 
 #divHints .square {
 	width: 15.667%;
-	
+	/*padding: 0;*/
+}
+
+@media screen and (min-width: 840px) {
+	#container {
+		width: 90%;
+
+	}
+}
+
+@media screen and (min-width: 560px), screen and (max-width: 839px) {
+
+/*	#container {
+		padding-bottom: 45%;
+	}*/
+
+	#sidebar {
+		float: left;
+		position: absolute;
+		left: 4%;
+	}
+
+	#main {
+		clear: left;
+		position: absolute;
+		left: 45%;
+		width: 50%;
+	}
+
+	#divGrid {
+		margin: auto;
+	}
+
 }
 
 @media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px)  {
@@ -143,6 +177,8 @@ button {
 	}
 
 	#sidebar {
+		position: static;
+		float: none;
 		display: block;
 		margin: auto;
 		padding: 0;
@@ -163,6 +199,7 @@ button {
 	}
 
 	#main {
+		position: static;
 		float: none;
 		margin: 30px auto;
 		width: 90%;
@@ -174,14 +211,8 @@ button {
 	}
 }
 
-@media screen and (min-width: 615px) {
-	#container {
-		width: 100%;
-	}
-
-}
-
 .currentMove {
+	padding: 0;
 	border: 1px solid orange;
 }
 
