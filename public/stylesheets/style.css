@@ -82,11 +82,11 @@ button {
 	opacity: 1;
 }
 
-.color-0 { background-color: #ff0000; }
-.color-1 { background-color: #ffff00; }
-.color-2 { background-color: #00ff00; }
-.color-3 { background-color: #ff00ff; }
-.color-4 { background-color: #0000ff; }
+.color-0 { background-color: #c03c2a; }
+.color-1 { background-color: #f4ee70; }
+.color-2 { background-color: #60cd34; }
+.color-3 { background-color: #ce31d7; }
+.color-4 { background-color: #322cc1; }
 
 .a {
 	background-color: #ffffff;
@@ -223,9 +223,11 @@ button {
 
 .hasImage {
 	padding-bottom: 0.27055%;
-}	
+}
 
-
+.currentMove.b {
+	padding-bottom: 15%;
+}
 
 /*ANIMATIONS*/
 
@@ -255,16 +257,17 @@ button {
   vertical-align: middle;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+  opacity: 0.8;
 }
 .highlight:before {
   content: '';
   position: absolute;
-  border: #e1e1e1 solid 6px;
+  border: #000 solid 7px;
   top: 0;
   right: 0;
   bottom: 0;
