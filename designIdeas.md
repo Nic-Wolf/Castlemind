@@ -37,4 +37,6 @@ When user launches app:
 
 Animation Ideas:
 
-Animations should be handled in Angular
+Animations should be handled in Angular, mainly using ng-repeat, although there are several other angular directives that are built well for handling animations. 
+
+Animations should be subtle yet fun and should add to the overall user experience.
