@@ -24,7 +24,10 @@ angular-animate.controller('animateController', ['$scope', function($scope) {
       submit: '&',
       submitted: '='
     },
-    link: function(scope, element, attrs, form) {
+
+    // Need to figure out how to tie to squares properly //
+    
+    squares: function(scope, element, attrs, form) {
       // listen on submit event
       element.on('submit', function() {
         // tell angular to update scope
