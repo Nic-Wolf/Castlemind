@@ -5,6 +5,7 @@ h1 {{gCtrl.message}}
 #container(class="container")
 	#sidebar(class="col-md-4")
 		button(ng-click="gCtrl.newGame()") New Game
+		button(ng-click="gCtrl.cancel()") Cancel Guess
 		h3 Path Hints
 		#divHints
 			div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")

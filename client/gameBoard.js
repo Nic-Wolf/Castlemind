@@ -153,6 +153,25 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 
 	} // end click()
 
+	this.cancel = function () {
+		manageState.resetGuess(
+				self.moves, self.hints, self.squares, self.solution,
+				function(moves, hints, squares, message) {
+					self.moves = moves;
+					self.hints = hints;
+					self.squares = squares;
+					self.message = message;
+					$cookies.moves = '';
+					self.squares = self.squares.map(function (elem) {
+						var result = elem;
+						result.click = click;
+						return result;
+					});
+					self.squares[self.solution[0].index].click();
+				}
+		);
+	};
+
 	// reset allows the page to refresh without trying to load a new board
 	this.reset = function () {
 		delete $cookies.playing;

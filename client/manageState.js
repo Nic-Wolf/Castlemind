@@ -59,7 +59,9 @@ function deStringState (boardString, solutionString, moveString, callback) {
 function resetGuess (moves, hints, squares, solution, callback) {
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
-	if (!moves.some( function (elem, ind) {
+	if (moves.length < 6) {
+		restart();
+	} else if (!moves.some( function (elem, ind) {
 		var result = true;
 		if (ind === 0) {
 			result = false;
@@ -71,6 +73,10 @@ function resetGuess (moves, hints, squares, solution, callback) {
 	})) {
 		message = "You win!";
 	} else {
+		restart();
+	}
+	
+	function restart () {
 		squares.forEach( function (elem, ind) {
 			if (elem.class.indexOf('clicked') !== -1) {
 				squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
