@@ -1,5 +1,5 @@
 var manageState = require('./manageState.js');
-<script src="/bower_components/angular-animate/angular-animate.js"></script>
+
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
@@ -9,8 +9,8 @@ var angular-animate = angular.module('animateApp', ['ngAnimate']);
 // Additional note: Do we want ng-animate and ngRepeat directives to go in index.jade view?
 
 angular-animate.controller('animateController', ['$scope', function($scope) {
-	$scope.item=[];
-}])	
+	$scope.value = "";
+}]);	
 
 
 
