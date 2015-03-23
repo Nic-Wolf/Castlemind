@@ -102,8 +102,12 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 
 		var direction = self.solution[self.moves.length -1].direction
 		var thisy = this;
+		var legalMoves = false;
 		self.squares.forEach(function (square, index) {
 			manageState.highlight(square, index, direction, thisy);
+			if (square.class.indexOf(' highlight') !== -1) {
+				legalMoves = true;
+			}
 		});
 
 		if (self.moves.length === 6) {
@@ -127,6 +131,9 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 					}
 				}
 			);
+		} else if (!legalMoves) {
+			self.cancel();
+			self.message = "Oops! You had nowhere to go.";
 		}
 
 	} // end click()
