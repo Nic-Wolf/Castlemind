@@ -35,3 +35,6 @@ When user launches app:
 
 -Could first display castle mind title page with an image, then slide away to reveal generated game- board. Once you create new game, hints and movement bars will load/fade-in, there could be a sound to announce the start of the game.
 
+Animation Ideas:
+
+Animations should be handled in Angular
