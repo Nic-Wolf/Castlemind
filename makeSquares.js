@@ -18,12 +18,20 @@
 var size;
 var presentColor = 0;
 
+// If no size is specified, set it to 5.
+function setSize () {
+	size = 5;
+}
+
 
 // ************************************************ //
 // GAME BOARD INIT //
 // ************************************************ //
 	// Set up the board to make a "normalized" latin square
 	function initSquares (callback) {
+		if (!size) {
+			setSize();
+		}
 		var squares = [];
 		var row, col;
 		// Init guesses and states for each square
