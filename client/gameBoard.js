@@ -104,14 +104,13 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 		var thisy = this;
 		var legalMoves = false;
 		self.squares.forEach(function (square, index) {
-			manageState.highlight(square, index, direction, thisy);
+			manageState.highlight(square, index, direction, self.moves.length, thisy);
 			if (square.class.indexOf(' highlight') !== -1) {
 				legalMoves = true;
 			}
 		});
 
 		if (self.moves.length === 6) {
-
 			manageState.resetGuess(
 				self.moves, self.hints, self.squares, self.solution,
 				function(moves, hints, squares, message) {

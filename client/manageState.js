@@ -131,11 +131,13 @@ function incrementMoves (square, hints, moves, squares, callback) {
 }// end incrementMoves()
 
 // highlight adds the highlight class to a square if it is a possible move
-function highlight (square, index, direction, clickedSquare) {
+function highlight (square, index, direction, guessNumber, clickedSquare) {
 	var rowDiff = Math.abs(clickedSquare.value[0] - square.value[0])
 	var columnDiff = Math.abs(clickedSquare.value[1] - square.value[1])
 	square.class = square.class.split(' highlight').join('');
 	if (square.class.indexOf(' hasImage') !== -1) {
+		// don't highlight already clicked squares
+	} else if (square.class.indexOf(' b') !== -1 && guessNumber < 5) {
 		// don't highlight already clicked squares
 	} else if(direction === "orthogonal") {
 		if ((rowDiff === 1 && columnDiff === 0) || (rowDiff === 0 && columnDiff === 1)) {
