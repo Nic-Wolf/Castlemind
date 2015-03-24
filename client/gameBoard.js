@@ -142,8 +142,8 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 
 	this.cancel = function () {
 		manageState.resetGuess(
-				self.moves, self.hints, self.squares, self.solution,
-				function(moves, hints, squares, message) {
+				self.moves, self.hints, self.squares, self.solution, self.guesses,
+				self.results, function(moves, hints, squares, message) {
 					self.moves = moves;
 					self.hints = hints;
 					self.squares = squares;
