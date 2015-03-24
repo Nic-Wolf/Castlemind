@@ -3,18 +3,18 @@ var manageState = require('./manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
-var angular-animate = angular.module('animateApp', ['ngAnimate']);
+var angularAnimate = angular.module('animateApp', ['ngAnimate']);
 
 // Should animate controller be separate from the gameApp controller??
 // Additional note: Do we want ng-animate and ngRepeat directives to go in index.jade view?
 
-angular-animate.controller('animateController', ['$scope', function($scope) {
+angularAnimate.controller('animateController', ['$scope', function($scope) {
 	$scope.value = "";
 	$scope.submit = function() {
 		$scope.showMessage = true;
 	};
 
-}]);
+}])
 
 .directive('shakeThat', ['$animate', function($animate) {
 
