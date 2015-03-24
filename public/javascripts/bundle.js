@@ -1,8 +1,8 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./public/app/index.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./client/index.js":[function(require,module,exports){
 'use strict';
 
-var gameBoard = require('./controllers/gameBoard.js');
-var tutorial  = require('./controllers/tutorial.js');
+var gameBoard = require('./gameBoard.js');
+var tutorial = require('./tutorial.js');
 
 // routeApp controlls the different views for this page
 var routeApp = angular.module('routeApp', [
@@ -26,20 +26,19 @@ routeApp.config(['$routeProvider',
         redirectTo: '/game'
       });
   }]);
-},{"./controllers/gameBoard.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/gameBoard.js","./controllers/tutorial.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/tutorial.js"}],"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/gameBoard.js":[function(require,module,exports){
-var manageState = require('../services/manageState.js');
+},{"./gameBoard.js":"/Users/aaronollis/class/castleMind/castlemind/client/gameBoard.js","./tutorial.js":"/Users/aaronollis/class/castleMind/castlemind/client/tutorial.js"}],"/Users/aaronollis/class/castleMind/castlemind/client/gameBoard.js":[function(require,module,exports){
+var manageState = require('./manageState.js');
 
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
-
-gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeout',
-	function($http, $cookies, $location, $timeout) {
+gameApp.controller('gameController', ['$http', '$cookies', '$location',
+	function($http, $cookies, $location) {
 	var self = this;
 	self.results = [];
+
 	self.message = "Welcome! Press New Game to Begin!";
 	self.points = 0;
-
 	
 	// ******************************************************* //
 	// newGame gets a gameboard and path from the server
@@ -75,11 +74,10 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			$cookies.solution = solution;
 		});
 
-		self.messageClass = 'glow';
 		self.solution = data.path;
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
-			result.class = "square color-" + elem.colorKey; 
+			result.class = "square color-" + elem.colorKey;
 			result.imgClass = "ng-hide";
 			result.click = click;
 			return result;
@@ -98,7 +96,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				}, '');
 				return {
 					"class": 'square hasImage',
-					"image": '../assets/img/' + string + '.png',
+					"image": './img/' + string + '.png',
 					"imgClass": ""
 				};
 				}
@@ -116,7 +114,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	//	if the guess is complete, check the solution
 	// ************************************************************************* //
 	function click () {
-		
 		delete this.click;
 		
 		if (self.moves.length < 6) {
@@ -130,22 +127,17 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 					self.squares = squares;
 			});
 
-
 			$cookies.moves += self.squares.indexOf(this) + '_';
 		}
 
-		self.moves[self.moves.length - 1].class += ' glow';
-
 		var direction = self.solution[self.moves.length -1].direction
 		var thisy = this;
-		var toHighlight = [];
+		var legalMoves = false;
 		self.squares.forEach(function (square, index) {
-			manageState.highlight(square, index, direction, self.moves.length, thisy,
-				function (result) {
-					if (result !== 'fuck') {
-						toHighlight.push(result);
-					}
-				});
+			manageState.highlight(square, index, direction, self.moves.length, thisy);
+			if (square.class.indexOf(' highlight') !== -1) {
+				legalMoves = true;
+			}
 		});
 
 		if (self.moves.length === 6) {
@@ -169,24 +161,11 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 						})
 						self.squares[self.solution[0].index].click();
 					}
-
-					else {
-						self.messageClass = 'theMessage';
-					}
 				}
 			);
-		} else if (toHighlight.length === 0) {
+		} else if (!legalMoves) {
 			self.cancel();
 			self.message = "Oops! You had nowhere to go.";
-		} else {
-			$timeout( function () {
-				self.squares.forEach(function (square) {
-					square.class = square.class.split(' highlight').join('');
-				});
-				toHighlight.forEach(function (elem) {
-					self.squares[elem].class += ' highlight';
-				});
-			}, 100);
 		}
 
 	} // end click()
@@ -234,6 +213,38 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		}
 	}
 
+// 	function animate() {
+
+// 		.directive('shakeThat', ['$animate', function($animate) {
+
+// 		  return {
+// 		    require: '^form',
+// 		    scope: {
+// 		      submit: '&',
+// 		      submitted: '='
+// 		    },
+
+//     // Need to figure out how to tie to squares properly //
+
+//     squares: function(scope, element, attrs, form) {
+//       // listen on submit event
+//       element.on('submit', function() {
+//         // tell angular to update scope
+//         scope.$apply(function() {
+//           // everything ok -> call submit fn from controller
+//           if (form.$valid) return scope.submit();
+//           // show error messages on submit
+//           scope.submitted = true;
+//           // shake that form
+//           $animate.addClass(element, 'shake', function() {
+//             $animate.removeClass(element, 'shake');
+//           });
+//         });
+//       });
+//     }
+//   };
+
+// }]);	
 	
 	init();
 }]);// end gameController
@@ -276,102 +287,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 
 
 
-},{"../services/manageState.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/services/manageState.js"}],"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/tutorial.js":[function(require,module,exports){
-var tutApp = angular.module('tutApp', ['ngCookies']);
-
-// ********************************************************************** //
-// exampleBoard and exampleSolution are just an example starting state
-// ********************************************************************** //
-
-var exampleBoard = [
-		{ value: [ 0, 0 ], colorKey: 3 },
-	  { value: [ 0, 1 ], colorKey: 2 },
-	  { value: [ 0, 2 ], colorKey: 0 },
-	  { value: [ 0, 3 ], colorKey: 4 },
-	  { value: [ 0, 4 ], colorKey: 1 },
-	  { value: [ 1, 0 ], colorKey: 2 },
-	  { value: [ 1, 1 ], colorKey: 1 },
-	  { value: [ 1, 2 ], colorKey: 3 },
-	  { value: [ 1, 3 ], colorKey: 0 },
-	  { value: [ 1, 4 ], colorKey: 4 },
-	  { value: [ 2, 0 ], colorKey: 0 },
-	  { value: [ 2, 1 ], colorKey: 3 },
-	  { value: [ 2, 2 ], colorKey: 4 },
-	  { value: [ 2, 3 ], colorKey: 1 },
-	  { value: [ 2, 4 ], colorKey: 2 },
-	  { value: [ 3, 0 ], colorKey: 1 },
-	  { value: [ 3, 1 ], colorKey: 4 },
-	  { value: [ 3, 2 ], colorKey: 2 },
-	  { value: [ 3, 3 ], colorKey: 3 },
-	  { value: [ 3, 4 ], colorKey: 0 },
-	  { value: [ 4, 0 ], colorKey: 4 },
-	  { value: [ 4, 1 ], colorKey: 0 },
-	  { value: [ 4, 2 ], colorKey: 1 },
-	  { value: [ 4, 3 ], colorKey: 2 },
-	  { value: [ 4, 4 ], colorKey: 3 }
-	].map(function (elem) {
-		var result = elem;
-		result.class = "square color-" + elem.colorKey;
-		result.imgClass = "ng-hide";
-		return result;
-	});
-
-	var exampleSolution = [
-		{ index: 12, direction: 'orthogonal', solution: 3 },
-	  { index: 7, direction: 'orthogonal', solution: 0 },
-	  { index: 8, direction: 'long orthogonal', solution: 2 },
-	  { index: 23, direction: 'long diagonal', solution: 2 },
-	  { index: 5, direction: 'orthogonal', solution: 1 },
-	  { index: 6 }
-  ];
-
-// ************************************************************************ //
-// Begin controller
-// ************************************************************************ //
-tutApp.controller('tutorialController', ['$location', '$timeout',
-	function($location, $timeout){
-	this.game = function () {
-		$location.path('/game');
-	};
-
-	this.example = exampleBoard;
-	this.solution = exampleSolution;
-
-	this.example[12].class += ' a hasImage';
-	this.example[12].imgClass = "";
-	this.example[12].image = "../assets/img/o.png";
-	this.example[6].class += ' b';
-
-	var self = this;
-	var highlights = [7, 11, 13, 17];
-	highlights.forEach( function (elem) {
-		self.example[elem].class += ' highlight';
-	});
-
-	var path = [11, 16, 19, 1];
-	var num = 0;
-	this.step = function () {
-		this.example[path[num]].class += ' hasImage';
-		this.example[path[num]].imgClass = "";
-		var string = this.solution[num + 1].direction;
-		var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
-		this.example[path[num]].image = "../assets/img/" + hint + ".png";
-		num++;
-		if (num < path.length) {
-			$timeout(function () {
-				self.next();
-			}, 700);
-		}
-	}
-
-	this.next = function () {
-		highlights.forEach( function (elem) {
-			self.example[elem].class = self.example[elem].class.split(' highlight').join('');
-		});
-		this.step();
-	}
-}]);
-},{}],"/Users/aaronollis/class/castleMind/castlemind/public/app/services/manageState.js":[function(require,module,exports){
+},{"./manageState.js":"/Users/aaronollis/class/castleMind/castlemind/client/manageState.js"}],"/Users/aaronollis/class/castleMind/castlemind/client/manageState.js":[function(require,module,exports){
 
 // stringState converts the board data to a pair of strings
 function stringState (data, callback) {
@@ -514,30 +430,28 @@ function incrementMoves (square, hints, moves, squares, callback) {
 }// end incrementMoves()
 
 // highlight adds the highlight class to a square if it is a possible move
-function highlight (square, index, direction, guessNumber, clickedSquare,
-		callback) {
-	var toHighlight = [];
+function highlight (square, index, direction, guessNumber, clickedSquare) {
 	var rowDiff = Math.abs(clickedSquare.value[0] - square.value[0])
 	var columnDiff = Math.abs(clickedSquare.value[1] - square.value[1])
 	square.class = square.class.split(' highlight').join('');
 	if (square.class.indexOf(' hasImage') !== -1) {
 		// don't highlight already clicked squares
 	} else if (square.class.indexOf(' b') !== -1 && guessNumber < 5) {
-		// don't highlight the end square until the end
+		// don't highlight already clicked squares
 	} else if(direction === "orthogonal") {
 		if ((rowDiff === 1 && columnDiff === 0) || (rowDiff === 0 && columnDiff === 1)) {
-			callback(index);
+			square.class += ' highlight';
 		}
 	} else if(direction === "diagonal" && rowDiff === 1 && columnDiff === 1) {
-		callback(index);
+		square.class += ' highlight';
+
 	} else if(direction === "long orthogonal") {
 		if ((rowDiff === 0 && columnDiff === 3) || (rowDiff === 3 && columnDiff === 0)) {
-			callback(index);
+			square.class += ' highlight';
 		}
 	} else if(direction === "long diagonal" && rowDiff === 3 && columnDiff === 3) {
-		callback(index);
-	} else {
-		callback('fuck');
+		square.class += ' highlight';
+
 	}
 }
 
@@ -548,4 +462,96 @@ module.exports = {
 	incrementMoves: incrementMoves,
 	highlight: highlight
 }
-},{}]},{},["./public/app/index.js"]);
+},{}],"/Users/aaronollis/class/castleMind/castlemind/client/tutorial.js":[function(require,module,exports){
+var tutApp = angular.module('tutApp', ['ngCookies']);
+
+// ********************************************************************** //
+// exampleBoard and exampleSolution are just an example starting state
+// ********************************************************************** //
+
+var exampleBoard = [
+		{ value: [ 0, 0 ], colorKey: 3 },
+	  { value: [ 0, 1 ], colorKey: 2 },
+	  { value: [ 0, 2 ], colorKey: 0 },
+	  { value: [ 0, 3 ], colorKey: 4 },
+	  { value: [ 0, 4 ], colorKey: 1 },
+	  { value: [ 1, 0 ], colorKey: 2 },
+	  { value: [ 1, 1 ], colorKey: 1 },
+	  { value: [ 1, 2 ], colorKey: 3 },
+	  { value: [ 1, 3 ], colorKey: 0 },
+	  { value: [ 1, 4 ], colorKey: 4 },
+	  { value: [ 2, 0 ], colorKey: 0 },
+	  { value: [ 2, 1 ], colorKey: 3 },
+	  { value: [ 2, 2 ], colorKey: 4 },
+	  { value: [ 2, 3 ], colorKey: 1 },
+	  { value: [ 2, 4 ], colorKey: 2 },
+	  { value: [ 3, 0 ], colorKey: 1 },
+	  { value: [ 3, 1 ], colorKey: 4 },
+	  { value: [ 3, 2 ], colorKey: 2 },
+	  { value: [ 3, 3 ], colorKey: 3 },
+	  { value: [ 3, 4 ], colorKey: 0 },
+	  { value: [ 4, 0 ], colorKey: 4 },
+	  { value: [ 4, 1 ], colorKey: 0 },
+	  { value: [ 4, 2 ], colorKey: 1 },
+	  { value: [ 4, 3 ], colorKey: 2 },
+	  { value: [ 4, 4 ], colorKey: 3 }
+	].map(function (elem) {
+		var result = elem;
+		result.class = "square color-" + elem.colorKey;
+		result.imgClass = "ng-hide";
+		return result;
+	});
+
+	var exampleSolution = [
+		{ index: 12, direction: 'orthogonal', solution: 3 },
+	  { index: 7, direction: 'orthogonal', solution: 0 },
+	  { index: 8, direction: 'long orthogonal', solution: 2 },
+	  { index: 23, direction: 'long diagonal', solution: 2 },
+	  { index: 5, direction: 'orthogonal', solution: 1 },
+	  { index: 6 }
+  ];
+
+// ************************************************************************ //
+// Begin controller
+// ************************************************************************ //
+tutApp.controller('tutorialController', ['$location', function($location){
+	this.game = function () {
+		$location.path('/game');
+	};
+
+	this.example = exampleBoard;
+	this.solution = exampleSolution;
+
+	this.example[12].class += ' a hasImage';
+	this.example[12].imgClass = "";
+	this.example[12].image = "/img/o.png";
+	this.example[6].class += ' b';
+
+	var self = this;
+	var highlights = [7, 11, 13, 17];
+	highlights.forEach( function (elem) {
+		self.example[elem].class += ' highlight';
+	});
+
+	var path = [11, 16, 19, 1];
+	var num = 0;
+	this.step = function () {
+		this.example[path[num]].class += ' hasImage';
+		this.example[path[num]].imgClass = "";
+		var string = this.solution[num + 1].direction;
+		var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
+		this.example[path[num]].image = "/img/" + hint + ".png";
+		num++;
+		if (num < path.length) {
+			self.next();
+		}
+	}
+
+	this.next = function () {
+		highlights.forEach( function (elem) {
+			self.example[elem].class = self.example[elem].class.split(' highlight').join('');
+		});
+		this.step();
+	}
+}]);
+},{}]},{},["./client/index.js"]);

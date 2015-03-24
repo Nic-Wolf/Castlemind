@@ -3,8 +3,9 @@ var manageState = require('../services/manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
-gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location',
-	function($scope, $http, $cookies, $location) {
+
+gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeout',
+	function($http, $cookies, $location, $timeout) {
 	var self = this;
 	self.results = [];
 	self.message = "Welcome! Press New Game to Begin!";
@@ -108,12 +109,14 @@ gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location'
 
 		var direction = self.solution[self.moves.length -1].direction
 		var thisy = this;
-		var legalMoves = false;
+		var toHighlight = [];
 		self.squares.forEach(function (square, index) {
-			manageState.highlight(square, index, direction, self.moves.length, thisy);
-			if (square.class.indexOf(' highlight') !== -1) {
-				legalMoves = true;
-			}
+			manageState.highlight(square, index, direction, self.moves.length, thisy,
+				function (result) {
+					if (result !== 'fuck') {
+						toHighlight.push(result);
+					}
+				});
 		});
 
 		if (self.moves.length === 6) {
@@ -143,9 +146,18 @@ gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location'
 					}
 				}
 			);
-		} else if (!legalMoves) {
+		} else if (toHighlight.length === 0) {
 			self.cancel();
 			self.message = "Oops! You had nowhere to go.";
+		} else {
+			$timeout( function () {
+				self.squares.forEach(function (square) {
+					square.class = square.class.split(' highlight').join('');
+				});
+				toHighlight.forEach(function (elem) {
+					self.squares[elem].class += ' highlight';
+				});
+			}, 100);
 		}
 
 	} // end click()
