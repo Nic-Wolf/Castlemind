@@ -82,6 +82,7 @@ button {
 
 .a {
 	background-color: transparent;
+	box-shadow: inset -3px -1px 30px 3px #f0f0f0
 }
 
 .b {
@@ -266,6 +267,7 @@ button {
 	content: '';
 	position: absolute;
 	border: #000 solid 7px;
+		border-radius: 10% 50%;
 	top:    0;
 	right:  0;
 	bottom: 0;
