@@ -1,7 +1,7 @@
 'use strict';
 
-var gameBoard = require('./gameBoard.js');
-var tutorial = require('./tutorial.js');
+var gameBoard = require('./controllers/gameBoard.js');
+var tutorial  = require('./controllers/tutorial.js');
 
 // routeApp controlls the different views for this page
 var routeApp = angular.module('routeApp', [
