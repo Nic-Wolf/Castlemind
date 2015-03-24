@@ -137,7 +137,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 			self.cancel();
 			self.message = "Oops! You had nowhere to go.";
 		}
-
+		
 	} // end click()
 
 	this.cancel = function () {
