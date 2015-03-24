@@ -1,7 +1,7 @@
-# [CastleMind](tba)
-[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/Nic-Wolf/castlemind)
+# [CastleMind](https://github.com/Nic-Wolf/castlemind)
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/Nic-Wolf/castlemind/releases)
 [![node](https://img.shields.io/node/v/gh-badges.svg)](https://github.com/Nic-Wolf/castlemind)
-[![Travis](https://img.shields.io/travis/joyent/node.svg)](https://travis-ci.org/Nic-Wolf/castlemind.svg?branch=master)
+[![Travis](https://img.shields.io/travis/joyent/node.svg)](https://travis-ci.org/Nic-Wolf/castlemind)
 
 [Nic Wolf](https://github.com/Nic-Wolf), [David Hasenjaeger](https://github.com/GerryFudd), [Aaron Ollis](https://github.com/aollis)
 
@@ -18,7 +18,7 @@
     - [Stage 2](#stage-2)
     - [Stage 3](#stage-3)
     - [Deployment](#deployment-&-Maintenance)
-- [Licence](#license-&-usage)
+- [License](#license-&-usage)
 
 ## Description
 Castlemind is a simple puzzle game. Try to figure out the sequence of moves in as few guesses as possible!

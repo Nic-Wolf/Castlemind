@@ -3,6 +3,7 @@ var manageState = require('./manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
+
 // var angular-animate = angular.module('animateApp', ['ngAnimate']);
 
 // // Should animate controller be separate from the gameApp controller??
@@ -49,11 +50,14 @@ var gameApp = angular.module('gameApp', ['ngCookies']);
 
 
 
+
 gameApp.controller('gameController', ['$http', '$cookies', '$location',
 	function($http, $cookies, $location) {
 	var self = this;
+	self.results = [];
 
-	this.message = "Welcome! Press New Game to Begin!";
+	self.message = "Welcome! Press New Game to Begin!";
+	self.points = 0;
 	
 	// ******************************************************* //
 	// newGame gets a gameboard and path from the server
@@ -64,7 +68,9 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 	//		hints: the values that are displayed to the player
 	// ******************************************************* //
 	this.newGame = function() {
-		self.message = "You are playing a game!";
+		self.guesses = 0;
+		$cookies.guesses = 0;
+		self.message = "You are playing a game! You have " + self.points + " points!";
 		$http.get('/api/game').
 		success(setSquares).
 		error(function(data, status, headers, config){
@@ -88,7 +94,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 		});
 
 		self.solution = data.path;
-		console.log(self.solution);
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
 			result.class = "square color-" + elem.colorKey;
@@ -119,7 +124,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 		
 		self.squares[self.solution[0].index].class += ' a';
 		self.squares[self.solution[0].index].click();
-		console.log(self.hints);
 	} // end setSquares
 
 	// ************************************************************************* //
@@ -129,7 +133,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 	//	if the guess is complete, check the solution
 	// ************************************************************************* //
 	function click () {
-		console.log($cookies.moves);
 		delete this.click;
 		
 		if (self.moves.length < 6) {
@@ -157,15 +160,18 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 		});
 
 		if (self.moves.length === 6) {
+			$cookies.guesses = self.guesses;
 			manageState.resetGuess(
-				self.moves, self.hints, self.squares, self.solution,
-				function(moves, hints, squares, message) {
+				self.moves, self.hints, self.squares, self.solution, self.guesses,
+				self.results, function(moves, hints, squares, message, results, points) {
 					self.moves = moves;
 					self.hints = hints;
 					self.squares = squares;
 					self.message = message;
+					self.results = results;
+					self.points = points;
 					if (moves.length === 0) {
-						console.log('clicking');
+						self.guesses++;
 						$cookies.moves = '';
 						self.squares = self.squares.map(function (elem) {
 							var result = elem;
@@ -185,8 +191,8 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 
 	this.cancel = function () {
 		manageState.resetGuess(
-				self.moves, self.hints, self.squares, self.solution,
-				function(moves, hints, squares, message) {
+				self.moves, self.hints, self.squares, self.solution, self.guesses,
+				self.results, function(moves, hints, squares, message) {
 					self.moves = moves;
 					self.hints = hints;
 					self.squares = squares;
@@ -214,6 +220,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 	// init restores the board state if there is an active game
 	function init () {
 		if ($cookies.playing) {
+			self.guesses = $cookies.guesses;
 			manageState.deStringState(
 				$cookies.state, $cookies.solution, $cookies.moves,
 				function (squares, solution, moves) {
