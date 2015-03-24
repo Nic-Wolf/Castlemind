@@ -33,7 +33,7 @@ var manageState = require('../services/manageState.js');
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
 gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location',
-	function($scope, $cookies, $location) {
+	function($scope, $http, $cookies, $location) {
 	var self = this;
 	self.results = [];
 	self.message = "Welcome! Press New Game to Begin!";
@@ -74,10 +74,11 @@ gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location'
 			$cookies.solution = solution;
 		});
 
+		self.messageClass = 'glow';
 		self.solution = data.path;
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
-			result.class = "square color-" + elem.colorKey + " shake"; 
+			result.class = "square color-" + elem.colorKey; 
 			result.imgClass = "ng-hide";
 			result.click = click;
 			return result;
@@ -114,7 +115,7 @@ gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location'
 	//	if the guess is complete, check the solution
 	// ************************************************************************* //
 	function click () {
-		this.class += ' glow';
+		
 		delete this.click;
 		
 		if (self.moves.length < 6) {
@@ -128,8 +129,11 @@ gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location'
 					self.squares = squares;
 			});
 
+
 			$cookies.moves += self.squares.indexOf(this) + '_';
 		}
+
+		self.moves[self.moves.length - 1].class += ' glow';
 
 		var direction = self.solution[self.moves.length -1].direction
 		var thisy = this;
@@ -161,6 +165,10 @@ gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location'
 							return result;
 						})
 						self.squares[self.solution[0].index].click();
+					}
+
+					else {
+						self.messageClass = 'theMessage';
 					}
 				}
 			);
