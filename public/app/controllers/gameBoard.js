@@ -1,4 +1,4 @@
-var manageState = require('./manageState.js');
+var manageState = require('../services/manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
@@ -66,7 +66,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 				}, '');
 				return {
 					"class": 'square hasImage',
-					"image": './img/' + string + '.png',
+					"image": '../assets/img/' + string + '.png',
 					"imgClass": ""
 				};
 				}
