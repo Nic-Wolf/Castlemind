@@ -107,6 +107,10 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 
 		self.moves[self.moves.length - 1].class += ' glow';
 
+		if(self.moves.length >= 2) {
+			self.moves[self.moves.length - 2].class = self.moves[self.moves.length - 2].class.split(" glow").join("");
+		}
+
 		var direction = self.solution[self.moves.length -1].direction
 		var thisy = this;
 		var toHighlight = [];
