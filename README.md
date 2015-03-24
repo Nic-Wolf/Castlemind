@@ -1,4 +1,7 @@
 # [CastleMind](tba)
+[![NPM version][npm-image]][npm-url] [![Build status][travis-image]][travis-url]
+
+
 [![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/Nic-Wolf/castlemind)
 [![node](https://img.shields.io/node/v/gh-badges.svg)](https://github.com/Nic-Wolf/castlemind)
 [![Travis](https://img.shields.io/travis/joyent/node.svg)](https://travis-ci.org/Nic-Wolf/castlemind.svg?branch=master)
