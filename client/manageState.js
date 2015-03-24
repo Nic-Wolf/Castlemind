@@ -56,7 +56,7 @@ function deStringState (boardString, solutionString, moveString, callback) {
 
 // resetGuess displays what part of the guess was correct.
 // If the guess is only partially correct, it resets the guess.
-function resetGuess (moves, hints, squares, solution, callback) {
+function resetGuess (moves, hints, squares, solution, guesses, results, callback) {
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
 	if (moves.length < 6) {
@@ -71,7 +71,16 @@ function resetGuess (moves, hints, squares, solution, callback) {
 		}
 		return result;
 	})) {
-		message = "You win!";
+		results.push(guesses);
+		var points = results.reduce( function (prev, curr) {
+			if (5 > curr) {
+				var newPoints = 5 - curr;
+			} else {
+				var newPoints = 1;
+			}
+			return prev + newPoints;
+		}, 0);
+		message = "You win! You have " + points + ' points!';
 	} else {
 		restart();
 	}
@@ -89,7 +98,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 		moves = [];
 		message = "Keep trying!";
 	}
-	callback(moves, hints, squares, message);
+	callback(moves, hints, squares, message, results, points);
 }// end resetGuess
 
 // ****************************************************************** //

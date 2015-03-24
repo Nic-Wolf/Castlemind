@@ -18,7 +18,7 @@
     - [Stage 2](#stage-2)
     - [Stage 3](#stage-3)
     - [Deployment](#deployment-&-Maintenance)
-- [Licence](#license-&-usage)
+- [License](#license-&-usage)
 
 ## Description
 Castlemind is a simple puzzle game. Try to figure out the sequence of moves in as few guesses as possible!
