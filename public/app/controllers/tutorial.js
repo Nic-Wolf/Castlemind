@@ -49,7 +49,8 @@ var exampleBoard = [
 // ************************************************************************ //
 // Begin controller
 // ************************************************************************ //
-tutApp.controller('tutorialController', ['$location', function($location){
+tutApp.controller('tutorialController', ['$location', '$timeout',
+	function($location, $timeout){
 	this.game = function () {
 		$location.path('/game');
 	};
@@ -78,7 +79,9 @@ tutApp.controller('tutorialController', ['$location', function($location){
 		this.example[path[num]].image = "../assets/img/" + hint + ".png";
 		num++;
 		if (num < path.length) {
-			self.next();
+			$timeout(function () {
+				self.next();
+			}, 700);
 		}
 	}
 
