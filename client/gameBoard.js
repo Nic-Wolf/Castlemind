@@ -148,34 +148,15 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 
 		var direction = self.solution[self.moves.length -1].direction
 		var thisy = this;
-		self.squares.forEach(highlight);
-
-		// highlight adds the highlight class to a square if it is a possible move
-		function highlight (square, index) {
-			var rowDiff = Math.abs(thisy.value[0] - square.value[0])
-			var columnDiff = Math.abs(thisy.value[1] - square.value[1])
-			square.class = square.class.split(' highlight').join('');
-			if (square.class.indexOf(' hasImage') !== -1) {
-				// don't highlight already clicked squares
-			} else if(direction === "orthogonal") {
-				if ((rowDiff === 1 && columnDiff === 0) || (rowDiff === 0 && columnDiff === 1)) {
-					square.class += ' highlight';
-				}
-			} else if(direction === "diagonal" && rowDiff === 1 && columnDiff === 1) {
-				square.class += ' highlight';
-
-			} else if(direction === "long orthogonal") {
-				if ((rowDiff === 0 && columnDiff === 3) || (rowDiff === 3 && columnDiff === 0)) {
-					square.class += ' highlight';
-				}
-			} else if(direction === "long diagonal" && rowDiff === 3 && columnDiff === 3) {
-				square.class += ' highlight';
-
+		var legalMoves = false;
+		self.squares.forEach(function (square, index) {
+			manageState.highlight(square, index, direction, self.moves.length, thisy);
+			if (square.class.indexOf(' highlight') !== -1) {
+				legalMoves = true;
 			}
-		}
+		});
 
 		if (self.moves.length === 6) {
-
 			manageState.resetGuess(
 				self.moves, self.hints, self.squares, self.solution,
 				function(moves, hints, squares, message) {
@@ -195,9 +176,31 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 					}
 				}
 			);
+		} else if (!legalMoves) {
+			self.cancel();
+			self.message = "Oops! You had nowhere to go.";
 		}
 
 	} // end click()
+
+	this.cancel = function () {
+		manageState.resetGuess(
+				self.moves, self.hints, self.squares, self.solution,
+				function(moves, hints, squares, message) {
+					self.moves = moves;
+					self.hints = hints;
+					self.squares = squares;
+					self.message = message;
+					$cookies.moves = '';
+					self.squares = self.squares.map(function (elem) {
+						var result = elem;
+						result.click = click;
+						return result;
+					});
+					self.squares[self.solution[0].index].click();
+				}
+		);
+	};
 
 	// reset allows the page to refresh without trying to load a new board
 	this.reset = function () {

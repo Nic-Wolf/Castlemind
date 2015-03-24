@@ -59,7 +59,9 @@ function deStringState (boardString, solutionString, moveString, callback) {
 function resetGuess (moves, hints, squares, solution, callback) {
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
-	if (!moves.some( function (elem, ind) {
+	if (moves.length < 6) {
+		restart();
+	} else if (!moves.some( function (elem, ind) {
 		var result = true;
 		if (ind === 0) {
 			result = false;
@@ -71,6 +73,10 @@ function resetGuess (moves, hints, squares, solution, callback) {
 	})) {
 		message = "You win!";
 	} else {
+		restart();
+	}
+	
+	function restart () {
 		squares.forEach( function (elem, ind) {
 			if (elem.class.indexOf('clicked') !== -1) {
 				squares[ind].class = elem.class.split(' ').slice(0, 2).join(' ');
@@ -124,9 +130,36 @@ function incrementMoves (square, hints, moves, squares, callback) {
 	callback(square, hints, moves, squares);
 }// end incrementMoves()
 
+// highlight adds the highlight class to a square if it is a possible move
+function highlight (square, index, direction, guessNumber, clickedSquare) {
+	var rowDiff = Math.abs(clickedSquare.value[0] - square.value[0])
+	var columnDiff = Math.abs(clickedSquare.value[1] - square.value[1])
+	square.class = square.class.split(' highlight').join('');
+	if (square.class.indexOf(' hasImage') !== -1) {
+		// don't highlight already clicked squares
+	} else if (square.class.indexOf(' b') !== -1 && guessNumber < 5) {
+		// don't highlight already clicked squares
+	} else if(direction === "orthogonal") {
+		if ((rowDiff === 1 && columnDiff === 0) || (rowDiff === 0 && columnDiff === 1)) {
+			square.class += ' highlight';
+		}
+	} else if(direction === "diagonal" && rowDiff === 1 && columnDiff === 1) {
+		square.class += ' highlight';
+
+	} else if(direction === "long orthogonal") {
+		if ((rowDiff === 0 && columnDiff === 3) || (rowDiff === 3 && columnDiff === 0)) {
+			square.class += ' highlight';
+		}
+	} else if(direction === "long diagonal" && rowDiff === 3 && columnDiff === 3) {
+		square.class += ' highlight';
+
+	}
+}
+
 module.exports = {
 	stringState: stringState,
 	deStringState: deStringState,
 	resetGuess: resetGuess,
-	incrementMoves: incrementMoves
+	incrementMoves: incrementMoves,
+	highlight: highlight
 }
