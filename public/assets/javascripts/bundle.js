@@ -32,13 +32,13 @@ var manageState = require('../services/manageState.js');
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
-gameApp.controller('gameController', ['$http', '$cookies', '$location', '$ngAnimate',
-	function($http, $cookies, $location) {
+gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location',
+	function($scope, $cookies, $location) {
 	var self = this;
 	self.results = [];
-
 	self.message = "Welcome! Press New Game to Begin!";
 	self.points = 0;
+
 	
 	// ******************************************************* //
 	// newGame gets a gameboard and path from the server
@@ -77,7 +77,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$ngAnim
 		self.solution = data.path;
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
-			result.class = "square color-" + elem.colorKey;
+			result.class = "square color-" + elem.colorKey + " shake"; 
 			result.imgClass = "ng-hide";
 			result.click = click;
 			return result;
@@ -114,6 +114,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$ngAnim
 	//	if the guess is complete, check the solution
 	// ************************************************************************* //
 	function click () {
+		this.class += ' glow';
 		delete this.click;
 		
 		if (self.moves.length < 6) {
@@ -213,38 +214,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$ngAnim
 		}
 	}
 
-// 	function animate() {
-
-// 		.directive('shakeThat', ['$animate', function($animate) {
-
-// 		  return {
-// 		    require: '^form',
-// 		    scope: {
-// 		      submit: '&',
-// 		      submitted: '='
-// 		    },
-
-//     // Need to figure out how to tie to squares properly //
-
-//     squares: function(scope, element, attrs, form) {
-//       // listen on submit event
-//       element.on('submit', function() {
-//         // tell angular to update scope
-//         scope.$apply(function() {
-//           // everything ok -> call submit fn from controller
-//           if (form.$valid) return scope.submit();
-//           // show error messages on submit
-//           scope.submitted = true;
-//           // shake that form
-//           $animate.addClass(element, 'shake', function() {
-//             $animate.removeClass(element, 'shake');
-//           });
-//         });
-//       });
-//     }
-//   };
-
-// }]);	
 	
 	init();
 }]);// end gameController

@@ -1,13 +1,12 @@
 var manageState = require('../services/manageState.js');
 
 
-var gameApp = angular.module('gameApp', ['ngCookies', 'ngAnimate']);
+var gameApp = angular.module('gameApp', ['ngCookies']);
 
-gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location', '$animate',
-	function($scope, $cookies, $location, $animate) {
+gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location',
+	function($scope, $cookies, $location) {
 	var self = this;
 	self.results = [];
-
 	self.message = "Welcome! Press New Game to Begin!";
 	self.points = 0;
 
@@ -86,6 +85,7 @@ gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location'
 	//	if the guess is complete, check the solution
 	// ************************************************************************* //
 	function click () {
+		this.class += ' glow';
 		delete this.click;
 		
 		if (self.moves.length < 6) {
@@ -185,47 +185,6 @@ gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location'
 		}
 	}
 
-	function animate() {
-
-		$scope.submitted = false;
-		// hide success message
-  		$scope.showMessage = false;
-  		// method called from shakeThat directive
-  		$scope.submit = function() {
-    	// show success message
-    	$scope.showMessage = true;
-    };
-
-		.directive('shakeThat', ['$animate', function($animate) {
-
-		  return {
-		    require: '^form',
-		    scope: {
-		      submit: '&',
-		      submitted: '='
-		    },
-
-    // Need to figure out how to tie to squares properly //
-
-    function(scope, squares, attrs, form) {
-      // listen on submit event
-      squares.on('submit', function() {
-        // tell angular to update scope
-        	$scope.$apply(function() {
-          // everything ok -> call submit fn from controller
-          if (form.$valid) return scope.submit();
-          // show error messages on submit
-          $scope.submitted = true;
-          // shake that form
-          $animate.addClass(squares, 'shake', function() {
-            $animate.removeClass(squares, 'shake');
-          });
-        });
-      });
-    }
-  };
-
-}]);	
 	
 	init();
 }]);// end gameController
