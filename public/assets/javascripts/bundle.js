@@ -26,12 +26,13 @@ routeApp.config(['$routeProvider',
         redirectTo: '/game'
       });
   }]);
-},{"./controllers/gameBoard.js":"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/gameBoard.js","./controllers/tutorial.js":"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/tutorial.js"}],"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/gameBoard.js":[function(require,module,exports){
+},{"./controllers/gameBoard.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/gameBoard.js","./controllers/tutorial.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/tutorial.js"}],"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/gameBoard.js":[function(require,module,exports){
 var manageState = require('../services/manageState.js');
+
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
 
-gameApp.controller('gameController', ['$http', '$cookies', '$location',
+gameApp.controller('gameController', ['$http', '$cookies', '$location', '$ngAnimate',
 	function($http, $cookies, $location) {
 	var self = this;
 	self.results = [];
@@ -212,10 +213,81 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 		}
 	}
 
+// 	function animate() {
+
+// 		.directive('shakeThat', ['$animate', function($animate) {
+
+// 		  return {
+// 		    require: '^form',
+// 		    scope: {
+// 		      submit: '&',
+// 		      submitted: '='
+// 		    },
+
+//     // Need to figure out how to tie to squares properly //
+
+//     squares: function(scope, element, attrs, form) {
+//       // listen on submit event
+//       element.on('submit', function() {
+//         // tell angular to update scope
+//         scope.$apply(function() {
+//           // everything ok -> call submit fn from controller
+//           if (form.$valid) return scope.submit();
+//           // show error messages on submit
+//           scope.submitted = true;
+//           // shake that form
+//           $animate.addClass(element, 'shake', function() {
+//             $animate.removeClass(element, 'shake');
+//           });
+//         });
+//       });
+//     }
+//   };
+
+// }]);	
+	
 	init();
 }]);// end gameController
 
-},{"../services/manageState.js":"/Users/pcsstudent/Desktop/castlemind/public/app/services/manageState.js"}],"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/tutorial.js":[function(require,module,exports){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+},{"../services/manageState.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/services/manageState.js"}],"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/tutorial.js":[function(require,module,exports){
 var tutApp = angular.module('tutApp', ['ngCookies']);
 
 // ********************************************************************** //
@@ -307,7 +379,7 @@ tutApp.controller('tutorialController', ['$location', function($location){
 		this.step();
 	}
 }]);
-},{}],"/Users/pcsstudent/Desktop/castlemind/public/app/services/manageState.js":[function(require,module,exports){
+},{}],"/Users/aaronollis/class/castleMind/castlemind/public/app/services/manageState.js":[function(require,module,exports){
 
 // stringState converts the board data to a pair of strings
 function stringState (data, callback) {

@@ -1,15 +1,16 @@
 var manageState = require('../services/manageState.js');
 
 
-var gameApp = angular.module('gameApp', ['ngCookies']);
+var gameApp = angular.module('gameApp', ['ngCookies', 'ngAnimate']);
 
-gameApp.controller('gameController', ['$http', '$cookies', '$location',
-	function($http, $cookies, $location) {
+gameApp.controller('gameController', ['$scope', '$http', '$cookies', '$location', '$animate',
+	function($scope, $cookies, $location, $animate) {
 	var self = this;
 	self.results = [];
 
 	self.message = "Welcome! Press New Game to Begin!";
 	self.points = 0;
+
 	
 	// ******************************************************* //
 	// newGame gets a gameboard and path from the server
@@ -48,7 +49,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 		self.solution = data.path;
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
-			result.class = "square color-" + elem.colorKey;
+			result.class = "square color-" + elem.colorKey + " shake"; 
 			result.imgClass = "ng-hide";
 			result.click = click;
 			return result;
@@ -184,38 +185,47 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location',
 		}
 	}
 
-// 	function animate() {
+	function animate() {
 
-// 		.directive('shakeThat', ['$animate', function($animate) {
+		$scope.submitted = false;
+		// hide success message
+  		$scope.showMessage = false;
+  		// method called from shakeThat directive
+  		$scope.submit = function() {
+    	// show success message
+    	$scope.showMessage = true;
+    };
 
-// 		  return {
-// 		    require: '^form',
-// 		    scope: {
-// 		      submit: '&',
-// 		      submitted: '='
-// 		    },
+		.directive('shakeThat', ['$animate', function($animate) {
 
-//     // Need to figure out how to tie to squares properly //
+		  return {
+		    require: '^form',
+		    scope: {
+		      submit: '&',
+		      submitted: '='
+		    },
 
-//     squares: function(scope, element, attrs, form) {
-//       // listen on submit event
-//       element.on('submit', function() {
-//         // tell angular to update scope
-//         scope.$apply(function() {
-//           // everything ok -> call submit fn from controller
-//           if (form.$valid) return scope.submit();
-//           // show error messages on submit
-//           scope.submitted = true;
-//           // shake that form
-//           $animate.addClass(element, 'shake', function() {
-//             $animate.removeClass(element, 'shake');
-//           });
-//         });
-//       });
-//     }
-//   };
+    // Need to figure out how to tie to squares properly //
 
-// }]);	
+    function(scope, squares, attrs, form) {
+      // listen on submit event
+      squares.on('submit', function() {
+        // tell angular to update scope
+        	$scope.$apply(function() {
+          // everything ok -> call submit fn from controller
+          if (form.$valid) return scope.submit();
+          // show error messages on submit
+          $scope.submitted = true;
+          // shake that form
+          $animate.addClass(squares, 'shake', function() {
+            $animate.removeClass(squares, 'shake');
+          });
+        });
+      });
+    }
+  };
+
+}]);	
 	
 	init();
 }]);// end gameController
