@@ -8,44 +8,44 @@ var angular-animate = angular.module('animateApp', ['ngAnimate']);
 // Should animate controller be separate from the gameApp controller??
 // Additional note: Do we want ng-animate and ngRepeat directives to go in index.jade view?
 
-// angular-animate.controller('animateController', ['$scope', function($scope) {
-// 	$scope.value = "";
-// 	$scope.submit = function() {
-// 		$scope.showMessage = true;
-// 	};
+angular-animate.controller('animateController', ['$scope', function($scope) {
+	$scope.value = "";
+	$scope.submit = function() {
+		$scope.showMessage = true;
+	};
 
-// }]);
+}]);
 
-// .directive('shakeThat', ['$animate', function($animate) {
+.directive('shakeThat', ['$animate', function($animate) {
 
-//   return {
-//     require: '^form',
-//     scope: {
-//       submit: '&',
-//       submitted: '='
-//     },
+  return {
+    require: '^form',
+    scope: {
+      submit: '&',
+      submitted: '='
+    },
 
-//     // Need to figure out how to tie to squares properly //
+    // Need to figure out how to tie to squares properly //
 
-//     squares: function(scope, element, attrs, form) {
-//       // listen on submit event
-//       element.on('submit', function() {
-//         // tell angular to update scope
-//         scope.$apply(function() {
-//           // everything ok -> call submit fn from controller
-//           if (form.$valid) return scope.submit();
-//           // show error messages on submit
-//           scope.submitted = true;
-//           // shake that form
-//           $animate.addClass(element, 'shake', function() {
-//             $animate.removeClass(element, 'shake');
-//           });
-//         });
-//       });
-//     }
-//   };
+    squares: function(scope, element, attrs, form) {
+      // listen on submit event
+      element.on('submit', function() {
+        // tell angular to update scope
+        scope.$apply(function() {
+          // everything ok -> call submit fn from controller
+          if (form.$valid) return scope.submit();
+          // show error messages on submit
+          scope.submitted = true;
+          // shake that form
+          $animate.addClass(element, 'shake', function() {
+            $animate.removeClass(element, 'shake');
+          });
+        });
+      });
+    }
+  };
 
-// }]);	
+}]);	
 
 
 
