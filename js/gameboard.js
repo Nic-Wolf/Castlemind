@@ -8,7 +8,6 @@
 /* Description:
 	 Sets up the game board, generating randomly-colored squares
 	 and assigns each a unique coodinate and color.
-
 	 TODOS:
 		 - Maybe to a custom html tag instead of all that div crap
 		 - 
