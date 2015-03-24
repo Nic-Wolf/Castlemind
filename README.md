@@ -1,7 +1,7 @@
 # [CastleMind](https://github.com/Nic-Wolf/castlemind)
 [![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/Nic-Wolf/castlemind/releases)
 [![node](https://img.shields.io/node/v/gh-badges.svg)](https://github.com/Nic-Wolf/castlemind)
-[![Travis](https://img.shields.io/travis/joyent/node.svg)](https://travis-ci.org/Nic-Wolf/castlemind)
+[![Travis](https://travis-ci.org/Nic-Wolf/castlemind.svg?branch=master)](https://travis-ci.org/Nic-Wolf/castlemind)
 
 [Nic Wolf](https://github.com/Nic-Wolf), [David Hasenjaeger](https://github.com/GerryFudd), [Aaron Ollis](https://github.com/aollis)
 

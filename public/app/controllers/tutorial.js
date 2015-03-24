@@ -59,7 +59,7 @@ tutApp.controller('tutorialController', ['$location', function($location){
 
 	this.example[12].class += ' a hasImage';
 	this.example[12].imgClass = "";
-	this.example[12].image = "/img/o.png";
+	this.example[12].image = "../assets/img/o.png";
 	this.example[6].class += ' b';
 
 	var self = this;
@@ -75,7 +75,7 @@ tutApp.controller('tutorialController', ['$location', function($location){
 		this.example[path[num]].imgClass = "";
 		var string = this.solution[num + 1].direction;
 		var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
-		this.example[path[num]].image = "/img/" + hint + ".png";
+		this.example[path[num]].image = "../assets/img/" + hint + ".png";
 		num++;
 		if (num < path.length) {
 			self.next();
