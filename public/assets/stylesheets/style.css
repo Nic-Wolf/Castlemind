@@ -1,3 +1,7 @@
+/*******************************/
+/* GENERAL STYLES */
+/*******************************/
+
 body {
 	margin: 0;
 	padding: 0;
@@ -133,6 +137,24 @@ button {
 	padding-bottom: inherit;
 }
 
+.currentMove {
+	padding: 0;
+	border: 1px solid orange;
+}
+
+.hasImage {
+	padding-bottom: 0.27055%;
+}
+
+.currentMove .b {
+	padding-bottom: 15%;
+}
+
+
+/*******************************/
+/* MEDIA QUERIES */
+/*******************************/
+
 @media screen and (max-width: 1250px) {
 	#container {
 		width: 750px;
@@ -213,18 +235,6 @@ button {
 	}
 }
 
-.currentMove {
-	padding: 0;
-	border: 1px solid orange;
-}
-
-.hasImage {
-	padding-bottom: 0.27055%;
-}
-
-.currentMove .b {
-	padding-bottom: 15%;
-}
 
 /*******************************/
 /* ANIMATIONS */
@@ -263,6 +273,7 @@ button {
 	position: relative;
 	opacity: 0.8;
 }
+
 .highlight:before {
 	content: '';
 	position: absolute;
@@ -274,73 +285,15 @@ button {
 	-webkit-animation: highlight 1s infinite;
 	animation: highlight 1s infinite;
 }
-.highlight:hover:before, .highlight:focus:before, .highlight:active:before {
-<<<<<<< HEAD
-<<<<<<< HEAD:public/stylesheets/style.css
-=======
-
->>>>>>> aaron
-  -webkit-animation-name: highlight;
-  animation-name: highlight;
-}
 
 .glow {
-	 -webkit-animation-name: farts;
-	  -webkit-animation-duration: 2s;
-	  -webkit-animation-iteration-count: infinite;
-
-}
-
-.glow:after{
-	background-color: black;
+	-webkit-animation-name: glow;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
 }
 	
 @-webkit-keyframes glow {
-	from { background-color: #749a02; -webkit-box-shadow: 0 0 9px #333; }
-	50% { background-color: #91bd09; -webkit-box-shadow: 0 0 18px #91bd09; }
-	to { background-color: #749a02; -webkit-box-shadow: 0 0 9px #333; }
+	from {box-shadow: inset 0 0 50px 0px transparent;}
+	50%  {box-shadow: inset 0 0 50px 0px white;}
+	to   {box-shadow: inset 0 0 50px 0px transparent;}
 }
-
-@-webkit-keyframes farts {
-	0%   {box-shadow: inset 0 0 0 100px black;}
-	50%  {box-shadow: inset 0 0 0 100px white;}
-	100% {}
-}
-
-	 
-	 
-	
-
-
-<<<<<<< HEAD
-@-webkit-keyframes spaceboots {
-	0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
-	10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
-	20% { -webkit-transform: translate(-3px, 0px) rotate(1deg); }
-	30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
-	40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
-	50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
-	60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
-	70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
-	80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
-	90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
-	100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
-}
-.shake:hover,
-.shake:focus {
-	-webkit-animation-name: spaceboots;
-	-webkit-animation-duration: 0.8s;
-	-webkit-transform-origin:50% 50%;
-	-webkit-animation-iteration-count: infinite;
-	-webkit-animation-timing-function: linear;
-}
-.shake {
-	display:inline-block
-}
-=======
-	-webkit-animation-name: highlight;
-	animation-name: highlight;
-}
->>>>>>> 851e07a38702bf3bb8e0a09ec39369d86dcd76f8:public/assets/stylesheets/style.css
-=======
->>>>>>> aaron
