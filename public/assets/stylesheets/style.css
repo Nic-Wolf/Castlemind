@@ -275,45 +275,44 @@ button {
 	animation: highlight 1s infinite;
 }
 .highlight:hover:before, .highlight:focus:before, .highlight:active:before {
+<<<<<<< HEAD
 <<<<<<< HEAD:public/stylesheets/style.css
+=======
+
+>>>>>>> aaron
   -webkit-animation-name: highlight;
   animation-name: highlight;
 }
 
+.glow {
+	 -webkit-animation-name: farts;
+	  -webkit-animation-duration: 2s;
+	  -webkit-animation-iteration-count: infinite;
 
-
-/*ng-animate automatically adds these states during an animation
-
-These are basic animation techniques that can apply to most things we do for having angular handle animatons*/
-
-.ng-enter{
-	transition: 0.75s;
-	opacity:0;
 }
 
-.ng-enter-stagger {
-	transition-delay:0.1s;
+.glow:after{
+	background-color: black;
+}
+	
+@-webkit-keyframes glow {
+	from { background-color: #749a02; -webkit-box-shadow: 0 0 9px #333; }
+	50% { background-color: #91bd09; -webkit-box-shadow: 0 0 18px #91bd09; }
+	to { background-color: #749a02; -webkit-box-shadow: 0 0 9px #333; }
 }
 
-.ng-enter-active{
-	opacity:1;
+@-webkit-keyframes farts {
+	0%   {box-shadow: inset 0 0 0 100px black;}
+	50%  {box-shadow: inset 0 0 0 100px white;}
+	100% {}
 }
 
-.ng-leave-stagger {
-	transition-delay:0.1s;
-}
+	 
+	 
+	
 
-.ng-leave{
-	transition: 0.75s;
-	opacity:1;
-}
 
-.ng-leave-active{
-	opacity:0;
-}
-
-/*possible shake animation to use*/
-
+<<<<<<< HEAD
 @-webkit-keyframes spaceboots {
 	0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
 	10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
@@ -343,3 +342,5 @@ These are basic animation techniques that can apply to most things we do for hav
 	animation-name: highlight;
 }
 >>>>>>> 851e07a38702bf3bb8e0a09ec39369d86dcd76f8:public/assets/stylesheets/style.css
+=======
+>>>>>>> aaron

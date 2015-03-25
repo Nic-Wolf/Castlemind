@@ -1,7 +1,7 @@
 button(ng-click="gCtrl.reset()") Reset!
 button(ng-click="gCtrl.tutorial()") How do I game?!
 title= title
-h1 {{gCtrl.message}}
+h1(class="{{gCtrl.messageClass}}") {{gCtrl.message}}
 #container(class="container")
 	#sidebar(class="col-md-4")
 		button(ng-click="gCtrl.newGame()") New Game
@@ -16,5 +16,5 @@ h1 {{gCtrl.message}}
 	#main
 		table#divGrid
 			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
-				td(ng-repeat="square in gCtrl.squares.slice(row * 5,(row + 1) * 5)",class="{{square.class}}",ng-click="square.click()") 
+				td(ng-repeat="square in gCtrl.squares.slice(row * 5,(row + 1) * 5)",class="{{square.class}}", ng-click="square.click()") 
 					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
