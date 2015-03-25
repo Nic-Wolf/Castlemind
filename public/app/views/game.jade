@@ -2,10 +2,10 @@ button(ng-click="gCtrl.reset()") Reset!
 button(ng-click="gCtrl.tutorial()") How do I game?!
 title= title
 h1(class="{{gCtrl.messageClass}}") {{gCtrl.message}}
+h3 {{gCtrl.timeDisplay}}
 #container(class="container")
 	#sidebar(class="col-md-4")
 		button(ng-click="gCtrl.newGame()") New Game
-		button(ng-click="gCtrl.cancel()") Cancel Guess
 		h3 Path Hints
 		#divHints
 			div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")
