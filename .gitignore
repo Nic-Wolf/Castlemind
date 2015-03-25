@@ -1,7 +1,7 @@
-/old
+old
 node_modules
 bower_components
-npm-debug.log
 public/assets/javascripts/bundle.js
+npm-debug.log
 .DS_Store
 *.swp
