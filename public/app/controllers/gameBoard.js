@@ -26,7 +26,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
-	}
+	};
 	self.results = [];
 	self.message = "Welcome! Press New Game to Begin!";
 	self.points = 0;
@@ -65,7 +65,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 
 	this.tutorial = function() {
 		$location.path('/');
-	}
+	};
 
 	// ******************************************************* //
 	// setSquares assigns each square a class and a click method
@@ -143,7 +143,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			self.moves[self.moves.length - 2].class = self.moves[self.moves.length - 2].class.split(" glow").join("");
 		}
 
-		var direction = self.solution[self.moves.length -1].direction
+		var direction = self.solution[self.moves.length -1].direction;
 		var thisy = this;
 		var toHighlight = [];
 		self.squares.forEach(function (square, index) {
@@ -173,13 +173,10 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 							var result = elem;
 							result.click = click;
 							return result;
-						})
+						});
 						self.squares[self.solution[0].index].click();
 					} else {
 						$cookies.victory = true;
-					}
-
-					else {
 						self.messageClass = 'theMessage';
 					}
 				}
@@ -228,7 +225,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		delete self.solution;
 		delete self.hints;
 		delete self.moves;
-	}
+	};
 
 	// init restores the board state if there is an active game
 	function init () {
@@ -240,7 +237,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				setSquares({"board": squares, "path": solution});
 				moves.slice(1).forEach(function (move) {
 					self.squares[move].click();
-				})
+				});
 			});
 			$cookies.timeCheck = Date.now();
 			self.timeDisplay = $cookies.timeDisplay;
