@@ -294,8 +294,6 @@ button {
 	
 @-webkit-keyframes glow {
 	from {box-shadow: inset 0 0 50px 0px transparent;}
-	25%  {box-shadow: inset 0 0 50px 0px #d3d3d3;}
-	50%  {box-shadow: inset 0 0 50px 0px white;}
-	75%  {box-shadow: inset 0 0 50px 0px #d3d3d3;}
-	to   {box-shadow: inset 0 0 50px 0px transparent;}
+	75%  {box-shadow: inset 0 0 50px 0px white;}
+	100% {box-shadow: inset 0 0 50px 0px transparent;}
 }
