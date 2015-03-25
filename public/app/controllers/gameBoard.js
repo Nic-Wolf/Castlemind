@@ -46,7 +46,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			$cookies.solution = solution;
 		});
 
-		self.messageClass = 'glow';
+		
 		self.solution = data.path;
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
