@@ -31,8 +31,7 @@ var manageState = require('../services/manageState.js');
 
 
 var gameApp = angular.module('gameApp', ['ngCookies']);
-
-
+	
 gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeout',
 	function($http, $cookies, $location, $timeout) {
 	var self = this;
