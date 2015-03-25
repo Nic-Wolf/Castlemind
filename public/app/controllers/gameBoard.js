@@ -167,20 +167,20 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 
 	this.cancel = function () {
 		manageState.resetGuess(
-				self.moves, self.hints, self.squares, self.solution, self.guesses,
-				self.results, function(moves, hints, squares, message) {
-					self.moves = moves;
-					self.hints = hints;
-					self.squares = squares;
-					self.message = message;
-					$cookies.moves = '';
-					self.squares = self.squares.map(function (elem) {
-						var result = elem;
-						result.click = click;
-						return result;
-					});
-					self.squares[self.solution[0].index].click();
-				}
+			self.moves, self.hints, self.squares, self.solution, self.guesses,
+			self.results, function(moves, hints, squares, message) {
+				self.moves = moves;
+				self.hints = hints;
+				self.squares = squares;
+				self.message = message;
+				$cookies.moves = '';
+				self.squares = self.squares.map(function (elem) {
+					var result = elem;
+					result.click = click;
+					return result;
+				});
+				self.squares[self.solution[0].index].click();
+			}
 		);
 	};
 
@@ -211,41 +211,3 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	
 	init();
 }]);// end gameController
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
