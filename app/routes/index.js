@@ -30,8 +30,6 @@ router.get('/api/game', function(req, res, next) {
 	completeBoard(function(squares) {
 		var path = makePath(squares);
 
-		console.log(squares);
-		console.log(path);
 		res.json({"board": squares, "path": path});
 	}, 5);
 });
