@@ -282,7 +282,6 @@ button {
 	-webkit-animation-name: glow;
 	-webkit-animation-duration: 1.5s;
 	-webkit-animation-iteration-count: infinite;
-
 }
 	
 @-webkit-keyframes glow {
