@@ -1,0 +1,10 @@
+extends layout
+
+block scripts
+	script(src="../assets/components/angular/angular.js")
+	script(src="../assets/components/angular/angular-cookies.js")
+	script(src="../assets/components/angular/angular-route.js")
+	script(src="../assets/javascripts/bundle.js")
+
+block content
+	div(ng-view)

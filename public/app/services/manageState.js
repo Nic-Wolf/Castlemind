@@ -56,7 +56,7 @@ function deStringState (boardString, solutionString, moveString, callback) {
 
 // resetGuess displays what part of the guess was correct.
 // If the guess is only partially correct, it resets the guess.
-function resetGuess (moves, hints, squares, solution, callback) {
+function resetGuess (moves, hints, squares, solution, guesses, results, callback) {
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
 	if (moves.length < 6) {
@@ -71,7 +71,16 @@ function resetGuess (moves, hints, squares, solution, callback) {
 		}
 		return result;
 	})) {
-		message = "You win!";
+		results.push(guesses);
+		var points = results.reduce( function (prev, curr) {
+			if (5 > curr) {
+				var newPoints = 5 - curr;
+			} else {
+				var newPoints = 1;
+			}
+			return prev + newPoints;
+		}, 0);
+		message = "You win! You have " + points + ' points!';
 	} else {
 		restart();
 	}
@@ -89,7 +98,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 		moves = [];
 		message = "Keep trying!";
 	}
-	callback(moves, hints, squares, message);
+	callback(moves, hints, squares, message, results, points);
 }// end resetGuess
 
 // ****************************************************************** //
@@ -131,28 +140,30 @@ function incrementMoves (square, hints, moves, squares, callback) {
 }// end incrementMoves()
 
 // highlight adds the highlight class to a square if it is a possible move
-function highlight (square, index, direction, guessNumber, clickedSquare) {
+function highlight (square, index, direction, guessNumber, clickedSquare,
+		callback) {
+	var toHighlight = [];
 	var rowDiff = Math.abs(clickedSquare.value[0] - square.value[0])
 	var columnDiff = Math.abs(clickedSquare.value[1] - square.value[1])
 	square.class = square.class.split(' highlight').join('');
 	if (square.class.indexOf(' hasImage') !== -1) {
 		// don't highlight already clicked squares
 	} else if (square.class.indexOf(' b') !== -1 && guessNumber < 5) {
-		// don't highlight already clicked squares
+		// don't highlight the end square until the end
 	} else if(direction === "orthogonal") {
 		if ((rowDiff === 1 && columnDiff === 0) || (rowDiff === 0 && columnDiff === 1)) {
-			square.class += ' highlight';
+			callback(index);
 		}
 	} else if(direction === "diagonal" && rowDiff === 1 && columnDiff === 1) {
-		square.class += ' highlight';
-
+		callback(index);
 	} else if(direction === "long orthogonal") {
 		if ((rowDiff === 0 && columnDiff === 3) || (rowDiff === 3 && columnDiff === 0)) {
-			square.class += ' highlight';
+			callback(index);
 		}
 	} else if(direction === "long diagonal" && rowDiff === 3 && columnDiff === 3) {
-		square.class += ' highlight';
-
+		callback(index);
+	} else {
+		callback('fuck');
 	}
 }
 

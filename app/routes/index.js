@@ -1,7 +1,7 @@
 var express       = require('express');
 var router        = express.Router();
-var completeBoard = require('../makeSquares.js').completeBoard;
-var makePath      = require('../makePath.js').makePath;
+var completeBoard = require('../models/makeSquares.js').completeBoard;
+var makePath      = require('../models/makePath.js').makePath;
 
 
 // GET Homepage //

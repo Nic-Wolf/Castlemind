@@ -5,7 +5,7 @@ body {
 }
 
 a {
-  color: #00B7FF;
+	color: #00B7FF;
 }
 
 h1 {
@@ -16,7 +16,6 @@ h1 {
 h3 {
 	margin: 0 auto;
 	padding-top: 8%;
-
 }
 
 button {
@@ -30,12 +29,6 @@ button {
 	padding: 30px 0;
 	width: 60%;
 	padding-bottom: 48.5%;
-}
-
-@media screen and (max-width: 1250px) {
-	#container {
-		width: 750px;
-	}
 }
 
 #sidebar {
@@ -60,18 +53,17 @@ button {
 	padding-bottom: 89.8%;
 	min-width: 260px;
 	min-height: 260px;
-	/*background: #333;*/
-	/*border: 4px solid black;*/
 }
 
 .square {
 	width: 18.5%;
 	padding-bottom: 19%;
-	height: auto;
 	margin-left: 1%;
 	margin-top: 1%;
 	float: left;
-	opacity: 0.6;
+	opacity: 0.85;
+	border-radius: 5%;
+	box-shadow: inset 0 -1px 2px 0 #404040;
 }
 
 .square img {
@@ -89,21 +81,21 @@ button {
 .color-4 { background-color: #322cc1; }
 
 .a {
-	background-color: #ffffff;
-	background: url("../img/start.jpg") no-repeat;
-	background-size: contain;
-	opacity: 0.8;
+	background-color: transparent;
+	box-shadow: inset -3px -1px 30px 3px #f0f0f0
 }
 
 .b {
-	background-color: #111111;
 	background: url("../img/end.jpg") no-repeat;
-	background-size: contain;
-	opacity: 0.9;
+	background-size: cover;
+	opacity: 0.8;
 }
 
 .clicked {
-	opacity: 0.78;
+	background: transparent;
+	border: 2px solid #f0f0f0;
+	border-radius: 50%;
+	box-shadow: inset 0 0px 20px 2px white;
 }
 
 #divUserMoves {
@@ -111,14 +103,15 @@ button {
 	width: 90%;
 	padding-bottom: 16%;
 	padding-right: 1%;
-	background: #777;
-	border: 4px solid black;
+	background-image: url("../img/brushed_alu_dark.png");
+	opacity: 0.97;
+	border: 3px solid black;
 }
 
 #divUserMoves .square {
 	width: 15.667%;
 	padding-bottom: 15.75%;
-	
+	box-shadow: 0 -1px 8px black;
 }
 
 #divHints {
@@ -126,28 +119,33 @@ button {
 	width: 90%;
 	padding-bottom: 16%;
 	padding-right: 1%;
-	background: #777;
+	background-image: url("../img/brushed_alu_dark.png");
+	opacity: 0.97;
 	border: 4px solid black;
 }
 
 #divHints .square {
 	width: 15.667%;
-	/*padding: 0;*/
+	box-shadow: 0 -1px 8px black;
+}
+
+#divHints .b {
+	padding-bottom: inherit;
+}
+
+@media screen and (max-width: 1250px) {
+	#container {
+		width: 750px;
+	}
 }
 
 @media screen and (min-width: 840px) {
 	#container {
 		width: 90%;
-
 	}
 }
 
 @media screen and (min-width: 560px), screen and (max-width: 839px) {
-
-/*	#container {
-		padding-bottom: 45%;
-	}*/
-
 	#sidebar {
 		float: left;
 		position: absolute;
@@ -164,7 +162,6 @@ button {
 	#divGrid {
 		margin: auto;
 	}
-
 }
 
 @media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px)  {
@@ -225,57 +222,60 @@ button {
 	padding-bottom: 0.27055%;
 }
 
-.currentMove.b {
+.currentMove .b {
 	padding-bottom: 15%;
 }
 
-/*ANIMATIONS*/
+/*******************************/
+/* ANIMATIONS */
+/*******************************/
 
 /* Ripple Out */
 @-webkit-keyframes highlight {
-  100% {
-    top: -12px;
-    right: -12px;
-    bottom: -12px;
-    left: -12px;
-    opacity: 0;
-  }
+	100% {
+		top:    -10px;
+		right:  -10px;
+		bottom: -10px;
+		left:   -10px;
+		opacity: 0;
+	}
 }
 
 @keyframes highlight {
-  100% {
-    top: -12px;
-    right: -12px;
-    bottom: -12px;
-    left: -12px;
-    opacity: 0;
-  }
+	100% {
+		top:    -10px;
+		right:  -10px;
+		bottom: -10px;
+		left:   -10px;
+		opacity: 0;
+	}
 }
 
 .highlight {
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -moz-osx-font-smoothing: grayscale;
-  position: relative;
-  opacity: 0.8;
+	display: inline-block;
+	vertical-align: middle;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-moz-osx-font-smoothing: grayscale;
+	position: relative;
+	opacity: 0.8;
 }
 .highlight:before {
-  content: '';
-  position: absolute;
-  border: #000 solid 7px;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  -webkit-animation: highlight 1s infinite;
-  animation: highlight 1s infinite;
+	content: '';
+	position: absolute;
+	box-shadow: inset 0 0 0 100px #fa0;
+	top:    0;
+	right:  0;
+	bottom: 0;
+	left:   0;
+	-webkit-animation: highlight 1s infinite;
+	animation: highlight 1s infinite;
 }
 .highlight:hover:before, .highlight:focus:before, .highlight:active:before {
+<<<<<<< HEAD:public/stylesheets/style.css
   -webkit-animation-name: highlight;
   animation-name: highlight;
 }
@@ -338,3 +338,8 @@ These are basic animation techniques that can apply to most things we do for hav
 .shake {
 	display:inline-block
 }
+=======
+	-webkit-animation-name: highlight;
+	animation-name: highlight;
+}
+>>>>>>> 851e07a38702bf3bb8e0a09ec39369d86dcd76f8:public/assets/stylesheets/style.css

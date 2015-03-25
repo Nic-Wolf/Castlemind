@@ -10,7 +10,7 @@ h1 {{gCtrl.message}}
 		#divHints
 			div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")
 				img(src="{{hint.image}}",alt="",class="{{hint.imgClass}}")
-		h3 User Guesses
+		h3 User Guesses: {{gCtrl.guesses}}
 		#divUserMoves
 			div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
 	#main
