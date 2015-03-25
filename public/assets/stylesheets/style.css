@@ -1,3 +1,7 @@
+/*******************************/
+/* GENERAL STYLES */
+/*******************************/
+
 body {
 	margin: 0;
 	padding: 0;
@@ -82,7 +86,7 @@ button {
 
 .a {
 	background-color: transparent;
-	box-shadow: inset -3px -1px 30px 3px #f0f0f0
+	box-shadow: inset -3px -1px 30px 4px #f0f0f0;
 }
 
 .b {
@@ -93,9 +97,7 @@ button {
 
 .clicked {
 	background: transparent;
-	border: 2px solid #f0f0f0;
-	border-radius: 50%;
-	box-shadow: inset 0 0px 20px 2px white;
+	box-shadow: inset -3px -1px 30px 4px #f0f0f0;
 }
 
 #divUserMoves {
@@ -132,6 +134,24 @@ button {
 #divHints .b {
 	padding-bottom: inherit;
 }
+
+.currentMove {
+	padding: 0;
+	border: 1px solid orange;
+}
+
+.hasImage {
+	padding-bottom: 0.27055%;
+}
+
+.currentMove .b {
+	padding-bottom: 15%;
+}
+
+
+/*******************************/
+/* MEDIA QUERIES */
+/*******************************/
 
 @media screen and (max-width: 1250px) {
 	#container {
@@ -206,6 +226,7 @@ button {
 		margin: 30px auto;
 		width: 90%;
 	}
+
 	#divGrid {
 		margin: auto;
 		width: 100%;
@@ -213,18 +234,6 @@ button {
 	}
 }
 
-.currentMove {
-	padding: 0;
-	border: 1px solid orange;
-}
-
-.hasImage {
-	padding-bottom: 0.27055%;
-}
-
-.currentMove .b {
-	padding-bottom: 15%;
-}
 
 /*******************************/
 /* ANIMATIONS */
@@ -263,11 +272,12 @@ button {
 	position: relative;
 	opacity: 0.8;
 }
+
 .highlight:before {
 	content: '';
 	position: absolute;
-	box-shadow: inset 0 0 0 100px #666;
-	border-radius: 50%;
+	border-radius: 5%;
+	box-shadow: inset 0 0 0 100px #202010;
 	top:    0;
 	right:  0;
 	bottom: 0;
@@ -275,7 +285,15 @@ button {
 	-webkit-animation: highlight 1s infinite;
 	animation: highlight 1s infinite;
 }
-.highlight:hover:before, .highlight:focus:before, .highlight:active:before {
-	-webkit-animation-name: highlight;
-	animation-name: highlight;
+
+.glow {
+	-webkit-animation-name: glow;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+}
+	
+@-webkit-keyframes glow {
+	from {box-shadow: inset 0 0 50px 0px transparent;}
+	50%  {box-shadow: inset 0 0 50px 0px white;}
+	to   {box-shadow: inset 0 0 50px 0px transparent;}
 }

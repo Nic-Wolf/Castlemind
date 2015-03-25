@@ -1,7 +1,8 @@
 var manageState = require('../services/manageState.js');
 
-var gameApp = angular.module('gameApp', ['ngCookies']);
 
+var gameApp = angular.module('gameApp', ['ngCookies']);
+	
 gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeout',
 	function($http, $cookies, $location, $timeout) {
 	var self = this;
@@ -27,9 +28,9 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		}, 500);
 	}
 	self.results = [];
-
 	self.message = "Welcome! Press New Game to Begin!";
 	self.points = 0;
+
 	
 	// ******************************************************* //
 	// newGame gets a gameboard and path from the server
@@ -77,10 +78,11 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			$cookies.solution = solution;
 		});
 
+		
 		self.solution = data.path;
 		self.squares = data.board.map(function (elem) {
 			var result = elem;
-			result.class = "square color-" + elem.colorKey;
+			result.class = "square color-" + elem.colorKey; 
 			result.imgClass = "ng-hide";
 			result.click = click;
 			return result;
@@ -117,6 +119,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	//	if the guess is complete, check the solution
 	// ************************************************************************* //
 	function click () {
+		
 		delete this.click;
 		
 		if (self.moves.length < 6) {
@@ -130,7 +133,14 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 					self.squares = squares;
 			});
 
+
 			$cookies.moves += self.squares.indexOf(this) + '_';
+		}
+
+		self.moves[self.moves.length - 1].class += ' glow';
+
+		if(self.moves.length >= 2) {
+			self.moves[self.moves.length - 2].class = self.moves[self.moves.length - 2].class.split(" glow").join("");
 		}
 
 		var direction = self.solution[self.moves.length -1].direction
@@ -167,6 +177,10 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 						self.squares[self.solution[0].index].click();
 					} else {
 						$cookies.victory = true;
+					}
+
+					else {
+						self.messageClass = 'theMessage';
 					}
 				}
 			);
@@ -234,5 +248,44 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		}
 	}
 
+	
 	init();
 }]);// end gameController
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
