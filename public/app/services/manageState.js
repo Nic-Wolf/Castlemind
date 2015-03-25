@@ -30,7 +30,6 @@ function deStringState (boardString, solutionString, moveString, callback) {
 	var solution = [];
 	var solutionArray = solutionString.split('_');
 	solutionArray.forEach( function (elem, ind) {
-		console.log(elem);
 		if (ind < solutionArray.length - 1) {
 			var newMove = {};
 			newMove.direction = elem.match(/[^\d]+/)[0];
@@ -40,7 +39,6 @@ function deStringState (boardString, solutionString, moveString, callback) {
 			var newMove = {};
 			newMove.index = Number(elem);
 		}
-		console.log(newMove);
 		solution.push(newMove);
 	});
 	if (moveString.length > 0) {

@@ -6,6 +6,17 @@ var gameApp = angular.module('gameApp', ['ngCookies']);
 gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeout',
 	function($http, $cookies, $location, $timeout) {
 	var self = this;
+	self.points = 0;
+
+	// *************************************************************************** //
+	//	countDown controlls the timeDisplay
+	//		The player should have five minutes of play time to accumulate as many
+	//		points as possible.
+	//			The timer will pause after each game.
+	//			At the end of the five minutes, the board will freeze.
+	//		After the five minutes are up, the player may start another five minute
+	//		session by pressing the new game button.
+	// *************************************************************************** //
 	self.countDown = function () {
 		$timeout(function () {
 			$cookies.elapsedTime = Number($cookies.elapsedTime) + Number(Date.now()) - Number($cookies.timeCheck);
@@ -23,18 +34,23 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.countDown();
 			} else {
 				self.timeDisplay = 'Time remaining: 0:00';
+				self.squares.forEach( function (square) {
+					delete square.click;
+				});
+				self.message = 'Time is up.  You earned ' + self.points + ' points!';
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
-	};
+	}; // end countDown()
 	self.results = [];
 	self.message = "Welcome! Press New Game to Begin!";
-	self.points = 0;
 
 	
 	// ******************************************************* //
 	// newGame gets a gameboard and path from the server
 	// The controller is assigned the following values
+	//		timeDisplay: shows the player their remaining time
+	//		points: this reflects the running total for five minutes
 	//		squares: the array of squares in the board
 	//		solution: the path that the player is trying to guess
 	//		moves: the moves that the player has guessed
@@ -45,6 +61,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			$cookies.timeCheck = Date.now();
 			$cookies.elapsedTime = 0;
 			self.timeDisplay = 'Time remaining: 5:00';
+			self.points = 0;
 			self.countDown();
 		} else if (self.timeDisplay.indexOf(' (paused)') !== -1) {
 			self.timeDisplay = self.timeDisplay.split(' (paused)').join('');
@@ -61,7 +78,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		success(setSquares).
 		error(function(data, status, headers, config){
 		});
-	}; // end newGame
+	}; // end newGame()
 
 	this.tutorial = function() {
 		$location.path('/');
@@ -110,7 +127,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		
 		self.squares[self.solution[0].index].class += ' a';
 		self.squares[self.solution[0].index].click();
-	} // end setSquares
+	} // end setSquares()
 
 	// ************************************************************************* //
 	// click has three main parts
@@ -199,6 +216,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 
 	} // end click()
 
+	// cancel removes a partial guess
 	this.cancel = function () {
 		manageState.resetGuess(
 			self.moves, self.hints, self.squares, self.solution, self.guesses,
@@ -247,4 +265,4 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 
 	
 	init();
-}]);// end gameController
+}]);// end gameController()
