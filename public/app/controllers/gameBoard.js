@@ -5,6 +5,27 @@ var gameApp = angular.module('gameApp', ['ngCookies']);
 gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeout',
 	function($http, $cookies, $location, $timeout) {
 	var self = this;
+	self.countDown = function () {
+		$timeout(function () {
+			$cookies.elapsedTime = Number($cookies.elapsedTime) + Number(Date.now()) - Number($cookies.timeCheck);
+			$cookies.timeCheck = Date.now();
+			var minutes = Math.floor($cookies.elapsedTime / 60000);
+			var seconds = Math.floor(($cookies.elapsedTime - minutes * 60000) / 1000);
+			if ($cookies.victory) {
+				self.timeDisplay = self.timeDisplay.split(' (paused)').join('') + ' (paused)';
+			} else if (minutes < 5) {
+				if (49 >= seconds) {
+					self.timeDisplay = 'Time remaining: ' + (4 - minutes) + ':' + (59 - seconds);
+				} else {
+					self.timeDisplay = 'Time remaining: ' + (4 - minutes) + ':0' + (59 - seconds);
+				}
+				self.countDown();
+			} else {
+				self.timeDisplay = 'Time remaining: 0:00';
+			}
+			$cookies.timeDisplay = self.timeDisplay;
+		}, 500);
+	}
 	self.results = [];
 
 	self.message = "Welcome! Press New Game to Begin!";
@@ -19,6 +40,19 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	//		hints: the values that are displayed to the player
 	// ******************************************************* //
 	this.newGame = function() {
+		if (!$cookies.playing || self.timeDisplay === 'Time remaining: 0:00') {
+			$cookies.timeCheck = Date.now();
+			$cookies.elapsedTime = 0;
+			self.timeDisplay = 'Time remaining: 5:00';
+			self.countDown();
+		} else if (self.timeDisplay.indexOf(' (paused)') !== -1) {
+			self.timeDisplay = self.timeDisplay.split(' (paused)').join('');
+			$cookies.timeCheck = Date.now();
+			self.countDown();
+		}
+		$cookies.playing = true;
+		delete $cookies.victory;
+		
 		self.guesses = 0;
 		$cookies.guesses = 0;
 		self.message = "You are playing a game! You have " + self.points + " points!";
@@ -38,7 +72,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	// The hints are given text values based on the solution
 	// ******************************************************* //
 	function setSquares (data) {
-		$cookies.playing = true;
 		manageState.stringState(data, function (state, solution) {
 			$cookies.state = state;
 			$cookies.solution = solution;
@@ -132,6 +165,8 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 							return result;
 						})
 						self.squares[self.solution[0].index].click();
+					} else {
+						$cookies.victory = true;
 					}
 				}
 			);
@@ -143,9 +178,11 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.squares.forEach(function (square) {
 					square.class = square.class.split(' highlight').join('');
 				});
-				toHighlight.forEach(function (elem) {
-					self.squares[elem].class += ' highlight';
-				});
+				if (!$cookies.victory) {
+					toHighlight.forEach(function (elem) {
+						self.squares[elem].class += ' highlight';
+					});
+				}
 			}, 100);
 		}
 
@@ -191,6 +228,9 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 					self.squares[move].click();
 				})
 			});
+			$cookies.timeCheck = Date.now();
+			self.timeDisplay = $cookies.timeDisplay;
+			self.countDown();
 		}
 	}
 
