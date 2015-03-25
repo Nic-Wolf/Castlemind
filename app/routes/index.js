@@ -9,6 +9,11 @@ router.get('/', function(req, res, next) {
 	res.render('index');
 });
 
+// GET mainpage //
+router.get('/main', function(req, res, next) {
+	res.render('main');
+});
+
 // GET game page //
 router.get('/game', function(req, res, next) {
 	res.render('game', {title: 'Castlemind Game View'});

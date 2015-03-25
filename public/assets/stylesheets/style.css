@@ -107,7 +107,8 @@ button {
 	padding-right: 1%;
 	background-image: url("../img/brushed_alu_dark.png");
 	opacity: 0.97;
-	border: 3px solid black;
+	border: 3px solid #aaa;
+	border-style: outset;
 }
 
 #divUserMoves .square {
@@ -123,7 +124,8 @@ button {
 	padding-right: 1%;
 	background-image: url("../img/brushed_alu_dark.png");
 	opacity: 0.97;
-	border: 4px solid black;
+	border: 4px solid #aaa;
+	border-style: outset;
 }
 
 #divHints .square {
@@ -239,7 +241,6 @@ button {
 /* ANIMATIONS */
 /*******************************/
 
-/* Ripple Out */
 @-webkit-keyframes highlight {
 	100% {
 		top:    -10px;
