@@ -241,21 +241,29 @@ button {
 
 /* Ripple Out */
 @-webkit-keyframes highlight {
-	100% {
+	50% {
 		top:    -10px;
 		right:  -10px;
 		bottom: -10px;
 		left:   -10px;
+		
+	}
+
+	100% {
 		opacity: 0;
 	}
 }
 
 @keyframes highlight {
-	100% {
+	50% {
 		top:    -10px;
 		right:  -10px;
 		bottom: -10px;
 		left:   -10px;
+		
+	}
+
+	100% {
 		opacity: 0;
 	}
 }
