@@ -37,7 +37,8 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.squares.forEach( function (square) {
 					delete square.click;
 				});
-				self.message = 'Time is up.  You earned ' + self.points + ' points!';
+				self.message = 'Time is up. Click New Game to start a new session.';
+				self.pointsReport = 'You earned ' + self.points + ' points!'
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
@@ -81,7 +82,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	}; // end newGame()
 
 	this.tutorial = function() {
-		$location.path('/');
+		$location.path('/tutorial');
 	};
 
 	// ******************************************************* //

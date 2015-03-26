@@ -1,10 +1,11 @@
 title= title
-button(ng-click="tCtrl.game()") Just Play!
 .directions
 	h1= title
-	p Follow the flashing squares.
-#main
-	button(ng-click="tCtrl.next()") Next!
+	ul
+		li(ng-repeat="message in tCtrl.messages.slice(tCtrl.messages.length - 6,tCtrl.messages.length - 1)") {{message}}
+#tutorialMain
+	button(ng-click="tCtrl.next()",id="next") Next!
+	button(ng-click="tCtrl.game()",id="justPlay") Just Play!
 	table#divGrid
 		tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
 			td(ng-repeat="square in tCtrl.example.slice(row * 5,(row + 1) * 5)",class="{{square.class}}",ng-click="square.click()") 

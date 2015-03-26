@@ -55,6 +55,23 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		$location.path('/game');
 	};
 
+	var messages = [
+		'Your objective is to guess the path that the computer took to the castle.',
+		'Click next to start the tutorial.',
+		'You can see the start and end points.',
+		"You can also see hints about the computer's moves",
+		"Before each move, the possible next moves flash.",
+		"Each time you click, the board updates to show your progress.",
+		"Click next to see an example of a guess.",
+		"First click: pink",
+		"Second click: blue",
+		"Third click: red",
+		"Fourth click: green",
+		"Fifth click: castle",
+		"That was the first guess."
+	];
+
+	this.messages = messages.slice(0,8);
 	this.example = exampleBoard;
 	this.solution = exampleSolution;
 
@@ -64,31 +81,41 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	this.example[6].class += ' b';
 
 	var self = this;
-	var highlights = [7, 11, 13, 17];
-	highlights.forEach( function (elem) {
+	var toHighlight = [
+		[7, 11, 13, 17],
+		[10,16],
+		[1,19],
+		[1],
+		[0,2,6],
+		[]
+	];
+	toHighlight[0].forEach( function (elem) {
 		self.example[elem].class += ' highlight';
 	});
 
-	var path = [11, 16, 19, 1];
+	var path = [11, 16, 19, 1,6];
 	var num = 0;
-	this.step = function () {
-		this.example[path[num]].class += ' hasImage';
-		this.example[path[num]].imgClass = "";
-		var string = this.solution[num + 1].direction;
-		var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
-		this.example[path[num]].image = "../assets/img/" + hint + ".png";
-		num++;
-		if (num < path.length) {
-			$timeout(function () {
-				self.next();
-			}, 700);
-		}
-	}
 
 	this.next = function () {
-		highlights.forEach( function (elem) {
+		self.messages.push(messages[self.messages.length]);
+		toHighlight[num].forEach( function (elem) {
 			self.example[elem].class = self.example[elem].class.split(' highlight').join('');
 		});
-		this.step();
+		if (this.example[path[num]].class.indexOf(' b') === -1) {
+			this.example[path[num]].class += ' hasImage';
+			this.example[path[num]].imgClass = "";
+			var string = this.solution[num + 1].direction;
+			var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
+			this.example[path[num]].image = "../assets/img/" + hint + ".png";
+			toHighlight[num + 1].forEach( function (elem) {
+				self.example[elem].class += ' highlight';
+			});
+			num++;
+			if (num < path.length) {
+				$timeout(function () {
+					self.next();
+				}, 2000);
+			}
+		}
 	}
 }]);
