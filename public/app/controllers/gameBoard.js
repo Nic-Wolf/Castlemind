@@ -110,21 +110,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		self.moves = [];
 		$cookies.moves = '';
 		
-		self.hints = self.solution.map(function (elem, ind) {
-			if (ind === 5) {
-				return {"class": 'square b', "imgClass": "ng-hide"};
-			} else {
-				var string = elem.direction.split(' ').reduce(function (prev, curr) {
-					return prev + curr[0];
-				}, '');
-				return {
-					"class": 'square hasImage',
-					"image": '../assets/img/' + string + '.png',
-					"imgClass": ""
-				};
-				}
-		});
-		self.hints[0].class = 'square hasImage a';
+		self.hints = self.solution.map(manageState.makeHint);
 		
 		self.squares[self.solution[0].index].class += ' a';
 		self.squares[self.solution[0].index].click();

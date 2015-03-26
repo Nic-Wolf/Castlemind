@@ -165,10 +165,32 @@ function highlight (square, index, direction, guessNumber, clickedSquare,
 	}
 }
 
+function makeHint (elem, ind) {
+	if (ind === 5) {
+		return {"class": 'square b', "imgClass": "ng-hide"};
+	} else {
+		var string = elem.direction.split(' ').reduce(function (prev, curr) {
+			return prev + curr[0];
+		}, '');
+		var hint = {
+				"class": 'square hasImage',
+				"image": '../assets/img/' + string + '.png',
+				"imgClass": ""
+			};
+
+		if (ind === 0) {
+			hint.class += ' a';
+		}
+
+		return hint;
+	}
+}
+
 module.exports = {
 	stringState: stringState,
 	deStringState: deStringState,
 	resetGuess: resetGuess,
 	incrementMoves: incrementMoves,
-	highlight: highlight
+	highlight: highlight,
+	makeHint: makeHint
 }
