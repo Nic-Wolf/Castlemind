@@ -48,7 +48,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 
 	
 	// ******************************************************* //
-	// newGame gets a gameboard and path from the server
+	// newGame starts the timer and gets a gameboard and path from the server
 	// The controller is assigned the following values
 	//		timeDisplay: shows the player their remaining time
 	//		points: this reflects the running total for five minutes

@@ -30,12 +30,7 @@ var exampleBoard = [
 	  { value: [ 4, 2 ], colorKey: 1 },
 	  { value: [ 4, 3 ], colorKey: 2 },
 	  { value: [ 4, 4 ], colorKey: 3 }
-	].map(function (elem) {
-		var result = elem;
-		result.class = "square color-" + elem.colorKey;
-		result.imgClass = "ng-hide";
-		return result;
-	});
+	];
 
 	var exampleSolution = [
 		{ index: 12, direction: 'orthogonal', solution: 3 },
@@ -71,17 +66,67 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		"That was the first guess."
 	];
 
-	this.messages = messages.slice(0,8);
-	this.example = exampleBoard;
+	// state which message is the oldest to be displayed and which messages are
+	// initially displayed
+	this.startMessages = 0;
+	this.messages = messages.slice(0,2);
+
+	// state the example board and solution variables
+	this.example = exampleBoard.map(function (elem) {
+		var result = elem;
+		result.class = "square color-" + elem.colorKey;
+		result.imgClass = "ng-hide";
+		return result;
+	});
 	this.solution = exampleSolution;
 
+	// give the start and end the correct styling
 	this.example[12].class += ' a hasImage';
 	this.example[12].imgClass = "";
 	this.example[12].image = "../assets/img/o.png";
 	this.example[6].class += ' b';
 
 	var self = this;
-	var toHighlight = [
+
+	var path = [11, 16, 19, 1,6];
+
+	// set up a function to represent each click of the next button
+	var slideNumber = 0;
+	var slides = [
+		gameRules,
+		firstGuess,
+	];
+
+	this.next = function () {
+		slides[slideNumber](0);
+		slideNumber++;
+	}
+
+	// declare what will be highlighted after each direction is introduced
+	var drawAttention = [
+		[self.example[6], self.example[12]]
+	];
+
+
+	function gameRules (num) {
+		self.messages.push(messages[self.messages.length]);
+		if (self.messages.length > 5) {
+			self.startMessages++;
+		}
+		num++;
+		if (num <= 4) {
+			$timeout( function () {
+				gameRules(num);
+			},2000);
+		} else {
+			legalMoves[0].forEach( function (elem) {
+				self.example[elem].class += ' highlight';
+			});
+		}
+	}
+
+	// declare what squares are legal after each click
+	var legalMoves = [
 		[7, 11, 13, 17],
 		[10,16],
 		[1,19],
@@ -89,31 +134,26 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		[0,2,6],
 		[]
 	];
-	toHighlight[0].forEach( function (elem) {
-		self.example[elem].class += ' highlight';
-	});
 
-	var path = [11, 16, 19, 1,6];
-	var num = 0;
-
-	this.next = function () {
+	function firstGuess (num) {
 		self.messages.push(messages[self.messages.length]);
-		toHighlight[num].forEach( function (elem) {
+		self.startMessages++;
+		legalMoves[num].forEach( function (elem) {
 			self.example[elem].class = self.example[elem].class.split(' highlight').join('');
 		});
-		if (this.example[path[num]].class.indexOf(' b') === -1) {
-			this.example[path[num]].class += ' hasImage';
-			this.example[path[num]].imgClass = "";
-			var string = this.solution[num + 1].direction;
+		if (self.example[path[num]].class.indexOf(' b') === -1) {
+			self.example[path[num]].class += ' hasImage';
+			self.example[path[num]].imgClass = "";
+			var string = self.solution[num + 1].direction;
 			var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
-			this.example[path[num]].image = "../assets/img/" + hint + ".png";
-			toHighlight[num + 1].forEach( function (elem) {
+			self.example[path[num]].image = "../assets/img/" + hint + ".png";
+			legalMoves[num + 1].forEach( function (elem) {
 				self.example[elem].class += ' highlight';
 			});
 			num++;
 			if (num < path.length) {
 				$timeout(function () {
-					self.next();
+					firstGuess(num);
 				}, 2000);
 			}
 		}

@@ -2,7 +2,7 @@ title= title
 .directions
 	h1= title
 	ul
-		li(ng-repeat="message in tCtrl.messages.slice(tCtrl.messages.length - 6,tCtrl.messages.length - 1)") {{message}}
+		li(ng-repeat="message in tCtrl.messages.slice(tCtrl.startMessages, tCtrl.messages.length)") {{message}}
 #tutorialMain
 	button(ng-click="tCtrl.next()",id="next") Next!
 	button(ng-click="tCtrl.game()",id="justPlay") Just Play!
