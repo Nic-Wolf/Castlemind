@@ -1,6 +1,7 @@
 title= title
 .directions
 	h1= title
+	h3 {{tCtrl.statement}}
 	ul
 		li(ng-repeat="message in tCtrl.messages.slice(tCtrl.startMessages, tCtrl.messages.length)") {{message}}
 #tutorialMain
