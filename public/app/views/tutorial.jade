@@ -3,7 +3,7 @@ title= title
 	h1= title
 	h3 {{tCtrl.statement}}
 	ul
-		li(ng-repeat="message in tCtrl.messages.slice(tCtrl.startMessages, tCtrl.messages.length)") {{message}}
+		li(ng-repeat="message in tCtrl.messages.slice(0, 5)") {{message}}
 #tutorialContainer
 	#tutorialBar
 		#divHints(class="{{tCtrl.hints.class}}")
