@@ -42,11 +42,6 @@ button {
 	box-shadow: 0 2px 14px 1px black;
 }
 
-
-
-
-
-
 #sidebar {
 	margin: 0 0 0 3%;
 	padding: 0;
@@ -61,6 +56,14 @@ button {
 	width: 60%;
 	max-width: 800px;
 	padding-right: 0.5%;
+}
+
+#tutorialBar {
+	margin: 0 0 0 3%;
+	padding: 0;
+	width: 60%;
+	max-width: 300px;
+	display: inline-block;
 }
 
 #divGrid {
@@ -286,6 +289,10 @@ button {
 	opacity: 0.8;
 }
 
+#divHints.highlight {
+	display: block;
+}
+
 .highlight:before {
 	content: '';
 	position: absolute;
@@ -316,9 +323,32 @@ button {
 	width: 40%;
 }
 
+.directions h3 {
+	float: left;
+}
+
+.directions ul {
+	position: fixed;
+	width: inherit;
+	margin-top: 50px;
+}
+
 .directions li {
 	margin: 20px 0 0 0;
 	font-size: 20px;
+}
+
+#tutorialContainer {
+	float: right;
+	width: 50%;
+}
+
+#tutorialGrid {
+	width: 100%;
+	padding: 0;
+	padding-bottom: 89.8%;
+	min-width: 260px;
+	min-height: 260px;
 }
 
 #next {
@@ -330,6 +360,5 @@ button {
 }
 
 #tutorialMain {
-	float: right;
-	width: 50%;
+	width: 100%;
 }

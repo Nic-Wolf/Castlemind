@@ -4,10 +4,17 @@ title= title
 	h3 {{tCtrl.statement}}
 	ul
 		li(ng-repeat="message in tCtrl.messages.slice(tCtrl.startMessages, tCtrl.messages.length)") {{message}}
-#tutorialMain
-	button(ng-click="tCtrl.next()",id="next") Next!
-	button(ng-click="tCtrl.game()",id="justPlay") Just Play!
-	table#divGrid
-		tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
-			td(ng-repeat="square in tCtrl.example.slice(row * 5,(row + 1) * 5)",class="{{square.class}}",ng-click="square.click()") 
-				img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
+#tutorialContainer
+	#tutorialBar
+		#divHints(class="{{tCtrl.hints.class}}")
+			div(ng-repeat="hint in tCtrl.hints",class="{{hint.class}}")
+				img(src="{{hint.image}}",alt="",class="{{hint.imgClass}}")
+		#divUserMoves
+			div(ng-repeat="move in tCtrl.moves",class="{{move.class}}")
+	#tutorialMain
+		button(ng-click="tCtrl.next()",id="next",class="{{tCtrl.buttonClass}}") Next!
+		button(ng-click="tCtrl.game()",id="justPlay") Just Play!
+		table#tutorialGrid
+			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
+				td(ng-repeat="square in tCtrl.example.slice(row * 5,(row + 1) * 5)",class="{{square.class}}",ng-click="square.click()") 
+					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
