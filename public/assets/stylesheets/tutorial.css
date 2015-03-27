@@ -1,0 +1,34 @@
+/*******************************/
+/* TUTORIAL STYLES */
+/*******************************/
+
+.directions {
+	/*float: left;*/
+	width: 40%;
+}
+
+.directions li {
+	margin: 20px 0 0 0;
+	font-size: 20px;
+}
+
+#next {
+	float: left;
+}
+
+#justPlay{
+	/*float: right;*/
+}
+
+#tutorialMain {
+	float: left;
+	width: 50%;
+}
+
+/*******************************/
+/* GAME BOARD OVERRIDES */
+/*******************************/
+
+#main {
+	float: left;
+}
