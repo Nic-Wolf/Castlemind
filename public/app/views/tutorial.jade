@@ -1,3 +1,7 @@
+block styles
+	link(rel='stylesheet', href='../assets/stylesheets/style.css')
+	link(rel='stylesheet', href='../assets/stylesheets/tutorial.css')
+
 title= title
 .directions
 	h1= title
@@ -14,6 +18,7 @@ title= title
 	#tutorialMain
 		button(ng-click="tCtrl.next()",id="next",class="{{tCtrl.buttonClass}}") Next!
 		button(ng-click="tCtrl.game()",id="justPlay") Just Play!
+	#main	
 		table#tutorialGrid
 			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
 				td(ng-repeat="square in tCtrl.example.slice(row * 5,(row + 1) * 5)",class="{{square.class}}",ng-click="square.click()") 
