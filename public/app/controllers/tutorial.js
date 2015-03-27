@@ -138,7 +138,7 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		[this.hints[1]],
 		[this.hints[2]],
 		[this.hints[3]],
-		[]
+		[this.hints]
 	];
 
 	var self = this;
