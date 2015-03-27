@@ -38,7 +38,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 					delete square.click;
 				});
 				self.message = 'Time is up. Click New Game to start a new session.';
-				self.pointsReport = 'You earned ' + self.points + ' points!'
+				self.pointsReport = 'Current Points: '; //+ self.points + " ";
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
