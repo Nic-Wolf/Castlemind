@@ -4,8 +4,10 @@
 
 body {
 	margin: 0;
-	padding: 0;
+	padding: 0 0 30px 0;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-image: url("../img/sandstone-bg.jpg");
+	background-size: cover;
 }
 
 a {
@@ -28,12 +30,22 @@ button {
 }
 
 #container {
-	background: url("../img/castle-bg-md.jpg") no-repeat;
+	background: url("../img/castle-bg-md-test.jpg") no-repeat;
 	background-size: cover;
 	padding: 30px 0;
 	width: 60%;
 	padding-bottom: 48.5%;
+	border: 10px outset transparent;
+	-webkit-border-image: url("../img/wood-border-test.jpg") 10 300 stretch;
+	-o-border-image:      url("../img/wood-border-test.jpg") 10 300 stretch;
+	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
+	box-shadow: 0 2px 14px 1px black;
 }
+
+
+
+
+
 
 #sidebar {
 	margin: 0 0 0 3%;
@@ -299,6 +311,26 @@ button {
 	}
 }
 
+.directions {
+	float: left;
+	width: 40%;
+}
 
+.directions li {
+	margin: 20px 0 0 0;
+	font-size: 20px;
+}
 
+#next {
+	float: left;
+}
+
+#justPlay{
+	float: right;
+}
+
+#tutorialMain {
+	float: right;
+	width: 50%;
+}
 

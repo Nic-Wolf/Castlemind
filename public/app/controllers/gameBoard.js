@@ -37,7 +37,8 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.squares.forEach( function (square) {
 					delete square.click;
 				});
-				self.message = 'Time is up.  You earned ' + self.points + ' points!';
+				self.message = 'Time is up. Click New Game to start a new session.';
+				self.pointsReport = 'You earned ' + self.points + ' points!'
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
@@ -47,7 +48,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 
 	
 	// ******************************************************* //
-	// newGame gets a gameboard and path from the server
+	// newGame starts the timer and gets a gameboard and path from the server
 	// The controller is assigned the following values
 	//		timeDisplay: shows the player their remaining time
 	//		points: this reflects the running total for five minutes
@@ -81,7 +82,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	}; // end newGame()
 
 	this.tutorial = function() {
-		$location.path('/');
+		$location.path('/tutorial');
 	};
 
 	// ******************************************************* //
@@ -109,21 +110,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		self.moves = [];
 		$cookies.moves = '';
 		
-		self.hints = self.solution.map(function (elem, ind) {
-			if (ind === 5) {
-				return {"class": 'square b', "imgClass": "ng-hide"};
-			} else {
-				var string = elem.direction.split(' ').reduce(function (prev, curr) {
-					return prev + curr[0];
-				}, '');
-				return {
-					"class": 'square hasImage',
-					"image": '../assets/img/' + string + '.png',
-					"imgClass": ""
-				};
-				}
-		});
-		self.hints[0].class = 'square hasImage a';
+		self.hints = self.solution.map(manageState.makeHint);
 		
 		self.squares[self.solution[0].index].class += ' a';
 		self.squares[self.solution[0].index].click();
