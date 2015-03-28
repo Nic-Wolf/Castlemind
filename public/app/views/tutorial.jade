@@ -1,11 +1,10 @@
-block styles
-	link(rel='stylesheet', href='../assets/stylesheets/style.css')
-	link(rel='stylesheet', href='../assets/stylesheets/tutorial.css')
-
 #container
 	#directions
+		div(ng-repeat='message in tCtrl.messages.slice(0, 1)') {{message}}
+	#options
+		button#next(class='{{tCtrl.buttonClass}}', ng-click='tCtrl.next()') Next
 		h3 {{tCtrl.statement}}
-		div(ng-repeat='message in tCtrl.messages.slice(0, 5)') {{message}}
+		button#justPlay(ng-click='tCtrl.game()') Just Play!
 	#divHints(class='{{tCtrl.hints.class}}')
 		div(class='{{hint.class}}', ng-repeat='hint in tCtrl.hints')
 			img(src='{{hint.image}}', alt='', class='{{hint.imgClass}}')
@@ -16,6 +15,3 @@ block styles
 			tr.rows(ng-repeat='row in [0, 1, 2, 3, 4]')
 				td(class='{{square.class}}', ng-repeat='square in tCtrl.example.slice(row * 5,(row + 1) * 5)', ng-click='square.click()')
 					img(class='{{square.imgClass}}', src='{{square.image}}', alt='')
-	#options
-		button#next(class='{{tCtrl.buttonClass}}', ng-click='tCtrl.next()') Next
-		button#justPlay(ng-click='tCtrl.game()') Just Play!
