@@ -19,6 +19,14 @@ h1 {
 	margin: auto;
 }
 
+h2 {
+	font-size: 1.5em;
+	display: inline-block;
+	float: left;
+	margin: 1.0em auto;
+	padding: 0;
+}
+
 h3 {
 	margin: 0 auto;
 	padding-top: 8%;
@@ -29,23 +37,47 @@ button {
 	font-size: 1.25em;
 }
 
+/*******************************/
+/* BANNER STYLES */
+/*******************************/
+
+.banner {
+	width: 93%;
+	display: inline-block;
+	margin: 1.5% auto 20px auto;
+}
+
+.banner h2 {
+	margin: auto 5%;
+}
+
+#btnTutorial {
+	position: absolute;
+	clear: left;
+	display: inline-block;
+	padding: 0.5em;
+	font-size: 2.0em;
+	font-weight: bolder;
+	margin: 0 auto;
+}
+
+/*******************************/
+/* BOARD STYLES */
+/*******************************/
+
 #container {
 	background: url("../img/castle-bg-md-test.jpg") no-repeat;
 	background-size: cover;
 	padding: 30px 0;
+	margin: auto;
 	width: 60%;
 	padding-bottom: 48.5%;
 	border: 10px outset transparent;
+	box-shadow: 0 2px 14px 1px black;
 	-webkit-border-image: url("../img/wood-border-test.jpg") 10 300 stretch;
 	-o-border-image:      url("../img/wood-border-test.jpg") 10 300 stretch;
 	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
-	box-shadow: 0 2px 14px 1px black;
 }
-
-
-
-
-
 
 #sidebar {
 	margin: 0 0 0 3%;
@@ -64,15 +96,16 @@ button {
 }
 
 #divGrid {
-	width: 90%;
+	position: absolute;
+	width: 92%;
+	margin-top: -2%;
 	padding: 0;
-	padding-bottom: 89.8%;
 	min-width: 260px;
 	min-height: 260px;
 }
 
 .square {
-	width: 18.5%;
+	width: 18%;
 	padding-bottom: 19%;
 	margin-left: 1%;
 	margin-top: 1%;
@@ -103,7 +136,7 @@ button {
 
 .b {
 	background: url("../img/end.jpg") no-repeat;
-	background-size: cover;
+	background-size: contain;
 	opacity: 0.8;
 }
 
@@ -113,10 +146,10 @@ button {
 }
 
 #divUserMoves {
+	box-sizing: border-box;
 	margin-top: 20px;
-	width: 90%;
-	padding-bottom: 16%;
-	padding-right: 1%;
+	width: 100%;
+	padding-bottom: 17%;
 	background-image: url("../img/brushed_alu_dark.png");
 	opacity: 0.97;
 	border: 3px solid #aaa;
@@ -124,16 +157,17 @@ button {
 }
 
 #divUserMoves .square {
-	width: 15.667%;
-	padding-bottom: 15.75%;
+	box-sizing: border-box;
+	width: 15.5%;
+	padding-bottom: 15.7%;
 	box-shadow: 0 -1px 8px black;
 }
 
 #divHints {
+	box-sizing: border-box;
 	margin-top: 20px;
-	width: 90%;
-	padding-bottom: 16%;
-	padding-right: 1%;
+	width: 100%;
+	padding-bottom: 17%;
 	background-image: url("../img/brushed_alu_dark.png");
 	opacity: 0.97;
 	border: 4px solid #aaa;
@@ -141,12 +175,14 @@ button {
 }
 
 #divHints .square {
-	width: 15.667%;
+	box-sizing: border-box;
+	width: 15.5%;
 	box-shadow: 0 -1px 8px black;
 }
 
 #divHints .b {
-	padding-bottom: inherit;
+	background-size: cover;
+	padding-bottom: 15%;
 }
 
 .currentMove {
@@ -167,19 +203,21 @@ button {
 /* MEDIA QUERIES */
 /*******************************/
 
-@media screen and (max-width: 1250px) {
+@media screen and (min-width: 840px), screen and (max-width: 1250px) {
 	#container {
 		width: 750px;
 	}
-}
 
-@media screen and (min-width: 840px) {
-	#container {
-		width: 90%;
+	#btnTutorial {
+		clear: left;
 	}
 }
 
 @media screen and (min-width: 560px), screen and (max-width: 839px) {
+	#container {
+		width: 90%;
+	}
+
 	#sidebar {
 		float: left;
 		position: absolute;
@@ -192,10 +230,6 @@ button {
 		left: 45%;
 		width: 50%;
 	}
-
-	#divGrid {
-		margin: auto;
-	}
 }
 
 @media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px)  {
@@ -203,13 +237,18 @@ button {
 		display: block;
 		margin: 0 auto;
 		padding: 0.25em;
-		width: 40%;
 		font-size: 2.0em;
-		border-radius: 13px;
+	}
+
+	.banner {
+		width: 80%;
+		float: left;
 	}
 
 	#container {
-		width: 100%
+		box-sizing: border-box;
+		width: 100%;
+		padding-bottom: 0;
 	}
 
 	#sidebar {
@@ -242,9 +281,8 @@ button {
 	}
 
 	#divGrid {
+		position: static;
 		margin: auto;
-		width: 100%;
-		padding-bottom: 98.8%;
 	}
 }
 
@@ -286,6 +324,10 @@ button {
 	opacity: 0.8;
 }
 
+#divHints.highlight {
+	display: block;
+}
+
 .highlight:before {
 	content: '';
 	position: absolute;
@@ -311,27 +353,4 @@ button {
 	50%  {box-shadow: inset 0 0 50px 0px white;}
 	75%  {box-shadow: inset 0 0 50px 0px #d3d3d3;}
 	to   {box-shadow: inset 0 0 50px 0px transparent;}
-}
-
-.directions {
-	float: left;
-	width: 40%;
-}
-
-.directions li {
-	margin: 20px 0 0 0;
-	font-size: 20px;
-}
-
-#next {
-	float: left;
-}
-
-#justPlay{
-	float: right;
-}
-
-#tutorialMain {
-	float: right;
-	width: 50%;
 }
