@@ -61,4 +61,5 @@
 
 #main {
 	float: left;
+	max-width: 600px;
 }
