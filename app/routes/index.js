@@ -14,11 +14,6 @@ router.get('/main', function(req, res, next) {
 	res.render('main');
 });
 
-// test
-router.get('/test', function(req, res, next) {
-	res.render('test');
-});
-
 // GET game page //
 router.get('/game', function(req, res, next) {
 	res.render('game', {title: 'Castlemind Game View'});

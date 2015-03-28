@@ -10,22 +10,22 @@
 	display: inline-block;
 }
 
-.directions {
+#directions {
 	float: left;
 	width: 40%;
 }
 
-.directions h3 {
+#directions h3 {
 	float: left;
 }
 
-.directions ul {
+#directions ul {
 	position: fixed;
 	width: inherit;
 	margin-top: 50px;
 }
 
-.directions li {
+#directions li {
 	margin: 20px 0 0 0;
 	font-size: 20px;
 }
@@ -55,11 +55,3 @@
 	width: 100%;
 }
 
-/*******************************/
-/* GAME BOARD OVERRIDES */
-/*******************************/
-
-#main {
-	float: left;
-	max-width: 600px;
-}

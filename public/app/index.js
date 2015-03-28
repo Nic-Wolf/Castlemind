@@ -19,9 +19,6 @@ routeApp.config(['$routeProvider',
 			templateUrl: '/main',
 			controller: 'mainController as mCtrl'
 		}).
-		when('/test', {
-			templateUrl: '/test',
-		}).
 		when('/tutorial', {
 			templateUrl: '/tutorial',
 			controller: 'tutorialController as tCtrl'
