@@ -1,9 +1,11 @@
-button(ng-click="gCtrl.reset()") Reset!
-button(ng-click="gCtrl.tutorial()") How do I game?!
-title= title
-h1(class="{{gCtrl.messageClass}}") {{gCtrl.message}}
-h3 {{gCtrl.pointsReport}}
-h3 {{gCtrl.timeDisplay}}
+block styles
+	link(rel='stylesheet', href='../assets/stylesheets/style.css')
+
+div.banner
+	h2#points Current Points:&nbsp;{{gCtrl.points}}&nbsp;
+	h2#high-score High Score:&nbsp;999
+	h2#timer {{gCtrl.timeDisplay}}
+button#btnTutorial(ng-click="gCtrl.tutorial()") ?!?
 #container(class="container")
 	#sidebar(class="col-md-4")
 		button(ng-click="gCtrl.newGame()") New Game
@@ -19,3 +21,4 @@ h3 {{gCtrl.timeDisplay}}
 			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
 				td(ng-repeat="square in gCtrl.squares.slice(row * 5,(row + 1) * 5)",class="{{square.class}}", ng-click="square.click()") 
 					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
+button(ng-click="gCtrl.reset()") Reset!

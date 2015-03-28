@@ -16,15 +16,15 @@ routeApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
 		when ('/main', {
-			templateUrl: './main',
+			templateUrl: '/main',
 			controller: 'mainController as mCtrl'
 		}).
 		when('/tutorial', {
-			templateUrl: './tutorial',
+			templateUrl: '/tutorial',
 			controller: 'tutorialController as tCtrl'
 		}).
 		when('/game', {
-			templateUrl: './game',
+			templateUrl: '/game',
 			controller: 'gameController as gCtrl'
 		}).
 		otherwise({
