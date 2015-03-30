@@ -1,7 +1,6 @@
 /*******************************/
-/* GENERAL STYLES */
+/* CUSTOM FONTS */
 /*******************************/
-
 @font-face {
 	font-family: Cardinal;
 	src: url('../fonts/Cardinal-Alternate.ttf');
@@ -13,12 +12,15 @@
 }
 
 
+/*******************************/
+/* GENERAL STYLES */
+/*******************************/
 body {
 	margin: 0;
 	padding: 0 0 30px 0;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-	background-image: url("../img/sandstone-bg.jpg");
-	background-size: cover;
+	background-image: url("../img/castle-bg-md.jpg");
+	background-size: 100% 150%;
 }
 
 a {
@@ -48,6 +50,8 @@ h3 {
 button {
 	margin: 0 auto 20px auto;
 	font-size: 1.25em;
+	background-image: url("../img/brushed_alu_dark.png");
+	border: outset 4px solid #aaa;
 }
 
 #divSplash {
@@ -71,7 +75,6 @@ button {
 /*******************************/
 /* TUTORIAL STYLES */
 /*******************************/
-
 #directions {
 	margin: 0;
 	padding: 0;
@@ -102,16 +105,23 @@ button {
 }
 
 #tutorialGrid {
-	width: 100%;
+	position: absolute;
+	width: 92%;
+	margin-top: -2%;
+	padding: 0;
+	min-width: 260px;
+	min-height: 260px;
+
 }
+
 #tutorialGrid tbody {
 	margin: 0 auto;
 }
 
+
 /*******************************/
 /* BANNER STYLES */
 /*******************************/
-
 .banner {
 	width: 93%;
 	display: inline-block;
@@ -132,12 +142,12 @@ button {
 	margin: 0 auto;
 }
 
+
 /*******************************/
 /* BOARD STYLES */
 /*******************************/
-
 #container {
-	background: url("../img/castle-bg-md-test.jpg") no-repeat;
+	background: url("../img/mahogany.jpg") no-repeat;
 	background-size: cover;
 	padding: 30px 0;
 	margin: auto;
@@ -176,18 +186,20 @@ button {
 }
 
 .square {
+	box-sizing: border-box;
+	line-height: 0;
 	width: 18%;
-	padding-bottom: 19%;
+	padding-bottom: 17%;
 	margin-left: 1%;
 	margin-top: 1%;
 	float: left;
 	opacity: 0.85;
 	border-radius: 5%;
 	box-shadow: inset 0 -1px 2px 0 #404040;
+	border: outset 2px #654;
 }
 
 .square img {
-	vertical-align: top;
 	margin: 0;
 	padding: 0;
 	width: 100%;
@@ -217,7 +229,7 @@ button {
 
 .a {
 	background-color: transparent;
-	box-shadow: inset -3px -1px 30px 4px #f0f0f0;
+	box-shadow: inset -3px 0 20px 1px #f0f0f0;
 }
 
 .b {
@@ -228,7 +240,7 @@ button {
 
 .clicked {
 	background: transparent;
-	box-shadow: inset -3px -1px 30px 4px #f0f0f0;
+	box-shadow: inset -3px 0 20px 1px #f0f0f0;
 }
 
 #divUserMoves {
@@ -245,7 +257,7 @@ button {
 #divUserMoves .square {
 	box-sizing: border-box;
 	width: 15.5%;
-	padding-bottom: 15.7%;
+	padding-bottom: 14%;
 	box-shadow: 0 -1px 8px black;
 }
 
@@ -268,7 +280,7 @@ button {
 
 #divHints .b {
 	background-size: cover;
-	padding-bottom: 15%;
+	padding-bottom: 14%;
 }
 
 .currentMove {
@@ -277,18 +289,17 @@ button {
 }
 
 .hasImage {
-	padding-bottom: 0.27055%;
+	line-height: 0;
+	padding-bottom: 0;
 }
 
 .currentMove .b {
-	padding-bottom: 15%;
 }
 
 
 /*******************************/
 /* MEDIA QUERIES */
 /*******************************/
-
 @media screen and (min-width: 840px), screen and (max-width: 1250px) {
 	#container {
 		width: 750px;
@@ -334,6 +345,42 @@ button {
 		font-size: 4.0em;
 	}
 
+	#directions {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 6.0em;
+		display: block;
+	}
+
+	#directions div {
+		font-size: 1.5em;
+	}
+
+	#options h3 {
+		display: inline-block;
+		padding: 0;
+	}
+
+	#next, #justPlay {
+		font-size: 1.75em;
+		display: inline-block;
+		margin: 0;
+		padding: 0.25em;
+	}
+
+	#justPlay {
+		float: right;
+	}
+
+	#tutorialGrid {
+		position: static;
+		margin: auto;
+	}
+
+/*	#tutorialGrid tbody {
+		margin: 0 auto;
+	}*/
 
 	.banner {
 		width: 80%;
@@ -385,7 +432,6 @@ button {
 /*******************************/
 /* ANIMATIONS */
 /*******************************/
-
 @-webkit-keyframes highlight {
 	100% {
 		top:    -10px;
@@ -408,7 +454,6 @@ button {
 
 .highlight {
 	display: inline-block;
-	/*vertical-align: middle;*/
 	-webkit-transform: translateZ(0);
 	transform: translateZ(0);
 	box-shadow: 0 0 2px rgba(0, 0, 0, 0);
