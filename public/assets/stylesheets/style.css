@@ -2,6 +2,17 @@
 /* GENERAL STYLES */
 /*******************************/
 
+@font-face {
+	font-family: Cardinal;
+	src: url('../fonts/Cardinal-Alternate.ttf');
+}
+
+@font-face {
+	font-family: Perrygot;
+	src: url('../fonts/Perrygot.ttf');
+}
+
+
 body {
 	margin: 0;
 	padding: 0 0 30px 0;
@@ -15,8 +26,10 @@ a {
 }
 
 h1 {
+	display: inline-block;
+	vertical-align: center;
+	font-family: Perrygot;
 	text-align: center;
-	margin: auto;
 }
 
 h2 {
@@ -33,9 +46,27 @@ h3 {
 }
 
 button {
-	margin-bottom: 20px;
+	margin: 0 auto 20px auto;
 	font-size: 1.25em;
 }
+
+#divSplash {
+	margin: auto;
+	width: 80%;
+	display: block;
+}
+
+#divSplash h1 {
+	width: 100%;
+	font-size: 8.0em;
+}
+
+#divSplash button {
+	font-size: 1.75em;
+	display: block;
+	padding: 0.5em;
+}
+
 
 /*******************************/
 /* TUTORIAL STYLES */
@@ -163,11 +194,26 @@ button {
 	opacity: 1;
 }
 
-.color-0 { background-color: #c03c2a; }
-.color-1 { background-color: #f4ee70; }
-.color-2 { background-color: #60cd34; }
-.color-3 { background-color: #ce31d7; }
-.color-4 { background-color: #322cc1; }
+.color-0 { 
+	background-image: url("../img/valley.jpg");
+	background-size: cover;
+}
+.color-1 { 
+	background-image: url("../img/mountain.jpg");
+	background-size: cover;
+}
+.color-2 { 
+	background-image: url("../img/swamp.jpg");
+	background-size: cover;
+}
+.color-3 { 
+	background-image: url("../img/desert.jpg");
+	background-size: cover;
+}
+.color-4 { 
+	background-image: url("../img/forest.jpg");
+	background-size: cover;
+}
 
 .a {
 	background-color: transparent;
@@ -254,6 +300,10 @@ button {
 }
 
 @media screen and (min-width: 560px), screen and (max-width: 839px) {
+	#divSplash h1 {
+		font-size: 6.0em;
+	}
+
 	#container {
 		width: 90%;
 	}
@@ -279,6 +329,11 @@ button {
 		padding: 0.25em;
 		font-size: 2.0em;
 	}
+
+	#divSplash h1 {
+		font-size: 4.0em;
+	}
+
 
 	.banner {
 		width: 80%;
