@@ -52,46 +52,58 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		$location.path('/game');
 	};
 
-	// make a list of messages to appear as the slides go
+	// This is a complete list of messages for the tutorial
 	var messages = [
 		'Your objective is to guess the path that the computer took to the castle.',
 		'Click next to start the tutorial.',
-		'You can see the start and end points.',
-		"You can also see hints about the computer's moves.",
+		'Here are the start and end points.',
+		"These are hints about the computer's moves.",
 		"In this example, you can see all four movement types:",
-		'  one space horizontal or vertical',
-		'  one space diagonal',
-		'  three spaces horizontal or vertical',
-		'  three spaces diagonal',
-		"There are always five moves, but not every kind of move will show up in a game",
+		'one space horizontal or vertical',
+		'one space diagonal',
+		'three spaces horizontal or vertical',
+		'three spaces diagonal',
+		"There are always five moves in one game.",
 		"Click next to see an example of a guess.",
 		"Before each move, the possible next moves flash.",
-		"Let's see what happens when a square is clicked.",
-		"First click: pink.  Notice the pink square above?",
-		"Second click: yellow. The squares in that bar show what colors you've guessed.",
+		"Let's see what a guess looks like.",
+		"First click: pink.  Notice the pink square in the user moves bar?",
+		"Second click: yellow.",
 		"Third click: pink.",
 		"Fourth click: pink.",
-		"The castle is the last click and the guess is complete.",
+		"The castle is the last click.  Now the guess is complete.",
 		"The hints update after a guess to show which squares you got correct.",
-		"There are no more slides."
+		"Click next to see the solution.",
+		"The first square must be pink, but there are two pink squares.",
+		"Let's try the one we didn't use last time.",
+		"Second click: blue",
+		"Third click: pink",
+		"Fourth click: pink",
+		"The last click is the castle.",
+		"This time the hints fill up all the way.",
+		"The board didn't reset either.",
+		"That was the correct guess! That's all there is to it."
 	];
 
-	// state which message is the oldest to be displayed and which messages are
-	// initially displayed
+	// this.messages starts with only one message
 	this.messages = [messages[0]];
+
+	// addToMessages adds a message to the beginning of this.messages
 	addToMessages = function () {
 		var visibleMessages = messages.slice(0,self.messages.length + 1);
 		self.messages = visibleMessages.reverse();
 	}
 
 
-	// state the example board and solution variables
+	// initialize the board
 	this.example = exampleBoard.map(function (elem) {
 		var result = elem;
 		result.class = "square color-" + elem.colorKey;
 		result.imgClass = "ng-hide";
 		return result;
 	});
+
+	// initialize the hints
 	this.hints = exampleSolution.map(manageState.makeHint);
 	this.hints.class = '';
 	this.solution = exampleSolution;
@@ -102,32 +114,40 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	this.example[12].image = "../assets/img/o.png";
 	this.example[6].class += ' b';
 
+	// initialize the user guesses
 	this.moves = [{
 		"class": 'square color-4 a'
 	}];
 
-
-	// set up a function to represent each click of the next button
-	var slideNumber = 2;
-	var slides = [
-		gameRules,
-		firstGuess,
-		bePatient
-	];
-
-
-
+	// prompt the user to start the tutorial after two seconds
 	$timeout( function () {
 		addToMessages();
 		slideNumber = 0;
 		self.buttonClass = ' highlight';
 	}, 2000);
 
+
+	// set up a function to represent each click of the next button
+	var slides = [
+		gameRules,
+		firstGuess,
+		bePatient
+	];
+	var slideNumber = slides.length - 1;
+
 	this.next = function () {
 		slides[slideNumber](0);
 		self.buttonClass = self.buttonClass.split(' highlight').join('');
 		slideNumber = slides.length - 1;
 	};
+
+
+
+	var self = this;
+
+	// ******************************************************************** //
+	// first slide
+	// ******************************************************************** //
 
 	// declare what will be highlighted after each direction is introduced
 	var drawAttention = [
@@ -140,8 +160,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		[this.hints[3]],
 		[this.hints]
 	];
-
-	var self = this;
 
 	function gameRules (num) {
 		if (num > 0) {
@@ -166,7 +184,12 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 			slideNumber = 1;
 			self.buttonClass = ' highlight';
 		}
-	}
+	}// end gameRules()
+
+
+	// ******************************************************************** //
+	// second slide
+	// ******************************************************************** //
 
 	// declare what squares are legal after each click
 	var legalMoves = [
@@ -232,6 +255,14 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		} else {
 			slideNumber = 2;
 		}
+	}// end firstGuess()
+
+
+	// ******************************************************************** //
+	// third slide
+	// ******************************************************************** //
+	function correctGuess (num) {
+		
 	}
 
 	function bePatient () {
