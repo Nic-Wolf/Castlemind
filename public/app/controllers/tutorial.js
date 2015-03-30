@@ -51,47 +51,60 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	this.game = function () {
 		$location.path('/game');
 	};
+	this.buttonClass = '';
 
-	// make a list of messages to appear as the slides go
+	// This is a complete list of messages for the tutorial
 	var messages = [
 		'Your objective is to guess the path that the computer took to the castle.',
 		'Click next to start the tutorial.',
-		'You can see the start and end points.',
-		"You can also see hints about the computer's moves.",
+		'Here are the start and end points.',
+		"These are hints about the computer's moves.",
 		"In this example, you can see all four movement types:",
-		'  one space horizontal or vertical',
-		'  one space diagonal',
-		'  three spaces horizontal or vertical',
-		'  three spaces diagonal',
-		"There are always five moves, but not every kind of move will show up in a game",
+		'one space horizontal or vertical',
+		'one space diagonal',
+		'three spaces horizontal or vertical',
+		'three spaces diagonal',
+		"There are always five moves in one game.",
 		"Click next to see an example of a guess.",
 		"Before each move, the possible next moves flash.",
-		"Let's see what happens when a square is clicked.",
-		"First click: pink.  Notice the pink square above?",
-		"Second click: yellow. The squares in that bar show what colors you've guessed.",
+		"Let's see what a guess looks like.",
+		"First click: pink.  Notice the pink square in the user moves bar?",
+		"Second click: yellow.",
 		"Third click: pink.",
 		"Fourth click: pink.",
-		"The castle is the last click and the guess is complete.",
+		"The castle is the last click.  Now the guess is complete.",
 		"The hints update after a guess to show which squares you got correct.",
-		"There are no more slides."
+		"Click next to see the solution.",
+		"The first square must be pink, but there are two pink squares.",
+		"Let's try the one we didn't use last time.",
+		"Second click: blue",
+		"Third click: pink",
+		"Fourth click: pink",
+		"The last click is the castle.",
+		"This time the hints fill up all the way.",
+		"The board didn't reset either.",
+		"That was the correct guess! That's all there is to it."
 	];
 
-	// state which message is the oldest to be displayed and which messages are
-	// initially displayed
+	// this.messages starts with only one message
 	this.messages = [messages[0]];
+
+	// addToMessages adds a message to the beginning of this.messages
 	addToMessages = function () {
 		var visibleMessages = messages.slice(0,self.messages.length + 1);
 		self.messages = visibleMessages.reverse();
 	}
 
 
-	// state the example board and solution variables
+	// initialize the board
 	this.example = exampleBoard.map(function (elem) {
 		var result = elem;
 		result.class = "square color-" + elem.colorKey;
 		result.imgClass = "ng-hide";
 		return result;
 	});
+
+	// initialize the hints
 	this.hints = exampleSolution.map(manageState.makeHint);
 	this.hints.class = '';
 	this.solution = exampleSolution;
@@ -102,32 +115,41 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	this.example[12].image = "../assets/img/o.png";
 	this.example[6].class += ' b';
 
+	// initialize the user guesses
 	this.moves = [{
 		"class": 'square color-4 a'
 	}];
 
-
-	// set up a function to represent each click of the next button
-	var slideNumber = 2;
-	var slides = [
-		gameRules,
-		firstGuess,
-		bePatient
-	];
-
-
-
+	// prompt the user to start the tutorial after two seconds
 	$timeout( function () {
 		addToMessages();
 		slideNumber = 0;
 		self.buttonClass = ' highlight';
 	}, 2000);
 
+
+	// set up a function to represent each click of the next button
+	var slides = [
+		gameRules,
+		firstGuess,
+		correctGuess,
+		bePatient
+	];
+	var slideNumber = slides.length - 1;
+
 	this.next = function () {
 		slides[slideNumber](0);
 		self.buttonClass = self.buttonClass.split(' highlight').join('');
 		slideNumber = slides.length - 1;
 	};
+
+
+
+	var self = this;
+
+	// ******************************************************************** //
+	// first slide
+	// ******************************************************************** //
 
 	// declare what will be highlighted after each direction is introduced
 	var drawAttention = [
@@ -140,8 +162,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		[this.hints[3]],
 		[this.hints]
 	];
-
-	var self = this;
 
 	function gameRules (num) {
 		if (num > 0) {
@@ -166,49 +186,33 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 			slideNumber = 1;
 			self.buttonClass = ' highlight';
 		}
-	}
+	}// end gameRules()
 
-	// declare what squares are legal after each click
-	var legalMoves = [
+
+	// ******************************************************************** //
+	// second slide
+	// ******************************************************************** //
+
+	// declare what squares are legal after each click and what the clicks are
+	var legalMovesGuess = [
 		[7, 11, 13, 17],
 		[5, 7, 15, 17],
-		[18],
+		[0, 18],
 		[0],
 		[6],
 		[]
 	];
+	var pathGuess = [11, 15, 18, 0, 6];
 
-	var path = [11, 15, 18, 0, 6];
 	function firstGuess (num) {
 		addToMessages();
-		if (num === 0) {
-			legalMoves[num].forEach( function (elem) {
-				self.example[elem].class += ' highlight';
-			});
-		}
-
-		if (num > 1 && num <= 6) {
-			legalMoves[num - 2].forEach( function (elem) {
-				self.example[elem].class = self.example[elem].class.split(' highlight').join('');
-			});
-			if (num < 6) {
-				self.moves.push({
-					"class": self.example[path[num - 2]].class
-				});
-				self.example[path[num - 2]].class += ' hasImage';
-				self.example[path[num - 2]].imgClass = "";
-				var string = self.solution[num - 1].direction;
-				var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
-				self.example[path[num - 2]].image = "../assets/img/" + hint + ".png";
-				legalMoves[num - 1].forEach( function (elem) {
-					self.example[elem].class += ' highlight';
-				});
-			}
+		if (num < 6) {
+			click(num - 2, pathGuess, legalMovesGuess);
 		}
 
 		if (num === 6) {
 			self.moves = self.moves.slice(0,1);
-			path.forEach( function (elem) {
+			pathGuess.forEach( function (elem) {
 				var square = self.example[elem];
 				square.class = square.class.split(' hasImage').join('');
 				square.imgClass = "ng-hide";
@@ -230,14 +234,104 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 				firstGuess(num);
 			}, 4000);
 		} else {
+			self.hints[1].class = self.hints[1].class.split(' highlight').join('');
+			self.buttonClass += ' highlight';
 			slideNumber = 2;
 		}
-	}
+	}// end firstGuess()
+
+
+	// ******************************************************************** //
+	// third slide
+	// ******************************************************************** //
+
+	// declare what squares are legal after each click
+	var legalMovesCorrect = [
+		[7, 11],
+		[1, 11, 3, 13],
+		[0, 18],
+		[0],
+		[6],
+		[]
+	];
+	var pathCorrect = [7, 3, 18, 0, 6];
+
+	function correctGuess (num) {
+		addToMessages();
+		if (num < 5) {
+			click(num - 1, pathCorrect, legalMovesCorrect);
+		}
+
+		if (num === 5) {
+			self.moves.push({"class": 'square b'});
+			self.example[6].class = self.example[6].class.split(' highlight').join('');
+			self.hints.slice(1,5).forEach( function (elem, ind) {
+				var square = self.example[exampleSolution[ind + 1].index];
+				elem.class = square.class;
+			});
+		}
+
+		if (num === 6) {
+			self.hints.class += ' highlight';
+		}
+
+		if (num === 7) {
+			self.hints.class = self.hints.class.split(' highlight').join('');
+			pathCorrect.forEach( function (elem) {
+				self.example[elem].class += ' highlight';
+			});
+		}
+
+		if (num === 8) {
+			pathCorrect.forEach( function (elem) {
+				self.example[elem].class = self.example[elem].class.split(' highlight').join('');
+			});
+		}
+
+		num++;
+		if (num <= 8) {
+			$timeout( function () {
+				correctGuess(num);
+			}, 4000);
+		} else {
+			slideNumber = 3;
+		}
+	}// end correctGuess()
+
+
+	// ******************************************************************* //
+	// support functions
+	// ******************************************************************* //
 
 	function bePatient () {
 		self.statement = "Please have patience."
 		$timeout(function () {
 			delete self.statement;
 		}, 1000);
+	}
+
+	function click (number, path, legalMoves) {
+		if (number < 0) {
+			legalMoves[0].forEach( function (elem) {
+				self.example[elem].class += ' highlight';
+			});
+		}
+
+		if (number >= 0) {
+			legalMoves[number].forEach( function (elem) {
+				self.example[elem].class = self.example[elem].class.split(' highlight').join('');
+			});
+			self.moves.push({
+				"class": self.example[path[number]].class
+			});
+			self.example[path[number]].class += ' hasImage';
+			self.example[path[number]].imgClass = "";
+			var string = self.solution[number + 1].direction;
+			var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
+			self.example[path[number]].image = "../assets/img/" + hint + ".png";
+			legalMoves[number + 1].forEach( function (elem) {
+				self.example[elem].class += ' highlight';
+			});
+		}
 	}
 }]);
