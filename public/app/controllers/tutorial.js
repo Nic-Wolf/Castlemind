@@ -51,6 +51,7 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	this.game = function () {
 		$location.path('/game');
 	};
+	this.buttonClass = '';
 
 	// This is a complete list of messages for the tutorial
 	var messages = [
@@ -131,6 +132,7 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	var slides = [
 		gameRules,
 		firstGuess,
+		correctGuess,
 		bePatient
 	];
 	var slideNumber = slides.length - 1;
@@ -191,47 +193,26 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	// second slide
 	// ******************************************************************** //
 
-	// declare what squares are legal after each click
-	var legalMoves = [
+	// declare what squares are legal after each click and what the clicks are
+	var legalMovesGuess = [
 		[7, 11, 13, 17],
 		[5, 7, 15, 17],
-		[18],
+		[0, 18],
 		[0],
 		[6],
 		[]
 	];
+	var pathGuess = [11, 15, 18, 0, 6];
 
-	var path = [11, 15, 18, 0, 6];
 	function firstGuess (num) {
 		addToMessages();
-		if (num === 0) {
-			legalMoves[num].forEach( function (elem) {
-				self.example[elem].class += ' highlight';
-			});
-		}
-
-		if (num > 1 && num <= 6) {
-			legalMoves[num - 2].forEach( function (elem) {
-				self.example[elem].class = self.example[elem].class.split(' highlight').join('');
-			});
-			if (num < 6) {
-				self.moves.push({
-					"class": self.example[path[num - 2]].class
-				});
-				self.example[path[num - 2]].class += ' hasImage';
-				self.example[path[num - 2]].imgClass = "";
-				var string = self.solution[num - 1].direction;
-				var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
-				self.example[path[num - 2]].image = "../assets/img/" + hint + ".png";
-				legalMoves[num - 1].forEach( function (elem) {
-					self.example[elem].class += ' highlight';
-				});
-			}
+		if (num < 6) {
+			click(num - 2, pathGuess, legalMovesGuess);
 		}
 
 		if (num === 6) {
 			self.moves = self.moves.slice(0,1);
-			path.forEach( function (elem) {
+			pathGuess.forEach( function (elem) {
 				var square = self.example[elem];
 				square.class = square.class.split(' hasImage').join('');
 				square.imgClass = "ng-hide";
@@ -253,6 +234,8 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 				firstGuess(num);
 			}, 4000);
 		} else {
+			self.hints[1].class = self.hints[1].class.split(' highlight').join('');
+			self.buttonClass += ' highlight';
 			slideNumber = 2;
 		}
 	}// end firstGuess()
@@ -261,14 +244,94 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	// ******************************************************************** //
 	// third slide
 	// ******************************************************************** //
+
+	// declare what squares are legal after each click
+	var legalMovesCorrect = [
+		[7, 11],
+		[1, 11, 3, 13],
+		[0, 18],
+		[0],
+		[6],
+		[]
+	];
+	var pathCorrect = [7, 3, 18, 0, 6];
+
 	function correctGuess (num) {
-		
-	}
+		addToMessages();
+		if (num < 5) {
+			click(num - 1, pathCorrect, legalMovesCorrect);
+		}
+
+		if (num === 5) {
+			self.moves.push({"class": 'square b'});
+			self.example[6].class = self.example[6].class.split(' highlight').join('');
+			self.hints.slice(1,5).forEach( function (elem, ind) {
+				var square = self.example[exampleSolution[ind + 1].index];
+				elem.class = square.class;
+			});
+		}
+
+		if (num === 6) {
+			self.hints.class += ' highlight';
+		}
+
+		if (num === 7) {
+			self.hints.class = self.hints.class.split(' highlight').join('');
+			pathCorrect.forEach( function (elem) {
+				self.example[elem].class += ' highlight';
+			});
+		}
+
+		if (num === 8) {
+			pathCorrect.forEach( function (elem) {
+				self.example[elem].class = self.example[elem].class.split(' highlight').join('');
+			});
+		}
+
+		num++;
+		if (num <= 8) {
+			$timeout( function () {
+				correctGuess(num);
+			}, 4000);
+		} else {
+			slideNumber = 3;
+		}
+	}// end correctGuess()
+
+
+	// ******************************************************************* //
+	// support functions
+	// ******************************************************************* //
 
 	function bePatient () {
 		self.statement = "Please have patience."
 		$timeout(function () {
 			delete self.statement;
 		}, 1000);
+	}
+
+	function click (number, path, legalMoves) {
+		if (number < 0) {
+			legalMoves[0].forEach( function (elem) {
+				self.example[elem].class += ' highlight';
+			});
+		}
+
+		if (number >= 0) {
+			legalMoves[number].forEach( function (elem) {
+				self.example[elem].class = self.example[elem].class.split(' highlight').join('');
+			});
+			self.moves.push({
+				"class": self.example[path[number]].class
+			});
+			self.example[path[number]].class += ' hasImage';
+			self.example[path[number]].imgClass = "";
+			var string = self.solution[number + 1].direction;
+			var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
+			self.example[path[number]].image = "../assets/img/" + hint + ".png";
+			legalMoves[number + 1].forEach( function (elem) {
+				self.example[elem].class += ' highlight';
+			});
+		}
 	}
 }]);
