@@ -43,7 +43,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
 	}; // end countDown()
-	self.results = [];
 	self.message = "Welcome! Press New Game to Begin!";
 
 	
@@ -63,6 +62,9 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			$cookies.elapsedTime = 0;
 			self.timeDisplay = 'Time remaining: 5:00';
 			self.points = 0;
+			$cookies.points = 0;
+			self.results = [];
+			$cookies.results = '';
 			self.countDown();
 		} else if (self.timeDisplay.indexOf(' (paused)') !== -1) {
 			self.timeDisplay = self.timeDisplay.split(' (paused)').join('');
@@ -160,7 +162,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		});
 
 		if (self.moves.length === 6) {
-			$cookies.guesses = self.guesses;
 			manageState.resetGuess(
 				self.moves, self.hints, self.squares, self.solution, self.guesses,
 				self.results, function(moves, hints, squares, message, results, points) {
@@ -168,10 +169,15 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 					self.hints = hints;
 					self.squares = squares;
 					self.message = message;
-					self.results = results;
-					self.points = points;
+					if(!$cookies.victory) {
+						self.results = results;
+						$cookies.results = results.join('_');
+						self.points = points;
+						$cookies.points = points;
+					}
 					if (moves.length === 0) {
 						self.guesses++;
+						$cookies.guesses = self.guesses;
 						$cookies.moves = '';
 						self.squares = self.squares.map(function (elem) {
 							var result = elem;
@@ -235,7 +241,12 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	// init restores the board state if there is an active game
 	function init () {
 		if ($cookies.playing) {
-			self.guesses = $cookies.guesses;
+			self.timeDisplay = $cookies.timeDisplay;
+			self.guesses = Number($cookies.guesses);
+			self.points = Number($cookies.points);
+			self.results = $cookies.results.split('_').map(function (elem) {
+				return Number(elem);
+			});
 			manageState.deStringState(
 				$cookies.state, $cookies.solution, $cookies.moves,
 				function (squares, solution, moves) {
@@ -245,7 +256,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				});
 			});
 			$cookies.timeCheck = Date.now();
-			self.timeDisplay = $cookies.timeDisplay;
 			self.countDown();
 		}
 	}
