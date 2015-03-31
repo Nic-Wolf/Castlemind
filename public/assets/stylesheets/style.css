@@ -2,13 +2,8 @@
 /* CUSTOM FONTS */
 /*******************************/
 @font-face {
-	font-family: Cardinal;
-	src: url('../fonts/Cardinal-Alternate.ttf');
-}
-
-@font-face {
-	font-family: Perrygot;
-	src: url('../fonts/Perrygot.ttf');
+	font-family: 'Perrygot';
+	src: url('../fonts/Perrygot.ttf') format('truetype');
 }
 
 
@@ -55,7 +50,9 @@ button {
 	margin: 2% auto 20px auto;
 	font-size: 1.25em;
 	background-image: url("../img/brushed_alu_dark.png");
-	border: outset 4px solid;
+}
+
+button:focus {
 	outline: 0;
 }
 
@@ -104,7 +101,7 @@ button {
 	padding: 0.25em;
 }
 
-#next {
+#next:focus {
 	outline: initial;
 }
 
@@ -143,52 +140,52 @@ button {
 
 @keyframes slide {
 	0% {
-	  left: 500px;
-	  opacity: 0;
+		left: 500px;
+		opacity: 0;
 	}
 	50% {
-  	opacity: 0;
+		opacity: 0;
 	}
-  100% {
-  	left: 8%;
-  	opacity: 1;
-  }
+	100% {
+		left: 8%;
+		opacity: 1;
+	}
 }
 
 .slideOut {
-  position: absolute;
-  float: left;
-  width: 25%;
-  -webkit-animation: slideOut 1s forwards;
-  animation: slideOut 1s forwards;
+	position: absolute;
+	float: left;
+	width: 25%;
+	-webkit-animation: slideOut 1s forwards;
+	animation: slideOut 1s forwards;
 }
 
 @-webkit-keyframes slideOut {
 	0% {
-	  left: 8%;
-	  opacity: 1;
+		left: 8%;
+		opacity: 1;
 	}
 	20% {
-  	opacity: 0;
+		opacity: 0;
 	}
-  100% {
-  	left: -500px;
-  	opacity: 0;
-  }
+	100% {
+		left: -500px;
+		opacity: 0;
+	}
 }
 
 @keyframes slideOut {
 	0% {
-	  left: 8%;
-	  opacity: 1;
+		left: 8%;
+		opacity: 1;
 	}
 	20% {
-  	opacity: 0;
+		opacity: 0;
 	}
-  100% {
-  	left: -500px;
-  	opacity: 0;
-  }
+	100% {
+		left: -500px;
+		opacity: 0;
+	}
 }
 
 
@@ -199,6 +196,7 @@ button {
 	width: 90%;
 	display: inline-block;
 	margin: 1.5% auto 20px auto;
+	float: left;
 }
 
 .banner h2 {
@@ -206,6 +204,7 @@ button {
 }
 
 #btnTutorial {
+	float: right;
 	position: fixed;
 	font-size: 2.0em;
 	font-weight: bolder;
@@ -282,7 +281,9 @@ button {
 .square img {
 	margin: 0;
 	padding: 0;
+	padding-bottom: 4.25%;
 	width: 100%;
+	height: 100%;
 	opacity: 1;
 }
 
@@ -314,8 +315,12 @@ button {
 
 .b {
 	background: url("../img/end.jpg") no-repeat;
-	background-size: contain;
+	background-size: cover;
 	opacity: 0.8;
+}
+
+.b img {
+	padding-bottom: 4.25%;
 }
 
 .clicked {
@@ -376,9 +381,6 @@ button {
 	padding-bottom: 0;
 }
 
-.currentMove .b {
-}
-
 
 /*******************************/
 /* MEDIA QUERIES */
@@ -389,7 +391,7 @@ button {
 	}
 
 	#btnTutorial {
-		/*position: relative;*/
+		
 	}
 
 }
