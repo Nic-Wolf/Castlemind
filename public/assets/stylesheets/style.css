@@ -83,7 +83,7 @@ button {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	height: 6.5em;
+	height: 6.75em;
 	background-color: lightblue;
 	display: block;
 }
@@ -168,7 +168,7 @@ button {
 	  left: 8%;
 	  opacity: 1;
 	}
-	10% {
+	20% {
   	opacity: 0;
 	}
   100% {
@@ -182,8 +182,8 @@ button {
 	  left: 8%;
 	  opacity: 1;
 	}
-	10% {
-  	opacity: .05;
+	20% {
+  	opacity: 0;
 	}
   100% {
   	left: -500px;
@@ -431,6 +431,14 @@ button {
 
 	#directions div {
 		font-size: 1.5em;
+	}
+
+	.slideIn {
+		width: 80%;
+	}
+
+	.slideOut {
+		width: 80%;
 	}
 
 	#options h3 {
