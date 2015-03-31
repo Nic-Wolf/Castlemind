@@ -42,15 +42,21 @@ h2 {
 }
 
 h3 {
+	text-align: center;
+	color: #e4dacd;
+	font-size: 1.25;
 	margin: 0 auto;
-	padding-top: 8%;
+	padding: 1%;
 }
 
 button {
-	margin: 0 auto 20px auto;
+	color: #e4dacd;
+	text-shadow: 0 -1px 1px black;
+	margin: 2% auto 20px auto;
 	font-size: 1.25em;
 	background-image: url("../img/brushed_alu_dark.png");
 	border: outset 4px solid;
+	outline: 0;
 }
 
 #divSplash {
@@ -98,6 +104,10 @@ button {
 	padding: 0.25em;
 }
 
+#next {
+	outline: initial;
+}
+
 #justPlay {
 	float: right;
 }
@@ -114,7 +124,7 @@ button {
 /* BANNER STYLES */
 /*******************************/
 .banner {
-	width: 93%;
+	width: 90%;
 	display: inline-block;
 	margin: 1.5% auto 20px auto;
 }
@@ -124,7 +134,7 @@ button {
 }
 
 #btnTutorial {
-	padding: 0.5em;
+	position: fixed;
 	font-size: 2.0em;
 	font-weight: bolder;
 	margin: 0 auto;
@@ -135,6 +145,7 @@ button {
 /* BOARD STYLES */
 /*******************************/
 #container {
+	clear: left;
 	box-sizing: border-box;
 	background: url("../img/mahogany.jpg") no-repeat;
 	background-size: cover;
@@ -250,8 +261,9 @@ button {
 #divUserMoves .square {
 	box-sizing: border-box;
 	width: 15.5%;
-	padding-bottom: 14%;
+	padding-bottom: 15.5%;
 	box-shadow: 0 -1px 8px black;
+	border: none;
 }
 
 #divHints {
@@ -269,16 +281,17 @@ button {
 	box-sizing: border-box;
 	width: 15.5%;
 	box-shadow: 0 -1px 8px black;
+	border: none;
 }
 
 #divHints .b {
 	background-size: cover;
-	padding-bottom: 14%;
+	padding-bottom: 15.5%;
 }
 
 .currentMove {
 	padding: 0;
-	border: 1px solid orange;
+	border: 2px solid orange;
 }
 
 .hasImage {
@@ -299,8 +312,9 @@ button {
 	}
 
 	#btnTutorial {
-		clear: left;
+		/*position: relative;*/
 	}
+
 }
 
 @media screen and (min-width: 560px), screen and (max-width: 839px) {
@@ -322,7 +336,6 @@ button {
 @media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px)  {
 	button {
 		display: block;
-		margin: 0 auto;
 		padding: 0.25em;
 		font-size: 2.0em;
 	}
@@ -365,13 +378,14 @@ button {
 	}
 
 	.banner {
-		width: 80%;
+		width: 78%;
 		float: left;
 	}
 
 	#container {
 		box-sizing: border-box;
 		width: 100%;
+		min-width: 328px;
 		padding-bottom: 0;
 	}
 
@@ -398,15 +412,21 @@ button {
 	}
 
 	#main {
-		position: static;
+		display: table;
 		float: none;
-		margin: 30px auto;
-		width: 90%;
+		margin: 1% 2%;
+		width: 100%;
 	}
 
 	#divGrid {
 		position: static;
 		margin: auto;
+		width: 100%;
+	}
+
+	#btnTutorial {
+		float: right;
+		position: relative;
 	}
 }
 
