@@ -2,11 +2,6 @@
 /* CUSTOM FONTS */
 /*******************************/
 @font-face {
-	font-family: Cardinal;
-	src: url('../fonts/Cardinal-Alternate.ttf');
-}
-
-@font-face {
 	font-family: Perrygot;
 	src: url('../fonts/Perrygot.ttf');
 }
@@ -17,10 +12,10 @@
 /*******************************/
 body {
 	margin: 0;
-	padding: 0 0 30px 0;
+	padding: 0;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	background-image: url("../img/castle-bg-md.jpg");
-	background-size: 100% 150%;
+	background-size: 100% 250%;
 }
 
 a {
@@ -29,7 +24,7 @@ a {
 
 h1 {
 	display: inline-block;
-	vertical-align: center;
+	vertical-align: middle;
 	font-family: Perrygot;
 	text-align: center;
 }
@@ -37,26 +32,30 @@ h1 {
 h2 {
 	font-size: 1.5em;
 	display: inline-block;
-	float: left;
 	margin: 1.0em auto;
 	padding: 0;
 }
 
 h3 {
+	text-align: center;
+	color: #e4dacd;
+	font-size: 1.25;
 	margin: 0 auto;
-	padding-top: 8%;
+	padding: 1%;
 }
 
 button {
-	margin: 0 auto 20px auto;
+	color: #e4dacd;
+	text-shadow: 0 -1px 1px black;
+	margin: 2% auto 20px auto;
 	font-size: 1.25em;
 	background-image: url("../img/brushed_alu_dark.png");
-	border: outset 4px solid #aaa;
+	border: outset 4px solid;
+	outline: 0;
 }
 
 #divSplash {
 	margin: auto;
-	width: 80%;
 	display: block;
 }
 
@@ -96,8 +95,12 @@ button {
 #next, #justPlay {
 	font-size: 1.75em;
 	display: inline-block;
-	margin: 0;``
+	margin: 0;
 	padding: 0.25em;
+}
+
+#next {
+	outline: initial;
 }
 
 #justPlay {
@@ -105,17 +108,10 @@ button {
 }
 
 #tutorialGrid {
-	position: absolute;
 	width: 92%;
-	margin-top: -2%;
 	padding: 0;
 	min-width: 260px;
 	min-height: 260px;
-
-}
-
-#tutorialGrid tbody {
-	margin: 0 auto;
 }
 
 
@@ -123,7 +119,7 @@ button {
 /* BANNER STYLES */
 /*******************************/
 .banner {
-	width: 93%;
+	width: 90%;
 	display: inline-block;
 	margin: 1.5% auto 20px auto;
 }
@@ -133,10 +129,7 @@ button {
 }
 
 #btnTutorial {
-	position: absolute;
-	clear: left;
-	display: inline-block;
-	padding: 0.5em;
+	position: fixed;
 	font-size: 2.0em;
 	font-weight: bolder;
 	margin: 0 auto;
@@ -147,15 +140,19 @@ button {
 /* BOARD STYLES */
 /*******************************/
 #container {
+	clear: left;
+	box-sizing: border-box;
 	background: url("../img/mahogany.jpg") no-repeat;
 	background-size: cover;
-	padding: 30px 0;
+	padding: 0;
 	margin: auto;
 	width: 60%;
-	padding-bottom: 48.5%;
+	display: block;
+	padding-bottom: 49%;
 	border: 10px outset transparent;
 	box-shadow: 0 2px 14px 1px black;
 	-webkit-border-image: url("../img/wood-border-test.jpg") 10 300 stretch;
+	-moz-border-image:    url("../img/wood-border-test.jpg") 10 300 stretch;
 	-o-border-image:      url("../img/wood-border-test.jpg") 10 300 stretch;
 	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
 }
@@ -164,7 +161,7 @@ button {
 	margin: 0 0 0 3%;
 	padding: 0;
 	width: 30%;
-	max-width: 300px;
+	max-width: 360px;
 	display: inline-block;
 }
 
@@ -177,9 +174,7 @@ button {
 }
 
 #divGrid {
-	position: absolute;
 	width: 92%;
-	margin-top: -2%;
 	padding: 0;
 	min-width: 260px;
 	min-height: 260px;
@@ -194,10 +189,14 @@ button {
 	margin-left: 1%;
 	margin-top: 1%;
 	float: left;
-	opacity: 0.85;
 	border-radius: 5%;
 	box-shadow: inset 0 -1px 2px 0 #404040;
-	border: outset 2px #654;
+	border: outset 3px #654;
+	-webkit-border-image: url("../img/wood-border-test.jpg") 10 300 stretch;
+	-moz-border-image:    url("../img/wood-border-test.jpg") 10 300 stretch;
+	-o-border-image:      url("../img/wood-border-test.jpg") 10 300 stretch;
+	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
+}
 
 
 .square img {
@@ -242,7 +241,8 @@ button {
 
 .clicked {
 	background: transparent;
-	box-shadow: inset -3px 0 20px 1px #f0f0f0;
+	box-shadow: inset -3px 0 20px 0 #f0f0f0;
+	border: none;
 }
 
 #divUserMoves {
@@ -259,8 +259,9 @@ button {
 #divUserMoves .square {
 	box-sizing: border-box;
 	width: 15.5%;
-	padding-bottom: 14%;
+	padding-bottom: 15.5%;
 	box-shadow: 0 -1px 8px black;
+	border: none;
 }
 
 #divHints {
@@ -278,16 +279,17 @@ button {
 	box-sizing: border-box;
 	width: 15.5%;
 	box-shadow: 0 -1px 8px black;
+	border: none;
 }
 
 #divHints .b {
 	background-size: cover;
-	padding-bottom: 14%;
+	padding-bottom: 15.5%;
 }
 
 .currentMove {
 	padding: 0;
-	border: 1px solid orange;
+	border: 2px solid orange;
 }
 
 .hasImage {
@@ -302,14 +304,15 @@ button {
 /*******************************/
 /* MEDIA QUERIES */
 /*******************************/
-@media screen and (min-width: 840px), screen and (max-width: 1250px) {
+@media screen and (min-width: 840px), screen and (max-width: 1000px) {
 	#container {
 		width: 750px;
 	}
 
 	#btnTutorial {
-		clear: left;
+		/*position: relative;*/
 	}
+
 }
 
 @media screen and (min-width: 560px), screen and (max-width: 839px) {
@@ -319,26 +322,18 @@ button {
 
 	#container {
 		width: 90%;
+		padding-bottom: 50%;
 	}
 
 	#sidebar {
 		float: left;
-		position: absolute;
-		left: 4%;
-	}
-
-	#main {
-		clear: left;
-		position: absolute;
-		left: 45%;
-		width: 50%;
+		margin: 5% 0 0 2%;
 	}
 }
 
 @media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px)  {
 	button {
 		display: block;
-		margin: 0 auto;
 		padding: 0.25em;
 		font-size: 2.0em;
 	}
@@ -380,18 +375,15 @@ button {
 		margin: auto;
 	}
 
-/*	#tutorialGrid tbody {
-		margin: 0 auto;
-	}*/
-
 	.banner {
-		width: 80%;
+		width: 78%;
 		float: left;
 	}
 
 	#container {
 		box-sizing: border-box;
 		width: 100%;
+		min-width: 328px;
 		padding-bottom: 0;
 	}
 
@@ -418,15 +410,21 @@ button {
 	}
 
 	#main {
-		position: static;
+		display: table;
 		float: none;
-		margin: 30px auto;
-		width: 90%;
+		margin: 1% 2%;
+		width: 100%;
 	}
 
 	#divGrid {
 		position: static;
 		margin: auto;
+		width: 100%;
+	}
+
+	#btnTutorial {
+		float: right;
+		position: relative;
 	}
 }
 

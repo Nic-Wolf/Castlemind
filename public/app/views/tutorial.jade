@@ -3,7 +3,7 @@
 		#directions
 			div(ng-repeat='message in tCtrl.messages.slice(0, 1)') {{message}}
 		#options
-			button#next(class='{{tCtrl.buttonClass}}', ng-click='tCtrl.next()') Next
+			button#next(ng-click='tCtrl.next()') Next
 			h3 {{tCtrl.statement}}
 			button#justPlay(ng-click='tCtrl.game()') Just Play!
 		#divHints(class='{{tCtrl.hints.class}}')

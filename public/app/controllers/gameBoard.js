@@ -7,6 +7,11 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	function($http, $cookies, $location, $timeout) {
 	var self = this;
 	self.points = 0;
+	if (!$cookies.highScore) {
+		self.highScore = 0;
+	} else {
+		self.highScore = Number($cookies.highScore);
+	}
 
 	// *************************************************************************** //
 	//	countDown controlls the timeDisplay
@@ -37,8 +42,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.squares.forEach( function (square) {
 					delete square.click;
 				});
-				self.message = 'Time is up. Click New Game to start a new session.';
-				self.pointsReport = 'Current Points: '; //+ self.points + " ";
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
@@ -76,7 +79,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		
 		self.guesses = 0;
 		$cookies.guesses = 0;
-		self.message = "You are playing a game! You have " + self.points + " points!";
 		$http.get('/api/game').
 		success(setSquares).
 		error(function(data, status, headers, config){
@@ -125,7 +127,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	//	if the guess is complete, check the solution
 	// ************************************************************************* //
 	function click () {
-		
 		delete this.click;
 		
 		if (self.moves.length < 6) {
@@ -169,7 +170,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 					self.hints = hints;
 					self.squares = squares;
 					self.message = message;
-					if(!$cookies.victory) {
+					if(!$cookies.victory && points) {
 						self.results = results;
 						$cookies.results = results.join('_');
 						self.points = points;
@@ -188,6 +189,10 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 					} else {
 						$cookies.victory = true;
 						self.messageClass = 'theMessage';
+						if (self.points > self.highScore) {
+							self.highScore = self.points;
+							$cookies.highScore = self.highScore;
+						}
 					}
 				}
 			);
@@ -232,6 +237,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	// reset allows the page to refresh without trying to load a new board
 	this.reset = function () {
 		delete $cookies.playing;
+		delete $cookies.highScore;
 		delete self.squares;
 		delete self.solution;
 		delete self.hints;
@@ -244,9 +250,13 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			self.timeDisplay = $cookies.timeDisplay;
 			self.guesses = Number($cookies.guesses);
 			self.points = Number($cookies.points);
-			self.results = $cookies.results.split('_').map(function (elem) {
-				return Number(elem);
-			});
+			self.results = $cookies.results.split('_').reduce(function (prev, curr) {
+				if (curr.length === 0) {
+					return prev;
+				} else {
+					return prev.concat([Number(curr)]);
+				}
+			}, []);
 			manageState.deStringState(
 				$cookies.state, $cookies.solution, $cookies.moves,
 				function (squares, solution, moves) {

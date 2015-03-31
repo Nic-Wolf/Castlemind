@@ -51,7 +51,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	this.game = function () {
 		$location.path('/game');
 	};
-	this.buttonClass = '';
 
 	// This is a complete list of messages for the tutorial
 	var messages = [
@@ -65,21 +64,20 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		'three spaces horizontal or vertical',
 		'three spaces diagonal',
 		"There are always five moves in one game.",
-		"Click next to see an example of a guess.",
-		"Before each move, the possible next moves flash.",
 		"Let's see what a guess looks like.",
-		"First click: pink.  Notice the pink square in the user moves bar?",
-		"Second click: yellow.",
-		"Third click: pink.",
-		"Fourth click: pink.",
+		"Before each move, the possible next moves flash.",
+		"First click: desert.  Notice the pink square in the user moves bar?",
+		"Second click: valley.",
+		"Third click: desert.",
+		"Fourth click: desert.",
 		"The castle is the last click.  Now the guess is complete.",
 		"The hints update after a guess to show which squares you got correct.",
 		"Click next to see the solution.",
-		"The first square must be pink, but there are two pink squares.",
+		"The first square must be desert, but there are two desert squares.",
 		"Let's try the one we didn't use last time.",
-		"Second click: blue",
-		"Third click: pink",
-		"Fourth click: pink",
+		"Second click: forest",
+		"Third click: desert",
+		"Fourth click: desert",
 		"The last click is the castle.",
 		"This time the hints fill up all the way.",
 		"The board didn't reset either.",
@@ -124,11 +122,11 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	$timeout( function () {
 		addToMessages();
 		slideNumber = 0;
-		self.buttonClass = ' highlight';
 	}, 2000);
 
 
 	// set up a function to represent each click of the next button
+	// there are three "slides" and each slide has several "views"
 	var slides = [
 		gameRules,
 		firstGuess,
@@ -136,11 +134,12 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		bePatient
 	];
 	var slideNumber = slides.length - 1;
+	var viewNumber = 0;
+	var timesClicked = 0;
 
 	this.next = function () {
-		slides[slideNumber](0);
-		self.buttonClass = self.buttonClass.split(' highlight').join('');
-		slideNumber = slides.length - 1;
+		slides[slideNumber](viewNumber);
+		timesClicked++;
 	};
 
 
@@ -177,14 +176,11 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		addToMessages();
 		if (self.messages.length > 5) {
 		}
-		num++;
-		if (num <= drawAttention.length) {
-			$timeout( function () {
-				gameRules(num);
-			},3000);
+		if (num < drawAttention.length) {
+			viewNumber++;
 		} else {
 			slideNumber = 1;
-			self.buttonClass = ' highlight';
+			viewNumber = 0;
 		}
 	}// end gameRules()
 
@@ -206,11 +202,11 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 
 	function firstGuess (num) {
 		addToMessages();
-		if (num < 6) {
-			click(num - 2, pathGuess, legalMovesGuess);
+		if (num < 5) {
+			click(num - 1, pathGuess, legalMovesGuess);
 		}
 
-		if (num === 6) {
+		if (num === 5) {
 			self.moves = self.moves.slice(0,1);
 			pathGuess.forEach( function (elem) {
 				var square = self.example[elem];
@@ -223,19 +219,16 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 			self.example[6].class += ' highlight';
 		} 
 
-		if (num === 7) {
+		if (num === 6) {
 			self.example[6].class = self.example[6].class.split(' highlight').join('');
 			self.hints[1].class += ' highlight';
 		}
 
-		num++;
-		if (num <= 8) {
-			$timeout(function () {
-				firstGuess(num);
-			}, 4000);
+		if (num < 7) {
+			viewNumber++;
 		} else {
 			self.hints[1].class = self.hints[1].class.split(' highlight').join('');
-			self.buttonClass += ' highlight';
+			viewNumber = 0;
 			slideNumber = 2;
 		}
 	}// end firstGuess()
@@ -288,12 +281,10 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 			});
 		}
 
-		num++;
-		if (num <= 8) {
-			$timeout( function () {
-				correctGuess(num);
-			}, 4000);
+		if (num < 8) {
+			viewNumber++;
 		} else {
+			viewNumber = 0;
 			slideNumber = 3;
 		}
 	}// end correctGuess()
