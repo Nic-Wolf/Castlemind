@@ -51,7 +51,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	this.game = function () {
 		$location.path('/game');
 	};
-	this.buttonClass = '';
 
 	// This is a complete list of messages for the tutorial
 	var messages = [
@@ -123,7 +122,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	$timeout( function () {
 		addToMessages();
 		slideNumber = 0;
-		self.buttonClass = ' highlight';
 	}, 2000);
 
 
@@ -141,13 +139,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 
 	this.next = function () {
 		slides[slideNumber](viewNumber);
-		$timeout(function () {
-			timesClicked--;
-			if (timesClicked === 0) {
-				self.buttonClass = ' highlight';
-			}
-		}, 3000);
-		self.buttonClass = self.buttonClass.split(' highlight').join('');
 		timesClicked++;
 	};
 
@@ -190,7 +181,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		} else {
 			slideNumber = 1;
 			viewNumber = 0;
-			self.buttonClass = ' highlight';
 		}
 	}// end gameRules()
 
@@ -238,7 +228,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 			viewNumber++;
 		} else {
 			self.hints[1].class = self.hints[1].class.split(' highlight').join('');
-			self.buttonClass += ' highlight';
 			viewNumber = 0;
 			slideNumber = 2;
 		}
