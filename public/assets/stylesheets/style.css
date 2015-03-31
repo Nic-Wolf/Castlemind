@@ -109,6 +109,22 @@ button {
 	min-height: 260px;
 }
 
+#directions {
+    position: relative;
+    left: 500px;
+    width: inherit;
+    -webkit-animation: slide 1s forwards;
+    animation: slide 0.5s forwards;
+}
+
+@-webkit-keyframes slide {
+    100% { left: 0; }
+}
+
+@keyframes slide {
+    100% { left: 0; }
+}
+
 
 /*******************************/
 /* BANNER STYLES */

@@ -1,7 +1,7 @@
 #container
 	#sidebar
-		#directions
-			div(ng-repeat='message in tCtrl.messages.slice(0, 1)') {{message}}
+		#directions(ng-repeat="message in tCtrl.messages.slice(0, 1)")
+			div {{message}}
 		#options
 			button#next(ng-click='tCtrl.next()') Next
 			h3 {{tCtrl.statement}}
