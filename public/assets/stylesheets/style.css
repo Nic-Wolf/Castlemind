@@ -83,7 +83,7 @@ button {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	height: 6.0em;
+	height: 6.5em;
 	background-color: lightblue;
 	display: block;
 }
@@ -119,20 +119,76 @@ button {
 	min-height: 260px;
 }
 
-#directions {
-    position: relative;
-    left: 500px;
-    width: inherit;
-    -webkit-animation: slide 1s forwards;
-    animation: slide 0.5s forwards;
+.slideIn {
+  position: absolute;
+  clear: left;
+  width: 25%;
+  -webkit-animation: slide 1s forwards;
+  animation: slide 1s forwards;
 }
 
 @-webkit-keyframes slide {
-    100% { left: 0; }
+	0% {
+	  left: 500px;
+	  opacity: 0;
+	}
+	50% {
+  	opacity: 0;
+	}
+  100% {
+  	left: 8%;
+  	opacity: 1;
+  }
 }
 
 @keyframes slide {
-    100% { left: 0; }
+	0% {
+	  left: 500px;
+	  opacity: 0;
+	}
+	50% {
+  	opacity: 0;
+	}
+  100% {
+  	left: 8%;
+  	opacity: 1;
+  }
+}
+
+.slideOut {
+  position: absolute;
+  float: left;
+  width: 25%;
+  -webkit-animation: slideOut 1s forwards;
+  animation: slideOut 1s forwards;
+}
+
+@-webkit-keyframes slideOut {
+	0% {
+	  left: 8%;
+	  opacity: 1;
+	}
+	10% {
+  	opacity: 0;
+	}
+  100% {
+  	left: -500px;
+  	opacity: 0;
+  }
+}
+
+@keyframes slideOut {
+	0% {
+	  left: 8%;
+	  opacity: 1;
+	}
+	10% {
+  	opacity: .05;
+	}
+  100% {
+  	left: -500px;
+  	opacity: 0;
+  }
 }
 
 
@@ -178,7 +234,12 @@ button {
 	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
 }
 
+
 #sidebar {
+  /*-webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%, 50% 0%,
+   50% 30%, 0% 30%, 0% 100%, 100% 100%, 100% 0%);
+	clip-path: polygon(0% 0%, 0% 100%, 4.5% 100%, 4.5% 20%, 33% 20%,
+   33% 40%, 4.5% 40%, 4.5% 100%, 100% 100%, 100% 0%);*/
 	margin: 0 0 0 3%;
 	padding: 0;
 	width: 30%;

@@ -1,7 +1,8 @@
-#container
+#container(class="clipped")
 	#sidebar
-		#directions(ng-repeat="message in tCtrl.messages.slice(0, 1)")
-			div {{message}}
+		#directions
+			.slideOut(ng-repeat="oldMessage in tCtrl.messages.slice(1, 2)") {{oldMessage}}
+			.slideIn(ng-repeat="message in tCtrl.messages.slice(0, 1)") {{message}}
 		#options
 			button#next(ng-click='tCtrl.next()') Next
 			h3 {{tCtrl.statement}}

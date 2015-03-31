@@ -54,6 +54,7 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 
 	// This is a complete list of messages for the tutorial
 	var messages = [
+		'',
 		'Your objective is to guess the path that the computer took to the castle.',
 		'Click next to start the tutorial.',
 		'Here are the start and end points.',
@@ -119,6 +120,9 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	}];
 
 	// prompt the user to start the tutorial after two seconds
+	$timeout( function () {
+		addToMessages();
+	}, 0);
 	$timeout( function () {
 		addToMessages();
 		slideNumber = 0;
@@ -295,10 +299,7 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	// ******************************************************************* //
 
 	function bePatient () {
-		self.statement = "Please have patience."
-		$timeout(function () {
-			delete self.statement;
-		}, 1000);
+		// This is nothing
 	}
 
 	function click (number, path, legalMoves) {
