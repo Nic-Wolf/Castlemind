@@ -1,0 +1,516 @@
+/*******************************/
+/* CUSTOM FONTS */
+/*******************************/
+@font-face {
+	font-family: Perrygot;
+	src: url('../fonts/Perrygot.ttf');
+}
+
+
+/*******************************/
+/* GENERAL STYLES */
+/*******************************/
+body {
+	margin: 0;
+	padding: 0;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-image: url("../img/castle-bg-md.jpg");
+	background-size: 100% 250%;
+}
+
+a {
+	color: #00B7FF;
+}
+
+h1 {
+	display: inline-block;
+	vertical-align: middle;
+	font-family: Perrygot;
+	text-align: center;
+}
+
+h2 {
+	font-size: 1.5em;
+	display: inline-block;
+	margin: 1.0em auto;
+	padding: 0;
+}
+
+h3 {
+	text-align: center;
+	color: #e4dacd;
+	font-size: 1.25;
+	margin: 0 auto;
+	padding: 1%;
+}
+
+button {
+	color: #e4dacd;
+	text-shadow: 0 -1px 1px black;
+	margin: 2% auto 20px auto;
+	font-size: 1.25em;
+	background-image: url("../img/brushed_alu_dark.png");
+	border: outset 4px solid;
+	outline: 0;
+}
+
+#divSplash {
+	margin: auto;
+	display: block;
+}
+
+#divSplash h1 {
+	width: 100%;
+	font-size: 8.0em;
+}
+
+#divSplash button {
+	font-size: 1.75em;
+	display: block;
+	padding: 0.5em;
+}
+
+
+/*******************************/
+/* TUTORIAL STYLES */
+/*******************************/
+#directions {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 6.0em;
+	background-color: lightblue;
+	display: block;
+}
+
+#directions div {
+	font-size: 1.5em;
+}
+
+#options h3 {
+	display: inline-block;
+	padding: 0;
+}
+
+#next, #justPlay {
+	font-size: 1.75em;
+	display: inline-block;
+	margin: 0;
+	padding: 0.25em;
+}
+
+#next {
+	outline: initial;
+}
+
+#justPlay {
+	float: right;
+}
+
+#tutorialGrid {
+	width: 92%;
+	padding: 0;
+	min-width: 260px;
+	min-height: 260px;
+}
+
+
+/*******************************/
+/* BANNER STYLES */
+/*******************************/
+.banner {
+	width: 90%;
+	display: inline-block;
+	margin: 1.5% auto 20px auto;
+}
+
+.banner h2 {
+	margin: auto 5%;
+}
+
+#btnTutorial {
+	position: fixed;
+	font-size: 2.0em;
+	font-weight: bolder;
+	margin: 0 auto;
+}
+
+
+/*******************************/
+/* BOARD STYLES */
+/*******************************/
+#container {
+	clear: left;
+	box-sizing: border-box;
+	background: url("../img/mahogany.jpg") no-repeat;
+	background-size: cover;
+	padding: 0;
+	margin: auto;
+	width: 60%;
+	display: block;
+	padding-bottom: 49%;
+	border: 10px outset transparent;
+	box-shadow: 0 2px 14px 1px black;
+	-webkit-border-image: url("../img/wood-border-test.jpg") 10 300 stretch;
+	-moz-border-image:    url("../img/wood-border-test.jpg") 10 300 stretch;
+	-o-border-image:      url("../img/wood-border-test.jpg") 10 300 stretch;
+	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
+}
+
+#sidebar {
+	margin: 0 0 0 3%;
+	padding: 0;
+	width: 30%;
+	max-width: 360px;
+	display: inline-block;
+}
+
+#main {
+	float: right;
+	padding: 0;
+	width: 60%;
+	max-width: 800px;
+	padding-right: 0.5%;
+}
+
+#divGrid {
+	width: 92%;
+	padding: 0;
+	min-width: 260px;
+	min-height: 260px;
+}
+
+.square {
+
+	box-sizing: border-box;
+	line-height: 0;
+	width: 18%;
+	padding-bottom: 17%;
+	margin-left: 1%;
+	margin-top: 1%;
+	float: left;
+	border-radius: 5%;
+	box-shadow: inset 0 -1px 2px 0 #404040;
+	border: outset 3px #654;
+	-webkit-border-image: url("../img/wood-border-test.jpg") 10 300 stretch;
+	-moz-border-image:    url("../img/wood-border-test.jpg") 10 300 stretch;
+	-o-border-image:      url("../img/wood-border-test.jpg") 10 300 stretch;
+	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
+}
+
+
+.square img {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	opacity: 1;
+	
+}
+
+.color-0 { 
+	background-image: url("../img/valley.jpg");
+	background-size: cover;
+}
+.color-1 { 
+	background-image: url("../img/mountain.jpg");
+	background-size: cover;
+}
+.color-2 { 
+	background-image: url("../img/swamp.jpg");
+	background-size: cover;
+}
+.color-3 { 
+	background-image: url("../img/desert.jpg");
+	background-size: cover;
+}
+.color-4 { 
+	background-image: url("../img/forest.jpg");
+	background-size: cover;
+}
+
+.a {
+	background-color: transparent;
+	box-shadow: inset -3px 0 20px 1px #f0f0f0;
+}
+
+.b {
+	background: url("../img/end.jpg") no-repeat;
+	background-size: contain;
+	opacity: 0.8;
+}
+
+.clicked {
+	background: transparent;
+	box-shadow: inset -3px 0 20px 0 #f0f0f0;
+	border: none;
+}
+
+#divUserMoves {
+	box-sizing: border-box;
+	margin-top: 20px;
+	width: 100%;
+	padding-bottom: 17%;
+	background-image: url("../img/brushed_alu_dark.png");
+	opacity: 0.97;
+	border: 3px solid #aaa;
+	border-style: outset;
+}
+
+#divUserMoves .square {
+	box-sizing: border-box;
+	width: 15.5%;
+	padding-bottom: 15.5%;
+	box-shadow: 0 -1px 8px black;
+	border: none;
+}
+
+#divHints {
+	box-sizing: border-box;
+	margin-top: 20px;
+	width: 100%;
+	padding-bottom: 17%;
+	background-image: url("../img/brushed_alu_dark.png");
+	opacity: 0.97;
+	border: 4px solid #aaa;
+	border-style: outset;
+}
+
+#divHints .square {
+	box-sizing: border-box;
+	width: 15.5%;
+	box-shadow: 0 -1px 8px black;
+	border: none;
+}
+
+#divHints .b {
+	background-size: cover;
+	padding-bottom: 15.5%;
+}
+
+.currentMove {
+	padding: 0;
+	border: 2px solid orange;
+}
+
+.hasImage {
+	line-height: 0;
+	padding-bottom: 0;
+}
+
+.currentMove .b {
+}
+
+
+/*******************************/
+/* MEDIA QUERIES */
+/*******************************/
+@media screen and (min-width: 840px), screen and (max-width: 1000px) {
+	#container {
+		width: 750px;
+	}
+
+	#btnTutorial {
+		/*position: relative;*/
+	}
+
+}
+
+@media screen and (min-width: 560px), screen and (max-width: 839px) {
+	#divSplash h1 {
+		font-size: 6.0em;
+	}
+
+	#container {
+		width: 90%;
+		padding-bottom: 50%;
+	}
+
+	#sidebar {
+		float: left;
+		margin: 5% 0 0 2%;
+	}
+}
+
+@media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px)  {
+	button {
+		display: block;
+		padding: 0.25em;
+		font-size: 2.0em;
+	}
+
+	#divSplash h1 {
+		font-size: 4.0em;
+	}
+
+	#directions {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 6.0em;
+		display: block;
+	}
+
+	#directions div {
+		font-size: 1.5em;
+	}
+
+	#options h3 {
+		display: inline-block;
+		padding: 0;
+	}
+
+	#next, #justPlay {
+		font-size: 1.75em;
+		display: inline-block;
+		margin: 0;
+		padding: 0.25em;
+	}
+
+	#justPlay {
+		float: right;
+	}
+
+	#tutorialGrid {
+		position: static;
+		margin: auto;
+	}
+
+	.banner {
+		width: 78%;
+		float: left;
+	}
+
+	#container {
+		box-sizing: border-box;
+		width: 100%;
+		min-width: 328px;
+		padding-bottom: 0;
+	}
+
+	#sidebar {
+		position: static;
+		float: none;
+		display: block;
+		margin: auto;
+		padding: 0;
+		width: 90%;
+		max-width: 90%;
+	}
+
+	#divHints {
+		margin: auto;
+		padding-bottom: 17.5%;
+		width: 100%;
+	}
+
+	#divUserMoves {
+		margin: auto;
+		padding-bottom: 17.5%;
+		width: 100%;
+	}
+
+	#main {
+		display: table;
+		float: none;
+		margin: 1% 2%;
+		width: 100%;
+	}
+
+	#divGrid {
+		position: static;
+		margin: auto;
+		width: 100%;
+	}
+
+	#btnTutorial {
+		float: right;
+		position: relative;
+	}
+}
+
+
+/*******************************/
+/* ANIMATIONS */
+/*******************************/
+@-webkit-keyframes highlight {
+	100% {
+		top:    -10px;
+		right:  -10px;
+		bottom: -10px;
+		left:   -10px;
+		opacity: 0;
+		
+	}
+}
+
+.highlight {
+	display: inline-block;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-moz-osx-font-smoothing: grayscale;
+	position: relative;
+	opacity: 0.8;
+}
+
+#divHints.highlight {
+	display: block;
+}
+
+.highlight:before {
+	content: '';
+	position: absolute;
+	border-radius: 5%;
+	box-shadow: inset 0 0 0 100px #202010;
+	top:    0;
+	right:  0;
+	bottom: 0;
+	left:   0;
+	-webkit-animation: highlight 1.5s infinite;
+	animation: highlight 1.5s infinite;
+}
+
+.glow {
+	border: 1.5px solid transparent;
+	-webkit-animation-name: glow;
+	-webkit-animation-duration: 1.5s;
+	-webkit-animation-iteration-count: infinite;
+}
+	
+@-webkit-keyframes glow {
+	0% {
+		border-color: #000;
+		/*box-shadow: inset 0 0 50px 0px transparent;*/
+	}
+	100% {
+		border-color: #FFCC00;
+		/*box-shadow: inset 0 0 50px 0px #FFCC00;*/
+	}
+}
+
+
+.directions {
+	float: left;
+	width: 40%;
+}
+
+.directions li {
+	margin: 20px 0 0 0;
+	font-size: 20px;
+}
+
+#next {
+	float: left;
+}
+
+#justPlay{
+	float: right;
+}
+
+#tutorialMain {
+	float: right;
+	width: 50%;
+}
+

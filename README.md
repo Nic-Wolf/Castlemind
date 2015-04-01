@@ -1,7 +1,7 @@
 # [CastleMind](https://github.com/Nic-Wolf/castlemind)
 [![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/Nic-Wolf/castlemind/releases)
 [![node](https://img.shields.io/node/v/gh-badges.svg)](https://github.com/Nic-Wolf/castlemind)
-[![Travis](https://img.shields.io/travis/joyent/node.svg)](https://travis-ci.org/Nic-Wolf/castlemind)
+[![Travis](https://travis-ci.org/Nic-Wolf/castlemind.svg?branch=master)](https://travis-ci.org/Nic-Wolf/castlemind)
 
 [Nic Wolf](https://github.com/Nic-Wolf), [David Hasenjaeger](https://github.com/GerryFudd), [Aaron Ollis](https://github.com/aollis)
 
@@ -46,30 +46,42 @@ The original concept was designed by [Cris Kelly](http://www.portlandcodeschool.
 
 ### Project Structure:
 ```
-app.js                // Main Node Server
-package.json
-bin/ 
-└── www.bin           // Express Binaries
-public/               // Front-End App Files and Static Assets
-├── components/
-│   ├── angular/
-│   │   ├── angular-cookies.js
-│   │   ├── angular-route.js
-│   │   └── angular.js
-│   └── bootstrap/
-│       └── bootstrap.min.css
-├── img/
-│   ├── castle-bg-md.jpg
-│   ├── start.jpg
-│   ├── end.jpg
-│   ├── d.png
-│   ├── o.png
-│   ├── ld.png
-│   └── lo.png
-├── javascripts/
-│   └── bundle.js        // compiled app
-└── stylesheets/
-        └── style.css        // main styles for layout and game board
+app.js // Main Node Server
+app/
+├── models/
+│   ├── makePath.js        // Sequence Generator
+│   └── makeSquares.js     // Board Generator
+└── routes/
+    └── index.js           // Express Routing
+public/                    // Front-End App Files and Static Assets
+├── app/                   // Angular Routes and Controllers
+│   ├── index.js
+│   ├── controllers/
+│   │   ├── gameBoard.js   // Board Functionality
+│   │   ├── mainView.js    // Title Page
+│   │   └── tutorial.js    // Tutorial Page
+│   ├── services/
+│   │   └── manageState.js // Game Round controls
+│   └── views/
+│       ├── error.jade
+│       ├── game.jade
+│       ├── index.jade     // Main html headers assigned by Express
+│       ├── main.js
+│       └── tutorial.jade
+└── assets                 // Static files served to client
+    ├── components/        // 3rd-Party Frontend Dependencies
+    │   ├── angular/
+    │   │   ├── angular-cookies.js
+    │   │   ├── angular-route.js
+    │   │   └── angular.js
+    │   └── bootstrap/
+    │       └── bootstrap.min.css
+    ├── img/
+    │   └── . . .
+    ├── javascripts/
+    │   └── bundle.js      // Compiled Frontend App via Gulp.js
+    └── stylesheets/
+        └── style.css
 . . .
 ```
 

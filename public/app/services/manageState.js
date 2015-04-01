@@ -30,7 +30,6 @@ function deStringState (boardString, solutionString, moveString, callback) {
 	var solution = [];
 	var solutionArray = solutionString.split('_');
 	solutionArray.forEach( function (elem, ind) {
-		console.log(elem);
 		if (ind < solutionArray.length - 1) {
 			var newMove = {};
 			newMove.direction = elem.match(/[^\d]+/)[0];
@@ -40,7 +39,6 @@ function deStringState (boardString, solutionString, moveString, callback) {
 			var newMove = {};
 			newMove.index = Number(elem);
 		}
-		console.log(newMove);
 		solution.push(newMove);
 	});
 	if (moveString.length > 0) {
@@ -56,7 +54,7 @@ function deStringState (boardString, solutionString, moveString, callback) {
 
 // resetGuess displays what part of the guess was correct.
 // If the guess is only partially correct, it resets the guess.
-function resetGuess (moves, hints, squares, solution, callback) {
+function resetGuess (moves, hints, squares, solution, guesses, results, callback) {
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
 	if (moves.length < 6) {
@@ -71,7 +69,16 @@ function resetGuess (moves, hints, squares, solution, callback) {
 		}
 		return result;
 	})) {
-		message = "You win!";
+		results.push(guesses);
+		var points = results.reduce( function (prev, curr) {
+			if (5 > curr) {
+				var newPoints = 5 - curr;
+			} else {
+				var newPoints = 1;
+			}
+			return prev + newPoints;
+		}, 0);
+		message = "You win! You have " + points + ' points!';
 	} else {
 		restart();
 	}
@@ -89,7 +96,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 		moves = [];
 		message = "Keep trying!";
 	}
-	callback(moves, hints, squares, message);
+	callback(moves, hints, squares, message, results, points);
 }// end resetGuess
 
 // ****************************************************************** //
@@ -99,7 +106,7 @@ function resetGuess (moves, hints, squares, solution, callback) {
 //		class: the chosen color
 //		value: the associated number
 //	...modifies the hits array so that
-//		only the current hint has the class currentMove
+//		only the current hint has the class glow
 //	...modifies the following properties of the active square
 //		class: hasImage added, clicked added (only if its not first or last)
 //		imgClass: ng-hide removed
@@ -112,10 +119,10 @@ function incrementMoves (square, hints, moves, squares, callback) {
 
 	hints = hints.map(function(elem) {
 		var result = elem;
-		result.class = elem.class.split(' currentMove').join('');
+		result.class = elem.class.split(' glow').join('');
 		return result;
 	});
-	hints[moves.length].class += ' currentMove';
+	hints[moves.length].class += ' glow';
 
 	moves.push(move);
 	if (square.class.indexOf(' b') === -1 && square.class.indexOf(' a') === -1) {
@@ -131,28 +138,51 @@ function incrementMoves (square, hints, moves, squares, callback) {
 }// end incrementMoves()
 
 // highlight adds the highlight class to a square if it is a possible move
-function highlight (square, index, direction, guessNumber, clickedSquare) {
+function highlight (square, index, direction, guessNumber, clickedSquare,
+		callback) {
+	var toHighlight = [];
 	var rowDiff = Math.abs(clickedSquare.value[0] - square.value[0])
 	var columnDiff = Math.abs(clickedSquare.value[1] - square.value[1])
 	square.class = square.class.split(' highlight').join('');
 	if (square.class.indexOf(' hasImage') !== -1) {
 		// don't highlight already clicked squares
 	} else if (square.class.indexOf(' b') !== -1 && guessNumber < 5) {
-		// don't highlight already clicked squares
+		// don't highlight the end square until the end
 	} else if(direction === "orthogonal") {
 		if ((rowDiff === 1 && columnDiff === 0) || (rowDiff === 0 && columnDiff === 1)) {
-			square.class += ' highlight';
+			callback(index);
 		}
 	} else if(direction === "diagonal" && rowDiff === 1 && columnDiff === 1) {
-		square.class += ' highlight';
-
+		callback(index);
 	} else if(direction === "long orthogonal") {
 		if ((rowDiff === 0 && columnDiff === 3) || (rowDiff === 3 && columnDiff === 0)) {
-			square.class += ' highlight';
+			callback(index);
 		}
 	} else if(direction === "long diagonal" && rowDiff === 3 && columnDiff === 3) {
-		square.class += ' highlight';
+		callback(index);
+	} else {
+		callback('fuck');
+	}
+}
 
+function makeHint (elem, ind) {
+	if (ind === 5) {
+		return {"class": 'square b', "imgClass": "ng-hide"};
+	} else {
+		var string = elem.direction.split(' ').reduce(function (prev, curr) {
+			return prev + curr[0];
+		}, '');
+		var hint = {
+				"class": 'square hasImage',
+				"image": '../assets/img/' + string + '.png',
+				"imgClass": ""
+			};
+
+		if (ind === 0) {
+			hint.class += ' a';
+		}
+
+		return hint;
 	}
 }
 
@@ -161,5 +191,6 @@ module.exports = {
 	deStringState: deStringState,
 	resetGuess: resetGuess,
 	incrementMoves: incrementMoves,
-	highlight: highlight
+	highlight: highlight,
+	makeHint: makeHint
 }

@@ -1,0 +1,21 @@
+div.banner
+	h2#points Current Points:&nbsp;{{gCtrl.points}}&nbsp;
+	h2#high-score High Score:&nbsp;{{gCtrl.highScore}}
+	h2#timer {{gCtrl.timeDisplay}}
+button#btnTutorial(ng-click="gCtrl.tutorial()") ?!?
+#container(class="container")
+	#sidebar(class="col-md-4")
+		button(ng-click="gCtrl.newGame()") New Game
+		h3 Path Hints
+		#divHints
+			div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")
+				img(src="{{hint.image}}",alt="",class="{{hint.imgClass}}")
+		h3 User Guesses: {{gCtrl.guesses}}
+		#divUserMoves
+			div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
+	#main
+		table#divGrid
+			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
+				td(ng-repeat="square in gCtrl.squares.slice(row * 5,(row + 1) * 5)",class="{{square.class}}", ng-click="square.click()") 
+					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
+button(ng-click="gCtrl.reset()") Reset!
