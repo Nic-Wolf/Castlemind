@@ -2,8 +2,8 @@
 /* CUSTOM FONTS */
 /*******************************/
 @font-face {
-	font-family: Perrygot;
-	src: url('../fonts/Perrygot.ttf');
+	font-family: 'Perrygot';
+	src: url('../fonts/Perrygot.ttf') format('truetype');
 }
 
 
@@ -14,7 +14,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-	background-image: url("../img/castle-bg-md.jpg");
+	background-image: url("../img/title1basicbrickborder2.jpg");
 	background-size: 100% 250%;
 }
 
@@ -50,7 +50,9 @@ button {
 	margin: 2% auto 20px auto;
 	font-size: 1.25em;
 	background-image: url("../img/brushed_alu_dark.png");
-	border: outset 4px solid;
+}
+
+button:focus {
 	outline: 0;
 }
 
@@ -78,7 +80,7 @@ button {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	height: 6.0em;
+	height: 6.75em;
 	background-color: lightblue;
 	display: block;
 }
@@ -99,7 +101,7 @@ button {
 	padding: 0.25em;
 }
 
-#next {
+#next:focus {
 	outline: initial;
 }
 
@@ -114,6 +116,78 @@ button {
 	min-height: 260px;
 }
 
+.slideIn {
+  position: absolute;
+  clear: left;
+  width: 25%;
+  -webkit-animation: slide 1s forwards;
+  animation: slide 1s forwards;
+}
+
+@-webkit-keyframes slide {
+	0% {
+	  left: 500px;
+	  opacity: 0;
+	}
+	50% {
+  	opacity: 0;
+	}
+  100% {
+  	left: 8%;
+  	opacity: 1;
+  }
+}
+
+@keyframes slide {
+	0% {
+		left: 500px;
+		opacity: 0;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		left: 8%;
+		opacity: 1;
+	}
+}
+
+.slideOut {
+	position: absolute;
+	float: left;
+	width: 25%;
+	-webkit-animation: slideOut 1s forwards;
+	animation: slideOut 1s forwards;
+}
+
+@-webkit-keyframes slideOut {
+	0% {
+		left: 8%;
+		opacity: 1;
+	}
+	20% {
+		opacity: 0;
+	}
+	100% {
+		left: -500px;
+		opacity: 0;
+	}
+}
+
+@keyframes slideOut {
+	0% {
+		left: 8%;
+		opacity: 1;
+	}
+	20% {
+		opacity: 0;
+	}
+	100% {
+		left: -500px;
+		opacity: 0;
+	}
+}
+
 
 /*******************************/
 /* BANNER STYLES */
@@ -122,6 +196,7 @@ button {
 	width: 90%;
 	display: inline-block;
 	margin: 1.5% auto 20px auto;
+	float: left;
 }
 
 .banner h2 {
@@ -129,6 +204,7 @@ button {
 }
 
 #btnTutorial {
+	float: right;
 	position: fixed;
 	font-size: 2.0em;
 	font-weight: bolder;
@@ -157,7 +233,12 @@ button {
 	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
 }
 
+
 #sidebar {
+  /*-webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%, 50% 0%,
+   50% 30%, 0% 30%, 0% 100%, 100% 100%, 100% 0%);
+	clip-path: polygon(0% 0%, 0% 100%, 4.5% 100%, 4.5% 20%, 33% 20%,
+   33% 40%, 4.5% 40%, 4.5% 100%, 100% 100%, 100% 0%);*/
 	margin: 0 0 0 3%;
 	padding: 0;
 	width: 30%;
@@ -202,7 +283,9 @@ button {
 .square img {
 	margin: 0;
 	padding: 0;
+	padding-bottom: 4.25%;
 	width: 100%;
+	height: 100%;
 	opacity: 1;
 	
 }
@@ -235,8 +318,12 @@ button {
 
 .b {
 	background: url("../img/end.jpg") no-repeat;
-	background-size: contain;
+	background-size: cover;
 	opacity: 0.8;
+}
+
+.b img {
+	padding-bottom: 4.25%;
 }
 
 .clicked {
@@ -297,9 +384,6 @@ button {
 	padding-bottom: 0;
 }
 
-.currentMove .b {
-}
-
 
 /*******************************/
 /* MEDIA QUERIES */
@@ -310,7 +394,7 @@ button {
 	}
 
 	#btnTutorial {
-		/*position: relative;*/
+		
 	}
 
 }
@@ -352,6 +436,14 @@ button {
 
 	#directions div {
 		font-size: 1.5em;
+	}
+
+	.slideIn {
+		width: 80%;
+	}
+
+	.slideOut {
+		width: 80%;
 	}
 
 	#options h3 {
