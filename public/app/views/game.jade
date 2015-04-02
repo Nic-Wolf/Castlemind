@@ -1,16 +1,24 @@
 div.banner
-	h2#points Current Points:&nbsp;{{gCtrl.points}}&nbsp;
-	h2#high-score High Score:&nbsp;{{gCtrl.highScore}}
-	h2#timer {{gCtrl.timeDisplay}}
-button#btnTutorial(ng-click="gCtrl.tutorial()") ?!?
+	div#points 
+		h2 Current Points:&nbsp;
+		h2 {{gCtrl.points}}
+	div#timer
+		h2 Time Remaining:&nbsp;
+		h2 {{gCtrl.timeDisplay}}
+	div#high-score
+		h2 High Score:&nbsp;
+		h2 {{gCtrl.highScore}}
 #container(class="container")
-	#sidebar(class="col-md-4")
-		button(ng-click="gCtrl.newGame()") New Game
+	#sidebar
+		div.inset
+			button(ng-click="gCtrl.newGame()") New Game
+			button(ng-click="gCtrl.newGame()") New Board
+			button#btnTutorial(ng-click="gCtrl.tutorial()") Help
 		h3 Path Hints
 		#divHints
 			div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")
 				img(src="{{hint.image}}",alt="",class="{{hint.imgClass}}")
-		h3 User Guesses: {{gCtrl.guesses}}
+		h3 Current Guess: &#40;Incorrect Guesses: {{gCtrl.guesses}}&#41;
 		#divUserMoves
 			div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
 	#main
@@ -18,4 +26,3 @@ button#btnTutorial(ng-click="gCtrl.tutorial()") ?!?
 			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
 				td(ng-repeat="square in gCtrl.squares.slice(row * 5,(row + 1) * 5)",class="{{square.class}}", ng-click="square.click()") 
 					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
-button(ng-click="gCtrl.reset()") Reset!
