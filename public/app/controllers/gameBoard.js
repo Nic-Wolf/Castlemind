@@ -48,9 +48,17 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	}; // end countDown()
 	self.message = "Welcome! Press New Game to Begin!";
 
+
+	// ******************************************************* //
+	// newGame
+	// ******************************************************* //
+	this.newGame = function() {
+		this.reset();
+		this.newBoard();
+	}
 	
 	// ******************************************************* //
-	// newGame starts the timer and gets a gameboard and path from the server
+	// newBoard starts the timer and gets a gameboard and path from the server
 	// The controller is assigned the following values
 	//		timeDisplay: shows the player their remaining time
 	//		points: this reflects the running total for five minutes
@@ -59,7 +67,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	//		moves: the moves that the player has guessed
 	//		hints: the values that are displayed to the player
 	// ******************************************************* //
-	this.newGame = function() {
+	this.newBoard = function() {
 		if (!$cookies.playing || self.timeDisplay === '0:00') {
 			$cookies.timeCheck = Date.now();
 			$cookies.elapsedTime = 0;
@@ -238,7 +246,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	// reset allows the page to refresh without trying to load a new board
 	this.reset = function () {
 		delete $cookies.playing;
-		delete $cookies.highScore;
 		delete self.squares;
 		delete self.solution;
 		delete self.hints;
