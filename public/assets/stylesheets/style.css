@@ -233,15 +233,6 @@ button:focus {
 	width: 14em;
 }
 
-#btnTutorial {
-	position: absolute;
-	top: 0;
-	right: 0;
-	font-size: 2.0em;
-	font-weight: bolder;
-	margin: 0;
-}
-
 
 /*******************************/
 /* BOARD STYLES */
@@ -273,6 +264,11 @@ button:focus {
 	left: 3%;
 	width: 30%;
 	padding: 0;
+}
+
+.inset {
+	font-size: 0.75em;
+	display: flex;
 }
 
 #main {
@@ -439,23 +435,55 @@ button:focus {
 }
 
 @media screen and (min-width: 1200px) {
-	#container {
-		padding-bottom: 640px;
+	.banner {
 		width: 1100px;
-		left: 11.8%;
+		margin: auto;
+	}
+
+	#container {
+		position: static;
+		padding-bottom: 280px;
+		width: 1100px;
+		margin: auto;
+		margin-top: 1%;
+	}
+
+	#sidebar {
+		display: inline-block;
+		position: static;
+		width: 380px;
+		margin: 2%;
 	}
 
 	#main {
+		clear: left;
+		display: inline-block;
+		position: static;
+		float: right;
+		margin-right: -1%; 
 		width: 640px;
 		height: 640px;
 	}
 }
 
-@media handheld, only screen and (max-width: 639px), only screen and (max-device-width: 480px)  {
+@media handheld, only screen and (max-width: 639px), only screen and (max-device-width: 1080px) {
+	body {
+		background-size: 200% 102%;
+	}
+
+	h2 {
+		font-size: 3.0em;
+	}
+
+	h3 {
+		font-size: 3.0em;
+	}
+
 	button {
+		margin-top: 0;
 		display: block;
 		padding: 0.25em;
-		font-size: 2.0em;
+		font-size: 3.25em;
 	}
 
 	#divSplash h1 {
@@ -504,9 +532,8 @@ button:focus {
 	}
 
 	.banner {
-		width: 78%;
+		width: 100%;
 		float: left;
-		display: block;
 		margin: 0;
 		background: none;
 		border: none;
@@ -517,9 +544,17 @@ button:focus {
 		border: outset 2px;
 	}
 
-	#points, #high-score, #timer {
-		text-align: left;
-		width: 17em; 
+
+	#points {
+		width: 22em;
+	}
+
+	#timer {
+		width: 24em;
+	}
+
+	#high-score {
+		width: 16em;
 	}
 
 	#container {
@@ -536,48 +571,53 @@ button:focus {
 		display: block;
 		margin: auto;
 		padding: 0;
-		width: 90%;
-		max-width: 90%;
+		width: 96%;
+	}
+
+	.inset {
+		width: 100%;
+		float: left;
+		margin: 0;
 	}
 
 	#divHints {
 		margin: auto;
-		padding-bottom: 17.5%;
+		padding-bottom: 18.5%;
 		width: 100%;
 	}
 
 	#divUserMoves {
 		margin: auto;
-		padding-bottom: 17.5%;
+		padding-bottom: 17.25%;
 		width: 100%;
 	}
 
 	#main {
+		clear: left;
 		position: static;
-		display: table;
-		float: none;
-		margin: 1% 2%;
+		display: block;
 		width: 100%;
+		max-width: none;
+		max-height: none;
+		margin-left: 2%;
 	}
 
 	#divGrid {
 		position: static;
-		margin: auto;
+		margin: 5% auto;
 		width: 100%;
 	}
 
-	#btnTutorial {
-		float: right;
-		position: relative;
-	}
-
-	#btnReset {
+/*	#btnTutorial {
 		position: static;
-	}
+		display: block;
+		font-size: 3.25em;
+
+	}*/
 }
 
 
-/*******************************/
+/******************************
 /* ANIMATIONS */
 /*******************************/
 @-webkit-keyframes highlight {

@@ -8,15 +8,17 @@ div.banner
 	div#high-score
 		h2 High Score:&nbsp;
 		h2 {{gCtrl.highScore}}
-button#btnTutorial(ng-click="gCtrl.tutorial()") ?!?
 #container(class="container")
 	#sidebar
-		button(ng-click="gCtrl.newGame()") New Game
+		div.inset
+			button(ng-click="gCtrl.newGame()") New Game
+			button(ng-click="gCtrl.newGame()") New Board
+			button#btnTutorial(ng-click="gCtrl.tutorial()") Help
 		h3 Path Hints
 		#divHints
 			div(ng-repeat="hint in gCtrl.hints",class="{{hint.class}}")
 				img(src="{{hint.image}}",alt="",class="{{hint.imgClass}}")
-		h3 User Guesses: {{gCtrl.guesses}}
+		h3 Current Guess: &#40;Incorrect Guesses: {{gCtrl.guesses}}&#41;
 		#divUserMoves
 			div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
 	#main
@@ -24,4 +26,3 @@ button#btnTutorial(ng-click="gCtrl.tutorial()") ?!?
 			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
 				td(ng-repeat="square in gCtrl.squares.slice(row * 5,(row + 1) * 5)",class="{{square.class}}", ng-click="square.click()") 
 					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
-//- button#btnReset(ng-click="gCtrl.reset()") Reset!
