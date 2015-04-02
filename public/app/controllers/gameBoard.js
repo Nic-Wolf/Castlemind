@@ -198,6 +198,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			);
 		} else if (toHighlight.length === 0) {
 			self.cancel();
+			self.guesses++;
 			self.message = "Oops! You had nowhere to go.";
 		} else {
 			$timeout( function () {
