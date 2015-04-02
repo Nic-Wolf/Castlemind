@@ -33,6 +33,7 @@ a {
 }
 
 h1 {
+	color: #210;
 	display: inline-block;
 	vertical-align: middle;
 	font-family: Perrygot;
@@ -492,6 +493,10 @@ button:focus {
 		background-size: 200% 104%;
 	}
 
+	h1 {
+		text-shadow: 0 6px 6px #404040;
+	}
+
 	h2 {
 		font-size: 3.0em;
 	}
@@ -509,8 +514,16 @@ button:focus {
 		background-color: #7c7c7c;
 	}
 
-	#divSplash h1 {
-		font-size: 4.0em;
+	#divSplash {
+		width: 100%;
+		font-size: 1.5em;
+	}
+
+	#divSplash button {
+		margin-top: 20%;
+		font-size: 2.5em;
+		text-shadow: 0 1px 10px 1px black;
+		border: 3px outset #ababab;
 	}
 
 	#directions {
