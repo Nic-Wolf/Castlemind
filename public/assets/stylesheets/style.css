@@ -166,7 +166,6 @@ button:focus {
 
 .slideOut {
 	position: absolute;
-	float: left;
 	width: 80%;
 	-webkit-animation: slideOut 1s forwards;
 	animation: slideOut 1s forwards;
@@ -174,14 +173,12 @@ button:focus {
 
 @-webkit-keyframes slideOut {
 	0% {
-		left: 8%;
 		opacity: 1;
 	}
 	20% {
 		opacity: 0;
 	}
 	100% {
-		left: -500px;
 		opacity: 0;
 	}
 }
@@ -487,12 +484,17 @@ button:focus {
 		height: 640px;
 	}
 
+	.sqare {
+		padding-bottom: 19%;
+	}
+
 	#directions {
 		height: 7em;
 	}
 
 	.slideIn {
-		width: 25%;
+		position: relative;
+		width: 90%;
 	}
 
 	@-webkit-keyframes slide {
@@ -504,7 +506,7 @@ button:focus {
 	  	opacity: 0;
 		}
 	  100% {
-			left: 12%;
+			left: 5%;
 	  	opacity: 1;
 	  }
 	}
@@ -518,32 +520,30 @@ button:focus {
 			opacity: 0;
 		}
 		100% {
-			left: 12%;
+			left: 0;
 			opacity: 1;
 		}
 	}
 
 	.slideOut {
-		width: 25%;
+		width: 350px;
 	}
 
 	@-webkit-keyframes slideOut {
 		0% {
-			left: 12%;
 			opacity: 1;
 		}
 		20% {
 			opacity: 0;
 		}
 		100% {
-			left: -500px;
 			opacity: 0;
 		}
 	}
 
 	@keyframes slideOut {
 		0% {
-			left: 12%;
+			left: 0%;
 			opacity: 1;
 		}
 		20% {
