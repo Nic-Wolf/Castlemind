@@ -30,6 +30,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			var seconds = Math.floor(($cookies.elapsedTime - minutes * 60000) / 1000);
 			if ($cookies.victory) {
 				self.timeDisplay = self.timeDisplay.split(' (paused)').join('') + ' (paused)';
+				alert("You Solved the board in " + (self.guesses + 1) + " guesses!\nClick New Board to continue.");
 			} else if (minutes < 5) {
 				if (49 >= seconds) {
 					self.timeDisplay = (4 - minutes) + ':' + (59 - seconds);
@@ -42,6 +43,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.squares.forEach( function (square) {
 					delete square.click;
 				});
+				alert("Game Over!\nYour final score is: " + self.points + "!");
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
