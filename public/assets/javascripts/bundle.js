@@ -32,7 +32,7 @@ routeApp.config(['$routeProvider',
 			redirectTo: '/main'
 	});
 }]);
-},{"./controllers/gameBoard.js":"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/controllers/gameBoard.js","./controllers/mainView.js":"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/controllers/mainView.js","./controllers/tutorial.js":"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/controllers/tutorial.js"}],"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/controllers/gameBoard.js":[function(require,module,exports){
+},{"./controllers/gameBoard.js":"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/gameBoard.js","./controllers/mainView.js":"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/mainView.js","./controllers/tutorial.js":"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/tutorial.js"}],"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/gameBoard.js":[function(require,module,exports){
 var manageState = require('../services/manageState.js');
 
 
@@ -308,7 +308,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	
 	init();
 }]);// end gameController()
-},{"../services/manageState.js":"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/services/manageState.js"}],"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/controllers/mainView.js":[function(require,module,exports){
+},{"../services/manageState.js":"/Users/pcsstudent/Desktop/castlemind/public/app/services/manageState.js"}],"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/mainView.js":[function(require,module,exports){
 var mainApp = angular.module('mainApp', []);
 	
 mainApp.controller('mainController', ['$location', function($location) {
@@ -323,7 +323,7 @@ mainApp.controller('mainController', ['$location', function($location) {
 		$location.path('/tutorial');
 	}
 }]);
-},{}],"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/controllers/tutorial.js":[function(require,module,exports){
+},{}],"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/tutorial.js":[function(require,module,exports){
 var tutApp = angular.module('tutApp', ['ngCookies']);
 var manageState = require('../services/manageState.js');
 
@@ -528,7 +528,7 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		self.example[path[number]].image = "../assets/img/" + hint + ".png";
 	}
 }]);
-},{"../services/manageState.js":"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/services/manageState.js"}],"/Users/davidhasenjaeger/temp/bigProjects/castlemind/public/app/services/manageState.js":[function(require,module,exports){
+},{"../services/manageState.js":"/Users/pcsstudent/Desktop/castlemind/public/app/services/manageState.js"}],"/Users/pcsstudent/Desktop/castlemind/public/app/services/manageState.js":[function(require,module,exports){
 
 // stringState converts the board data to a pair of strings
 function stringState (data, callback) {
