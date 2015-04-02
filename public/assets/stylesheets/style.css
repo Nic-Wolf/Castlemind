@@ -504,7 +504,7 @@ button:focus {
 	  	opacity: 0;
 		}
 	  100% {
-			left: 10%;
+			left: 12%;
 	  	opacity: 1;
 	  }
 	}
@@ -518,7 +518,7 @@ button:focus {
 			opacity: 0;
 		}
 		100% {
-			left: 10%;
+			left: 12%;
 			opacity: 1;
 		}
 	}
@@ -529,7 +529,7 @@ button:focus {
 
 	@-webkit-keyframes slideOut {
 		0% {
-			left: 10%;
+			left: 12%;
 			opacity: 1;
 		}
 		20% {
@@ -543,7 +543,7 @@ button:focus {
 
 	@keyframes slideOut {
 		0% {
-			left: 10%;
+			left: 12%;
 			opacity: 1;
 		}
 		20% {
