@@ -3,19 +3,29 @@
 /*******************************/
 @font-face {
 	font-family: 'Perrygot';
-	src: url('../fonts/Perrygot.ttf') format('truetype');
+	src: url('../fonts/perrygot.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Contra';
+	src: url('../fonts/contra.ttf') format('truetype');
 }
 
 
 /*******************************/
 /* GENERAL STYLES */
 /*******************************/
+html {
+	height: 100%;
+}
+
 body {
 	margin: 0;
 	padding: 0;
-	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-	background-image: url("../img/castle-bg-md.jpg");
-	background-size: 100% 250%;
+	font: 14px "Contra", Helvetica, Arial, sans-serif;
+	background: url("../img/castle-bg-md.jpg") no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
 }
 
 a {
@@ -30,9 +40,9 @@ h1 {
 }
 
 h2 {
-	font-size: 1.5em;
+	font-size: 1.75em;
 	display: inline-block;
-	margin: 1.0em auto;
+	margin: 0 auto;
 	padding: 0;
 }
 
@@ -40,15 +50,16 @@ h3 {
 	text-align: center;
 	color: #e4dacd;
 	font-size: 1.25;
-	margin: 0 auto;
-	padding: 1%;
+	margin: 1.0em auto 0 auto;
 }
 
 button {
+	display: block;
 	color: #e4dacd;
 	text-shadow: 0 -1px 1px black;
 	margin: 2% auto 20px auto;
-	font-size: 1.25em;
+	padding: 0.25em;
+	font-size: 2.0em;
 	background-image: url("../img/brushed_alu_dark.png");
 }
 
@@ -119,7 +130,7 @@ button:focus {
 .slideIn {
   position: absolute;
   clear: left;
-  width: 25%;
+  width: 80%;
   -webkit-animation: slide 1s forwards;
   animation: slide 1s forwards;
 }
@@ -155,7 +166,7 @@ button:focus {
 .slideOut {
 	position: absolute;
 	float: left;
-	width: 25%;
+	width: 80%;
 	-webkit-animation: slideOut 1s forwards;
 	animation: slideOut 1s forwards;
 }
@@ -193,22 +204,42 @@ button:focus {
 /* BANNER STYLES */
 /*******************************/
 .banner {
-	width: 90%;
-	display: inline-block;
-	margin: 1.5% auto 20px auto;
-	float: left;
+	display: flex;
+	margin: 0 8.4%;
+	background-image: url("../img/brushed_alu_dark.png");
+	border: outset 2px;
 }
 
-.banner h2 {
-	margin: auto 5%;
+.banner div {
+	margin: 0 auto;
+	text-align: center;
+}
+
+#points {
+	float: left;
+	padding: 0.2em;
+	width: 13em;
+}
+
+#high-score {
+	float: left;
+	padding: 0.2em;
+	width: 10em;
+}
+
+#timer {
+	float: left;
+	padding: 0.2em;
+	width: 14em;
 }
 
 #btnTutorial {
-	float: right;
-	position: fixed;
+	position: absolute;
+	top: 0;
+	right: 0;
 	font-size: 2.0em;
 	font-weight: bolder;
-	margin: 0 auto;
+	margin: 0;
 }
 
 
@@ -217,48 +248,46 @@ button:focus {
 /*******************************/
 #container {
 	clear: left;
+	display: block;
 	box-sizing: border-box;
 	background: url("../img/mahogany.jpg") no-repeat;
 	background-size: cover;
-	padding: 0;
-	margin: auto;
-	width: 60%;
-	display: block;
-	padding-bottom: 49%;
-	border: 10px outset transparent;
+	position: absolute;
+	top: 10%;
+	left: 7.5%;
+	width: 85%;
+	min-width: 640px;
+	min-height: 400px;
+	padding-bottom: 48%;
 	box-shadow: 0 2px 14px 1px black;
+	border: 10px outset transparent;
 	-webkit-border-image: url("../img/wood-border-test.jpg") 10 300 stretch;
 	-moz-border-image:    url("../img/wood-border-test.jpg") 10 300 stretch;
 	-o-border-image:      url("../img/wood-border-test.jpg") 10 300 stretch;
 	border-image:         url("../img/wood-border-test.jpg") 10 300 stretch;
 }
 
-
 #sidebar {
-  /*-webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%, 50% 0%,
-   50% 30%, 0% 30%, 0% 100%, 100% 100%, 100% 0%);
-	clip-path: polygon(0% 0%, 0% 100%, 4.5% 100%, 4.5% 20%, 33% 20%,
-   33% 40%, 4.5% 40%, 4.5% 100%, 100% 100%, 100% 0%);*/
-	margin: 0 0 0 3%;
-	padding: 0;
+	position: absolute;
+	top: 2.5%;
+	left: 3%;
 	width: 30%;
-	max-width: 360px;
-	display: inline-block;
+	padding: 0;
 }
 
 #main {
-	float: right;
-	padding: 0;
+	position: absolute;
+	top: 1%;
+	left: 40%;
 	width: 60%;
-	max-width: 800px;
-	padding-right: 0.5%;
+	max-width: 640px;
+	max-height: 640px;
+	padding: 0;
 }
 
 #divGrid {
-	width: 92%;
+	width: 100%;
 	padding: 0;
-	min-width: 260px;
-	min-height: 260px;
 }
 
 .square {
@@ -331,7 +360,7 @@ button:focus {
 
 #divUserMoves {
 	box-sizing: border-box;
-	margin-top: 20px;
+	margin-top: 1.0em;
 	width: 100%;
 	padding-bottom: 17%;
 	background-image: url("../img/brushed_alu_dark.png");
@@ -350,7 +379,7 @@ button:focus {
 
 #divHints {
 	box-sizing: border-box;
-	margin-top: 20px;
+	margin-top: 0.5em;
 	width: 100%;
 	padding-bottom: 17%;
 	background-image: url("../img/brushed_alu_dark.png");
@@ -381,38 +410,48 @@ button:focus {
 	padding-bottom: 0;
 }
 
+#btnReset {
+	position: absolute;
+	top: 65%;
+	left: 0;
+
+}
+
 
 /*******************************/
 /* MEDIA QUERIES */
 /*******************************/
-@media screen and (min-width: 840px), screen and (max-width: 1000px) {
-	#container {
-		width: 750px;
-	}
-
-	#btnTutorial {
-		
-	}
-
-}
-
-@media screen and (min-width: 560px), screen and (max-width: 839px) {
+@media screen and (min-width: 640px) {
 	#divSplash h1 {
 		font-size: 6.0em;
 	}
 
 	#container {
-		width: 90%;
-		padding-bottom: 50%;
-	}
-
-	#sidebar {
-		float: left;
-		margin: 5% 0 0 2%;
+		left: 0;
 	}
 }
 
-@media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px)  {
+@media screen and (min-width: 750px) {
+	#container {
+		padding-bottom: 50%;
+		left: 7.5%;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	#container {
+		padding-bottom: 640px;
+		width: 1100px;
+		left: 11.8%;
+	}
+
+	#main {
+		width: 640px;
+		height: 640px;
+	}
+}
+
+@media handheld, only screen and (max-width: 639px), only screen and (max-device-width: 480px)  {
 	button {
 		display: block;
 		padding: 0.25em;
@@ -467,10 +506,25 @@ button:focus {
 	.banner {
 		width: 78%;
 		float: left;
+		display: block;
+		margin: 0;
+		background: none;
+		border: none;
+	}
+
+	.banner div {
+		background-image: url("../img/brushed_alu_dark.png");
+		border: outset 2px;
+	}
+
+	#points, #high-score, #timer {
+		text-align: left;
+		width: 17em; 
 	}
 
 	#container {
 		box-sizing: border-box;
+		position: static;
 		width: 100%;
 		min-width: 328px;
 		padding-bottom: 0;
@@ -499,6 +553,7 @@ button:focus {
 	}
 
 	#main {
+		position: static;
 		display: table;
 		float: none;
 		margin: 1% 2%;
@@ -515,6 +570,10 @@ button:focus {
 		float: right;
 		position: relative;
 	}
+
+	#btnReset {
+		position: static;
+	}
 }
 
 
@@ -523,20 +582,20 @@ button:focus {
 /*******************************/
 @-webkit-keyframes highlight {
 	100% {
-		top:    -10px;
-		right:  -10px;
-		bottom: -10px;
-		left:   -10px;
+		top:    -12px;
+		right:  -12px;
+		bottom: -12px;
+		left:   -12px;
 		opacity: 0;
 	}
 }
 
 @keyframes highlight {
 	100% {
-		top:    -10px;
-		right:  -10px;
-		bottom: -10px;
-		left:   -10px;
+		top:    -12px;
+		right:  -12px;
+		bottom: -12px;
+		left:   -12px;
 		opacity: 0;
 	}
 }
