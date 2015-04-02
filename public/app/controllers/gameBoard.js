@@ -32,13 +32,13 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.timeDisplay = self.timeDisplay.split(' (paused)').join('') + ' (paused)';
 			} else if (minutes < 5) {
 				if (49 >= seconds) {
-					self.timeDisplay = 'Time remaining: ' + (4 - minutes) + ':' + (59 - seconds);
+					self.timeDisplay = (4 - minutes) + ':' + (59 - seconds);
 				} else {
-					self.timeDisplay = 'Time remaining: ' + (4 - minutes) + ':0' + (59 - seconds);
+					self.timeDisplay = (4 - minutes) + ':0' + (59 - seconds);
 				}
 				self.countDown();
 			} else {
-				self.timeDisplay = 'Time remaining: 0:00';
+				self.timeDisplay = '0:00';
 				self.squares.forEach( function (square) {
 					delete square.click;
 				});
@@ -60,10 +60,10 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	//		hints: the values that are displayed to the player
 	// ******************************************************* //
 	this.newGame = function() {
-		if (!$cookies.playing || self.timeDisplay === 'Time remaining: 0:00') {
+		if (!$cookies.playing || self.timeDisplay === '0:00') {
 			$cookies.timeCheck = Date.now();
 			$cookies.elapsedTime = 0;
-			self.timeDisplay = 'Time remaining: 5:00';
+			self.timeDisplay = '5:00';
 			self.points = 0;
 			$cookies.points = 0;
 			self.results = [];
