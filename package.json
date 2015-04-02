@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "`npm bin`/jasmine",
-    "start": "gulp",
+    "start": "npm install && gulp",
     "postinstall": "./node_modules/bower/bin/bower install"
   },
   "dependencies": {
