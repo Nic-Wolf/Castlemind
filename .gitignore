@@ -2,5 +2,6 @@ old
 node_modules
 bower_components
 npm-debug.log
+newrelic_agent.log
 .DS_Store
 *.swp
