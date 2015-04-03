@@ -121,7 +121,7 @@ button:focus {
 }
 
 #options {
-	display: block;
+	display: flex;
 }
 
 #options h3 {
@@ -308,7 +308,6 @@ button:focus {
 }
 
 .square {
-
 	box-sizing: border-box;
 	line-height: 0;
 	width: 18%;
@@ -434,7 +433,6 @@ button:focus {
 	position: absolute;
 	top: 65%;
 	left: 0;
-
 }
 
 #alert {
