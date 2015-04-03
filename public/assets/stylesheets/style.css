@@ -1,12 +1,14 @@
 /*******************************/
 /* CUSTOM FONTS */
 /*******************************/
+
+
+/*font options for splash page button text below:*/ 
+
 @font-face {
 	font-family: 'Perrygot';
 	src: url('../fonts/perrygot.ttf') format('truetype');
 }
-
-/*font options for splash page button text below: */
 
 @font-face {
 	font-family: 'Tryst-Regular';
