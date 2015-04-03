@@ -446,6 +446,12 @@ button:focus {
 
 }
 
+#alert button {
+	position: relative;
+	left: 40%;
+	width: 20%;
+}
+
 
 /*******************************/
 /* MEDIA QUERIES */
@@ -612,17 +618,19 @@ button:focus {
 		border: outset 2px;
 	}
 
-
 	#points {
-		width: 22em;
+		font-size: 0.88em;
+		width: 25em;
 	}
 
 	#timer {
-		width: 24em;
+		font-size: 0.89em;
+		width: 23em;
 	}
 
 	#high-score {
-		width: 16em;
+		font-size: 0.88em;
+		width: 19em;
 	}
 
 	#container {
@@ -644,7 +652,7 @@ button:focus {
 	}
 
 	.inset {
-		font-size: 1.25em;
+		font-size: 1.1em;
 		width: 100%;
 		float: left;
 		margin: 0;
