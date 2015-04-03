@@ -32,7 +32,7 @@ routeApp.config(['$routeProvider',
 			redirectTo: '/main'
 	});
 }]);
-},{"./controllers/gameBoard.js":"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/gameBoard.js","./controllers/mainView.js":"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/mainView.js","./controllers/tutorial.js":"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/tutorial.js"}],"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/gameBoard.js":[function(require,module,exports){
+},{"./controllers/gameBoard.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/gameBoard.js","./controllers/mainView.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/mainView.js","./controllers/tutorial.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/tutorial.js"}],"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/gameBoard.js":[function(require,module,exports){
 var manageState = require('../services/manageState.js');
 
 
@@ -308,11 +308,11 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	
 	init();
 }]);// end gameController()
-},{"../services/manageState.js":"/Users/pcsstudent/Desktop/castlemind/public/app/services/manageState.js"}],"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/mainView.js":[function(require,module,exports){
+},{"../services/manageState.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/services/manageState.js"}],"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/mainView.js":[function(require,module,exports){
 var mainApp = angular.module('mainApp', []);
 	
 mainApp.controller('mainController', ['$location', function($location) {
-	
+
 	this.header = "CastleMind";
 
 	this.newGame = function() {
@@ -323,7 +323,7 @@ mainApp.controller('mainController', ['$location', function($location) {
 		$location.path('/tutorial');
 	}
 }]);
-},{}],"/Users/pcsstudent/Desktop/castlemind/public/app/controllers/tutorial.js":[function(require,module,exports){
+},{}],"/Users/aaronollis/class/castleMind/castlemind/public/app/controllers/tutorial.js":[function(require,module,exports){
 var tutApp = angular.module('tutApp', ['ngCookies']);
 var manageState = require('../services/manageState.js');
 
@@ -528,7 +528,7 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		self.example[path[number]].image = "../assets/img/" + hint + ".png";
 	}
 }]);
-},{"../services/manageState.js":"/Users/pcsstudent/Desktop/castlemind/public/app/services/manageState.js"}],"/Users/pcsstudent/Desktop/castlemind/public/app/services/manageState.js":[function(require,module,exports){
+},{"../services/manageState.js":"/Users/aaronollis/class/castleMind/castlemind/public/app/services/manageState.js"}],"/Users/aaronollis/class/castleMind/castlemind/public/app/services/manageState.js":[function(require,module,exports){
 
 // stringState converts the board data to a pair of strings
 function stringState (data, callback) {
@@ -637,7 +637,7 @@ function resetGuess (moves, hints, squares, solution, guesses, results, callback
 //		class: the chosen color
 //		value: the associated number
 //	...modifies the hits array so that
-//		only the current hint has the class currentMove
+//		only the current hint has the class glow
 //	...modifies the following properties of the active square
 //		class: hasImage added, clicked added (only if its not first or last)
 //		imgClass: ng-hide removed
@@ -650,10 +650,10 @@ function incrementMoves (square, hints, moves, squares, callback) {
 
 	hints = hints.map(function(elem) {
 		var result = elem;
-		result.class = elem.class.split(' currentMove').join('');
+		result.class = elem.class.split(' glow').join('');
 		return result;
 	});
-	hints[moves.length].class += ' currentMove';
+	hints[moves.length].class += ' glow';
 
 	moves.push(move);
 	if (square.class.indexOf(' b') === -1 && square.class.indexOf(' a') === -1) {

@@ -7,9 +7,11 @@
 }
 
 @font-face {
-	font-family: 'Contra';
-	src: url('../fonts/contra.ttf') format('truetype');
+	font-family: 'Artifika-Regular';
+	src: url('../fonts/Artifika-Regular.ttf') format('truetype');
 }
+
+
 
 
 /*******************************/
@@ -55,13 +57,15 @@ h3 {
 }
 
 button {
+	width: 15%;
+	text-align: center;
+	font-family: 'Artifika-Regular';
 	display: block;
 	color: #e4dacd;
 	text-shadow: 0 -1px 1px black;
 	margin: 2% auto 20px auto;
 	padding: 0.25em;
 	font-size: 2.0em;
-	background-image: url("../img/stone-texture.jpg");
 }
 
 button:focus {
@@ -76,13 +80,36 @@ button:focus {
 #divSplash h1 {
 	width: 100%;
 	font-size: 8.0em;
+	text-shadow: 2px 2px 1px black;
+	margin-left: 15%;
+	color: #a91c00;
+
+
 }
 
-#divSplash button {
-	font-size: 1.75em;
+
+#divNewGame button {
+	font-size: 2.5em;
 	display: block;
 	padding: 0.5em;
+	margin-left: 60%;
+	margin-bottom: -.5em;
+	background-image: url("../img/texture3.png");
+	border: 2px solid #3a0e05;
+	
 }
+
+#divTutorial button {
+	font-size: 2.5em;
+	display: block;
+	padding: 0.5em;
+	margin-left: 60%;
+	padding-right: 2.18em;
+	background-image: url("../img/texture3.png");
+	border: 2px solid #3a0e05;
+
+}
+
 
 
 /*******************************/
