@@ -794,7 +794,7 @@ button:focus {
 	}
 }
 
-@-webkit-keyframes slideOut {
+/*@-webkit-keyframes slideOut {
 	0% {
 		left: 0%;
 		opacity: 1;
@@ -820,5 +820,5 @@ button:focus {
 		left: -500px;
 		opacity: 0;
 	}
-}
+}*/
 
