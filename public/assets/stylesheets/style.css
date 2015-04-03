@@ -2,13 +2,13 @@
 /* CUSTOM FONTS */
 /*******************************/
 @font-face {
-	font-family: 'Perrygot';
-	src: url('../fonts/perrygot.ttf') format('truetype');
+	font-family: 'Artifika';
+	src: url('../fonts/Artifika-Regular.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'Artifika';
-	src: url('../fonts/Artifika-Regular.ttf') format('truetype');
+	font-family: 'Perrygot';
+	src: url('../fonts/PERRYGOT.TTF') format('truetype');
 }
 
 
@@ -815,3 +815,4 @@ button:focus {
 		opacity: 0;
 	}
 }
+
