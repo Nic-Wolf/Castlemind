@@ -65,6 +65,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			var seconds = Math.floor(($cookies.elapsedTime - minutes * 60000) / 1000);
 			if ($cookies.victory) {
 				self.timeDisplay = self.timeDisplay.split(' (paused)').join('') + ' (paused)';
+				alert("You Solved the board in " + (self.guesses + 1) + " guesses!\nClick New Board to continue.");
 			} else if (minutes < 5) {
 				if (49 >= seconds) {
 					self.timeDisplay = (4 - minutes) + ':' + (59 - seconds);
@@ -77,15 +78,24 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.squares.forEach( function (square) {
 					delete square.click;
 				});
+				alert("Game Over!\nYour final score is: " + self.points + "!");
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
 	}; // end countDown()
 	self.message = "Welcome! Press New Game to Begin!";
 
+
+	// ******************************************************* //
+	// newGame
+	// ******************************************************* //
+	this.newGame = function() {
+		this.reset();
+		this.newBoard();
+	}
 	
 	// ******************************************************* //
-	// newGame starts the timer and gets a gameboard and path from the server
+	// newBoard starts the timer and gets a gameboard and path from the server
 	// The controller is assigned the following values
 	//		timeDisplay: shows the player their remaining time
 	//		points: this reflects the running total for five minutes
@@ -94,7 +104,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	//		moves: the moves that the player has guessed
 	//		hints: the values that are displayed to the player
 	// ******************************************************* //
-	this.newGame = function() {
+	this.newBoard = function() {
 		if (!$cookies.playing || self.timeDisplay === '0:00') {
 			$cookies.timeCheck = Date.now();
 			$cookies.elapsedTime = 0;
@@ -233,6 +243,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			);
 		} else if (toHighlight.length === 0) {
 			self.cancel();
+			self.guesses++;
 			self.message = "Oops! You had nowhere to go.";
 		} else {
 			$timeout( function () {
@@ -272,7 +283,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	// reset allows the page to refresh without trying to load a new board
 	this.reset = function () {
 		delete $cookies.playing;
-		delete $cookies.highScore;
 		delete self.squares;
 		delete self.solution;
 		delete self.hints;
@@ -588,9 +598,7 @@ function deStringState (boardString, solutionString, moveString, callback) {
 function resetGuess (moves, hints, squares, solution, guesses, results, callback) {
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
-	if (moves.length < 6) {
-		restart();
-	} else if (!moves.some( function (elem, ind) {
+	if (!moves.some( function (elem, ind) {
 		var result = true;
 		if (ind === 0) {
 			result = false;
@@ -599,7 +607,7 @@ function resetGuess (moves, hints, squares, solution, guesses, results, callback
 			result = false;
 		}
 		return result;
-	})) {
+	}) && moves.length === 6) {
 		results.push(guesses);
 		var points = results.reduce( function (prev, curr) {
 			if (5 > curr) {
