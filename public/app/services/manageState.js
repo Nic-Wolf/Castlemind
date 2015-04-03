@@ -76,7 +76,7 @@ function resetGuess (moves, hints, squares, solution, guesses, results, callback
 			}
 			return prev + newPoints;
 		}, 0);
-		message = "You win! You have " + points + ' points!';
+		message = "You Solved the board in " + (guesses + 1) + " guesses!\nClick New Board to continue.";
 	} else {
 		restart();
 	}
