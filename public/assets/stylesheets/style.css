@@ -7,8 +7,8 @@
 }
 
 @font-face {
-	font-family: 'Contra';
-	src: url('../fonts/contra.ttf') format('truetype');
+	font-family: 'Artifika';
+	src: url('../fonts/Artifika-Regular.ttf') format('truetype');
 }
 
 
@@ -22,7 +22,7 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-	font: 14px "Contra", Helvetica, Arial, sans-serif;
+	font: 14px "Artifika", serif;
 	background: url("../img/castle-bg-sm-cropped.jpg") no-repeat;
 	background-position: center;
 	background-size: 100% 100%;
@@ -55,13 +55,15 @@ h3 {
 }
 
 button {
-	display: block;
+	text-align: center;
+	font-family: 'Artifika';
 	color: #e4dacd;
 	text-shadow: 0 -1px 1px black;
 	margin: 2% auto 20px auto;
 	padding: 0.25em;
 	font-size: 2.0em;
-	background-image: url("../img/stone-texture.jpg");
+	background-image: url("../img/texture3.png");
+	border: 3px outset #843;
 }
 
 button:focus {
@@ -76,12 +78,29 @@ button:focus {
 #divSplash h1 {
 	width: 100%;
 	font-size: 8.0em;
+	text-shadow: 2px 2px 1px black;
+	margin-left: 15%;
+	color: #a91c00;
 }
 
-#divSplash button {
-	font-size: 1.75em;
+#divNewGame button {
+	width: 7em;
+	font-size: 2.5em;
 	display: block;
 	padding: 0.5em;
+	margin-left: 60%;
+	text-align: right;
+	border: 2px solid #3a0e05;
+}
+
+#divTutorial button {
+	width: 7em;
+	font-size: 2.5em;
+	display: block;
+	padding: 0.5em;
+	margin-left: 60%;
+	text-align: right;
+	border: 2px solid #3a0e05;
 }
 
 
@@ -99,6 +118,10 @@ button:focus {
 
 #directions div {
 	font-size: 1.5em;
+}
+
+#options {
+	display: block;
 }
 
 #options h3 {
@@ -216,19 +239,19 @@ button:focus {
 #points {
 	float: left;
 	padding: 0.2em;
-	width: 13em;
+	width: 15em;
 }
 
 #high-score {
 	float: left;
 	padding: 0.2em;
-	width: 10em;
+	width: 11em;
 }
 
 #timer {
 	float: left;
 	padding: 0.2em;
-	width: 14em;
+	width: 13em;
 }
 
 
@@ -285,6 +308,7 @@ button:focus {
 }
 
 .square {
+
 	box-sizing: border-box;
 	line-height: 0;
 	width: 18%;
@@ -306,6 +330,7 @@ button:focus {
 	padding: 0;
 	width: 100%;
 	opacity: 1;
+	
 }
 
 .color-0 { 
@@ -428,6 +453,14 @@ button:focus {
 	#container {
 		left: 0;
 	}
+
+	.square {
+		padding-bottom: 16%;
+	}
+
+	.hasImage {
+		padding-bottom: 0;
+	}
 }
 
 @media screen and (min-width: 750px) {
@@ -441,7 +474,7 @@ button:focus {
 	}
 
 	.square {
-		padding-bottom: 16%;
+		padding-bottom: 17%;
 	}
 
 	.hasImage {
@@ -484,8 +517,12 @@ button:focus {
 		height: 640px;
 	}
 
-	.sqare {
-		padding-bottom: 19%;
+	.square {
+		padding-bottom: 17%;
+	}
+
+	.hasImage {
+		padding-bottom: 0;
 	}
 
 	#directions {
@@ -558,7 +595,9 @@ button:focus {
 
 @media handheld, only screen and (max-width: 639px), only screen and (max-device-width: 1080px) {
 	body {
-		background: none;
+		/*background: none;*/
+		background-size: 160% 100%;
+		background-position: left;
 	}
 
 	h1 {
@@ -570,6 +609,7 @@ button:focus {
 	}
 
 	h3 {
+		margin: 0.5em auto;
 		font-size: 3.0em;
 	}
 
@@ -578,8 +618,23 @@ button:focus {
 		display: block;
 		padding: 0.25em;
 		font-size: 3.25em;
-		background-image: none;
 		background-color: #7c7c7c;
+	}
+
+	#divSplash h1 {
+		margin: 10% auto;
+	}
+
+	#divNewGame button {
+		margin: auto;
+		text-align: center;
+		width: 80%;
+	}
+
+	#divTutorial button {
+		margin: auto;
+		text-align: center;
+		width: 80%;
 	}
 
 	#divSplash {
@@ -591,7 +646,7 @@ button:focus {
 		margin-top: 20%;
 		font-size: 2.5em;
 		text-shadow: 0 1px 10px 1px black;
-		border: 3px outset #ababab;
+		border: 2px solid #3a0e05;
 	}
 
 	#directions {
@@ -637,8 +692,9 @@ button:focus {
 
 	.banner {
 		width: 100%;
+		vertical-align: top;
 		float: left;
-		margin: 0;
+		margin: 0 auto;
 		background: none;
 		border: none;
 	}
@@ -649,17 +705,16 @@ button:focus {
 		border: outset 2px;
 	}
 
-
 	#points {
-		width: 22em;
+		width: 25em;
 	}
 
 	#timer {
-		width: 24em;
+		width: 23em;
 	}
 
 	#high-score {
-		width: 16em;
+		width: 19em;
 	}
 
 	#container {
@@ -669,6 +724,11 @@ button:focus {
 		width: 100%;
 		min-width: 328px;
 		padding-bottom: 0;
+	}
+
+	#container button {
+		background-image: none;
+		background-color: #572112;
 	}
 
 	#sidebar {
@@ -685,11 +745,11 @@ button:focus {
 		width: 100%;
 		float: left;
 		margin: 0;
-		margin-top: -3%;
+		margin-top: -1%;
 	}
 
 	#divHints {
-		margin: auto;
+		margin: 0 auto;
 		padding-bottom: 17.25%;
 		width: 100%;
 		background-image: none;
@@ -741,6 +801,9 @@ button:focus {
 		bottom: -12px;
 		left:   -12px;
 		opacity: 0;
+<<<<<<< HEAD
+		
+=======
 	}
 }
 
@@ -751,6 +814,7 @@ button:focus {
 		bottom: -12px;
 		left:   -12px;
 		opacity: 0;
+>>>>>>> master
 	}
 }
 
@@ -779,18 +843,49 @@ button:focus {
 	right:  0;
 	bottom: 0;
 	left:   0;
-	-webkit-animation: highlight 1s infinite;
-	animation: highlight 1s infinite;
+	-webkit-animation: highlight 1.5s infinite;
+	animation: highlight 1.5s infinite;
 }
 
 .glow {
+	border: 1.5px solid transparent;
 	-webkit-animation-name: glow;
-	-webkit-animation-duration: 2s;
+	-webkit-animation-duration: 1.5s;
 	-webkit-animation-iteration-count: infinite;
 }
 	
 @-webkit-keyframes glow {
-	from {box-shadow: inset 0 0 50px 0px transparent;}
-	50%  {box-shadow: inset 0 0 50px 0px white;}
-	to   {box-shadow: inset 0 0 50px 0px transparent;}
+	0% {
+		border-color: #000;
+		/*box-shadow: inset 0 0 50px 0px transparent;*/
+	}
+	100% {
+		border-color: #FFCC00;
+		/*box-shadow: inset 0 0 50px 0px #FFCC00;*/
+	}
 }
+
+
+.directions {
+	float: left;
+	width: 40%;
+}
+
+.directions li {
+	margin: 20px 0 0 0;
+	font-size: 20px;
+}
+
+#next {
+	float: left;
+}
+
+#justPlay{
+	float: right;
+}
+
+#tutorialMain {
+	float: right;
+	width: 50%;
+}
+
