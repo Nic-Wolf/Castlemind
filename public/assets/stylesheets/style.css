@@ -426,6 +426,12 @@ button:focus {
 	font-size: 20px;
 }
 
+#alert button {
+	position: relative;
+	left: 40%;
+	width: 20%;
+}
+
 
 /*******************************/
 /* MEDIA QUERIES */
