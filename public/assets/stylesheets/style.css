@@ -412,6 +412,20 @@ button:focus {
 
 }
 
+#alert {
+	position: absolute;
+	top: 20%;
+	left: 10%;
+	width: 80%;
+	background-color: lightblue;
+}
+
+#alert p {
+	margin: 2em auto;
+	text-align: center;
+	font-size: 20px;
+}
+
 
 /*******************************/
 /* MEDIA QUERIES */

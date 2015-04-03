@@ -6,6 +6,11 @@ var gameApp = angular.module('gameApp', ['ngCookies']);
 gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeout',
 	function($http, $cookies, $location, $timeout) {
 	var self = this;
+	self.hideAlert = true;
+	self.killAlert = function () {
+		self.hideAlert = true;
+	}
+
 	self.points = 0;
 	if (!$cookies.highScore) {
 		self.highScore = 0;
@@ -30,7 +35,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			var seconds = Math.floor(($cookies.elapsedTime - minutes * 60000) / 1000);
 			if ($cookies.victory) {
 				self.timeDisplay = self.timeDisplay.split(' (paused)').join('') + ' (paused)';
-				alert("You Solved the board in " + (self.guesses + 1) + " guesses!\nClick New Board to continue.");
 			} else if (minutes < 5) {
 				if (49 >= seconds) {
 					self.timeDisplay = (4 - minutes) + ':' + (59 - seconds);
@@ -198,7 +202,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 						self.squares[self.solution[0].index].click();
 					} else {
 						$cookies.victory = true;
-						self.messageClass = 'theMessage';
+						self.hideAlert = false;
 						if (self.points > self.highScore) {
 							self.highScore = self.points;
 							$cookies.highScore = self.highScore;
