@@ -36,7 +36,7 @@ h1 {
 	color: #210;
 	display: inline-block;
 	vertical-align: middle;
-	font-family: Perrygot;
+	font-family: "Perrygot";
 	text-align: center;
 }
 
@@ -76,6 +76,7 @@ button:focus {
 }
 
 #divSplash h1 {
+	font-family: "Perrygot";
 	width: 100%;
 	font-size: 8.0em;
 	text-shadow: 2px 2px 1px black;
