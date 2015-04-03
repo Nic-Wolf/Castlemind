@@ -57,9 +57,7 @@ function deStringState (boardString, solutionString, moveString, callback) {
 function resetGuess (moves, hints, squares, solution, guesses, results, callback) {
 	// The colors in the hint match the colors on the board
 	// Now the colors in the guess and the hint don't line up
-	if (moves.length < 6) {
-		restart();
-	} else if (!moves.some( function (elem, ind) {
+	if (!moves.some( function (elem, ind) {
 		var result = true;
 		if (ind === 0) {
 			result = false;
@@ -68,7 +66,7 @@ function resetGuess (moves, hints, squares, solution, guesses, results, callback
 			result = false;
 		}
 		return result;
-	})) {
+	}) && moves.length === 6) {
 		results.push(guesses);
 		var points = results.reduce( function (prev, curr) {
 			if (5 > curr) {
@@ -78,7 +76,7 @@ function resetGuess (moves, hints, squares, solution, guesses, results, callback
 			}
 			return prev + newPoints;
 		}, 0);
-		message = "You win! You have " + points + ' points!';
+		message = "You Solved the board in " + (guesses + 1) + " guesses!\nClick New Board to continue.";
 	} else {
 		restart();
 	}

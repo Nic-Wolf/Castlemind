@@ -1,4 +1,5 @@
 var gulp       = require('gulp');
+var server		 = require('gulp-express');
 var gutil      = require('gulp-util');
 var source     = require('vinyl-source-stream');
 var watchify   = require('watchify');
@@ -18,5 +19,8 @@ bundler.on('update', bundle);
 bundler.on('log', gutil.log);
 
 gulp.task('js', bundle);
-gulp.task('default', ['js']);
+gulp.task('serve', function () {
+	server.run(['./bin/www']);
+});
+gulp.task('default', ['js', 'serve']);
 

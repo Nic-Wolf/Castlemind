@@ -6,6 +6,11 @@ var gameApp = angular.module('gameApp', ['ngCookies']);
 gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeout',
 	function($http, $cookies, $location, $timeout) {
 	var self = this;
+	self.hideAlert = true;
+	self.killAlert = function () {
+		self.hideAlert = true;
+	}
+
 	self.points = 0;
 	if (!$cookies.highScore) {
 		self.highScore = 0;
@@ -42,15 +47,24 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.squares.forEach( function (square) {
 					delete square.click;
 				});
+				alert("Game Over!\nYour final score is: " + self.points + "!");
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
 	}; // end countDown()
 	self.message = "Welcome! Press New Game to Begin!";
 
+
+	// ******************************************************* //
+	// newGame
+	// ******************************************************* //
+	this.newGame = function() {
+		this.reset();
+		this.newBoard();
+	}
 	
 	// ******************************************************* //
-	// newGame starts the timer and gets a gameboard and path from the server
+	// newBoard starts the timer and gets a gameboard and path from the server
 	// The controller is assigned the following values
 	//		timeDisplay: shows the player their remaining time
 	//		points: this reflects the running total for five minutes
@@ -59,7 +73,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	//		moves: the moves that the player has guessed
 	//		hints: the values that are displayed to the player
 	// ******************************************************* //
-	this.newGame = function() {
+	this.newBoard = function() {
 		if (!$cookies.playing || self.timeDisplay === '0:00') {
 			$cookies.timeCheck = Date.now();
 			$cookies.elapsedTime = 0;
@@ -188,7 +202,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 						self.squares[self.solution[0].index].click();
 					} else {
 						$cookies.victory = true;
-						self.messageClass = 'theMessage';
+						self.hideAlert = false;
 						if (self.points > self.highScore) {
 							self.highScore = self.points;
 							$cookies.highScore = self.highScore;
@@ -198,6 +212,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			);
 		} else if (toHighlight.length === 0) {
 			self.cancel();
+			self.guesses++;
 			self.message = "Oops! You had nowhere to go.";
 		} else {
 			$timeout( function () {
@@ -237,7 +252,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	// reset allows the page to refresh without trying to load a new board
 	this.reset = function () {
 		delete $cookies.playing;
-		delete $cookies.highScore;
 		delete self.squares;
 		delete self.solution;
 		delete self.hints;

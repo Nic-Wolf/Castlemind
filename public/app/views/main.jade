@@ -1,4 +1,6 @@
 #divSplash
 	h1 {{mCtrl.header}}
-	button(ng-click="mCtrl.newGame()") New Game
-	button(ng-click="mCtrl.tutorial()") Tutorial
+	#divNewGame
+		button(ng-click="mCtrl.newGame()") New Game
+	#divTutorial
+		button(ng-click="mCtrl.tutorial()") Tutorial

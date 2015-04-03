@@ -1,9 +1,9 @@
-div.banner
+.banner
 	div#points 
 		h2 Current Points:&nbsp;
 		h2 {{gCtrl.points}}
 	div#timer
-		h2 Time Remaining:&nbsp;
+		h2 Time Left:&nbsp;
 		h2 {{gCtrl.timeDisplay}}
 	div#high-score
 		h2 High Score:&nbsp;
@@ -12,7 +12,7 @@ div.banner
 	#sidebar
 		div.inset
 			button(ng-click="gCtrl.newGame()") New Game
-			button(ng-click="gCtrl.newGame()") New Board
+			button(ng-click="gCtrl.newBoard()") New Board
 			button#btnTutorial(ng-click="gCtrl.tutorial()") Help
 		h3 Path Hints
 		#divHints
@@ -26,3 +26,6 @@ div.banner
 			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")
 				td(ng-repeat="square in gCtrl.squares.slice(row * 5,(row + 1) * 5)",class="{{square.class}}", ng-click="square.click()") 
 					img(class="{{square.imgClass}}",src="{{square.image}}",alt="")
+#alert(ng-hide="gCtrl.hideAlert")
+	p {{gCtrl.message}}
+	button(ng-click="gCtrl.killAlert()") Ok

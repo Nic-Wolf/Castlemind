@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "`npm bin`/jasmine",
-    "start": "node ./bin/www",
+    "start": "npm install && gulp",
     "postinstall": "./node_modules/bower/bin/bower install"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
   "devDependencies": {
     "browserify": "~9.0.3",
     "gulp": "~3.8.11",
+    "gulp-express": "^0.3.5",
     "gulp-util": "~3.0.4",
     "vinyl-source-stream": "~1.1.0",
     "watchify": "~2.4.0"
