@@ -6,11 +6,12 @@
 /*font options for splash page button text below:*/ 
 
 @font-face {
-	font-family: 'Perrygot';
-	src: url('../fonts/perrygot.ttf') format('truetype');
+	font-family: 'Artifika';
+	src: url('../fonts/Artifika-Regular.ttf') format('truetype');
 }
 
 @font-face {
+<<<<<<< HEAD
 	font-family: 'Tryst-Regular';
 	src: url('../fonts/Tryst-Regular.otf') format('truetype');
 }
@@ -40,6 +41,10 @@
 @font-face {
 	font-family: 'Artifika-Regular';
 	src: url('../fonts/Artifika-Regular.ttf') format('truetype');
+=======
+	font-family: 'Perrygot';
+	src: url('../fonts/PERRYGOT.TTF') format('truetype');
+>>>>>>> master
 }
 
 
@@ -53,7 +58,6 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-	font: 14px "Artifika", serif;
 	background: url("../img/castle-bg-sm-cropped.jpg") no-repeat;
 	background-position: center;
 	background-size: 100% 100%;
@@ -67,12 +71,12 @@ h1 {
 	color: #210;
 	display: inline-block;
 	vertical-align: middle;
-	font-family: Perrygot;
+	font-family: 'Perrygot';
 	text-align: center;
 }
 
 h2 {
-	font-size: 1.75em;
+	font: 1.75em 'Artifika';
 	display: inline-block;
 	margin: 0 auto;
 	padding: 0;
@@ -88,13 +92,16 @@ h3 {
 button {
 	width: 15%;
 	text-align: center;
+<<<<<<< HEAD
 	font-family: 'Artifika-Regular';
 	display: block;
+=======
+	font: 2.0em 'Artifika';
+>>>>>>> master
 	color: #e4dacd;
 	text-shadow: 0 -1px 1px black;
 	margin: 2% auto 20px auto;
 	padding: 0.25em;
-	font-size: 2.0em;
 	background-image: url("../img/texture3.png");
 	border: 3px outset #843;
 }
@@ -109,8 +116,8 @@ button:focus {
 }
 
 #divSplash h1 {
+	font: 8.0em "Perrygot";
 	width: 100%;
-	font-size: 8.0em;
 	text-shadow: 2px 2px 1px black;
 	margin-left: 15%;
 	color: #a91c00;
@@ -171,6 +178,10 @@ button:focus {
 	padding: 0.25em;
 }
 
+#next {
+	float: left;
+}
+
 #next:focus {
 	outline: initial;
 }
@@ -194,65 +205,11 @@ button:focus {
   animation: slide 1s forwards;
 }
 
-@-webkit-keyframes slide {
-	0% {
-	  left: 500px;
-	  opacity: 0;
-	}
-	50% {
-  	opacity: 0;
-	}
-  100% {
-  	left: 8%;
-  	opacity: 1;
-  }
-}
-
-@keyframes slide {
-	0% {
-		left: 500px;
-		opacity: 0;
-	}
-	50% {
-		opacity: 0;
-	}
-	100% {
-		left: 8%;
-		opacity: 1;
-	}
-}
-
 .slideOut {
 	position: absolute;
 	width: 80%;
 	-webkit-animation: slideOut 1s forwards;
 	animation: slideOut 1s forwards;
-}
-
-@-webkit-keyframes slideOut {
-	0% {
-		opacity: 1;
-	}
-	20% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-
-@keyframes slideOut {
-	0% {
-		left: 8%;
-		opacity: 1;
-	}
-	20% {
-		opacity: 0;
-	}
-	100% {
-		left: -500px;
-		opacity: 0;
-	}
 }
 
 
@@ -277,16 +234,16 @@ button:focus {
 	width: 15em;
 }
 
+#timer {
+	float: left;
+	padding: 0.2em;
+	width: 12em;
+}
+
 #high-score {
 	float: left;
 	padding: 0.2em;
 	width: 11em;
-}
-
-#timer {
-	float: left;
-	padding: 0.2em;
-	width: 13em;
 }
 
 
@@ -323,7 +280,7 @@ button:focus {
 }
 
 .inset {
-	font-size: 0.75em;
+	font-size: 0.65em;
 	display: flex;
 }
 
@@ -366,7 +323,6 @@ button:focus {
 	padding: 0;
 	width: 100%;
 	opacity: 1;
-	
 }
 
 .color-0 { 
@@ -461,6 +417,10 @@ button:focus {
 	border: none;
 }
 
+#divHints.highlight {
+	display: block;
+}
+
 .hasImage {
 	line-height: 0;
 	padding-bottom: 0;
@@ -470,6 +430,32 @@ button:focus {
 	position: absolute;
 	top: 65%;
 	left: 0;
+}
+
+.highlight {
+	display: inline-block;
+	position: relative;
+	opacity: 0.8;
+}
+
+.highlight:before {
+	content: '';
+	position: absolute;
+	border-radius: 5%;
+	box-shadow: inset 0 0 0 100px #202010;
+	top:    0;
+	right:  0;
+	bottom: 0;
+	left:   0;
+	-webkit-animation: highlight 1.5s infinite;
+	animation: highlight 1.5s infinite;
+}
+
+.glow {
+	border: 1.5px solid transparent;
+	-webkit-animation-name: glow;
+	-webkit-animation-duration: 1.5s;
+	-webkit-animation-iteration-count: infinite;
 }
 
 #alert {
@@ -583,68 +569,13 @@ button:focus {
 		width: 90%;
 	}
 
-	@-webkit-keyframes slide {
-		0% {
-		  left: 500px;
-		  opacity: 0;
-		}
-		50% {
-	  	opacity: 0;
-		}
-	  100% {
-			left: 5%;
-	  	opacity: 1;
-	  }
-	}
-
-	@keyframes slide {
-		0% {
-			left: 500px;
-			opacity: 0;
-		}
-		50% {
-			opacity: 0;
-		}
-		100% {
-			left: 0;
-			opacity: 1;
-		}
-	}
-
 	.slideOut {
 		width: 350px;
-	}
-
-	@-webkit-keyframes slideOut {
-		0% {
-			opacity: 1;
-		}
-		20% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 0;
-		}
-	}
-
-	@keyframes slideOut {
-		0% {
-			left: 0%;
-			opacity: 1;
-		}
-		20% {
-			opacity: 0;
-		}
-		100% {
-			left: -500px;
-			opacity: 0;
-		}
 	}
 }
 
 @media handheld, only screen and (max-width: 639px), only screen and (max-device-width: 1080px) {
 	body {
-		/*background: none;*/
 		background-size: 160% 100%;
 		background-position: left;
 	}
@@ -854,95 +785,96 @@ button:focus {
 }
 
 
-.highlight {
-	display: inline-block;
-	-webkit-transform: translateZ(0);
-	transform: translateZ(0);
-	box-shadow: 0 0 2px rgba(0, 0, 0, 0);
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-	-moz-osx-font-smoothing: grayscale;
-	position: relative;
-	opacity: 0.8;
-}
-
-#divHints.highlight {
-	display: block;
-}
-
-.highlight:before {
-	content: '';
-	position: absolute;
-	border-radius: 5%;
-	box-shadow: inset 0 0 0 100px #202010;
-	top:    0;
-	right:  0;
-	bottom: 0;
-	left:   0;
-	-webkit-animation: highlight 1.5s infinite;
-	animation: highlight 1.5s infinite;
-}
-
-.glow {
-	border: 1.5px solid transparent;
-	-webkit-animation-name: glow;
-	-webkit-animation-duration: 1.5s;
-	-webkit-animation-iteration-count: infinite;
-}
-	
 @-webkit-keyframes glow {
 	from {box-shadow: inset 0 0 50px 0px transparent;}
 	25%  {box-shadow: inset 0 0 50px 0px #d3d3d3;}
 	50%  {box-shadow: inset 0 0 50px 0px white;}
 	75%  {box-shadow: inset 0 0 50px 0px #d3d3d3;}
 	to   {box-shadow: inset 0 0 50px 0px transparent;}
+
+.directions {
+	float: left;
+	width: 40%;
+}
+
+.directions li {
+	margin: 20px 0 0 0;
+	font-size: 20px;
+}
+
+#next {
+	float: left;
+}
+
+#justPlay{
+	float: right;
+}
+
+}
+
+
+.directions {
+	float: left;
+	width: 40%;
+	100% {border-color: #FFCC00};
+}
+
+.directions li {
+	margin: 20px 0 0 0;
+	font-size: 20px;
+@-webkit-keyframes slide {
 	0% {
-		border-color: #000;
-		/*box-shadow: inset 0 0 50px 0px transparent;*/
+		left: 500px;
+		opacity: 0;
 	}
-
-
-.directions {
-	float: left;
-	width: 40%;
+	50% {
+		opacity: 0;
+	}
+	100% {
+		left: 5%;
+		opacity: 1;
+	}
 }
 
-.directions li {
-	margin: 20px 0 0 0;
-	font-size: 20px;
+@keyframes slide {
+	0% {
+		left: 500px;
+		opacity: 0;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		left: 5%;
+		opacity: 1;
+	}
 }
 
-#next {
-	float: left;
+@-webkit-keyframes slideOut {
+	0% {
+		left: 0%;
+		opacity: 1;
+	}
+	20% {
+		opacity: 0;
+	}
+	100% {
+		left: -500px;
+		opacity: 0;
+	}
 }
 
-#justPlay{
-	float: right;
-}
-
-}
-
-
-.directions {
-	float: left;
-	width: 40%;
-}
-
-.directions li {
-	margin: 20px 0 0 0;
-	font-size: 20px;
-}
-
-#next {
-	float: left;
-}
-
-#justPlay{
-	float: right;
-}
-
-#tutorialMain {
-	float: right;
-	width: 50%;
+@keyframes slideOut {
+	0% {
+		left: 0%;
+		opacity: 1;
+	}
+	20% {
+		opacity: 0;
+	}
+	100% {
+		left: -500px;
+		opacity: 0;
+	}
 }
 
