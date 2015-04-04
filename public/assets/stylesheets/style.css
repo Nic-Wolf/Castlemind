@@ -1,10 +1,6 @@
 /*******************************/
 /* CUSTOM FONTS */
 /*******************************/
-
-
-/*font options for splash page button text below:*/ 
-
 @font-face {
 	font-family: 'Artifika';
 	src: url('../fonts/Artifika-Regular.ttf') format('truetype');
@@ -26,8 +22,7 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-	font: 14px "Contra", Helvetica, Arial, sans-serif;
-	background: url("../img/castle-bg-sm.jpg") no-repeat;
+	background: url("../img/castle-bg-sm-cropped.jpg") no-repeat;
 	background-position: center;
 	background-size: 100% 100%;
 }
@@ -40,12 +35,12 @@ h1 {
 	color: #210;
 	display: inline-block;
 	vertical-align: middle;
-	font-family: Perrygot;
+	font-family: 'Perrygot';
 	text-align: center;
 }
 
 h2 {
-	font-size: 1.75em;
+	font: 1.75em 'Artifika';
 	display: inline-block;
 	margin: 0 auto;
 	padding: 0;
@@ -59,13 +54,14 @@ h3 {
 }
 
 button {
-	display: block;
+	text-align: center;
+	font: 2.0em 'Artifika';
 	color: #e4dacd;
 	text-shadow: 0 -1px 1px black;
 	margin: 2% auto 20px auto;
 	padding: 0.25em;
-	font-size: 2.0em;
-	background-image: url("../img/stone-texture.jpg");
+	background-image: url("../img/texture3.png");
+	border: 3px outset #843;
 }
 
 button:focus {
@@ -78,14 +74,31 @@ button:focus {
 }
 
 #divSplash h1 {
+	font: 8.0em "Perrygot";
 	width: 100%;
-	font-size: 8.0em;
+	text-shadow: 2px 2px 1px black;
+	margin-left: 15%;
+	color: #a91c00;
 }
 
-#divSplash button {
-	font-size: 1.75em;
+#divNewGame button {
+	width: 7em;
+	font-size: 2.5em;
 	display: block;
 	padding: 0.5em;
+	margin-left: 60%;
+	text-align: right;
+	border: 2px solid #3a0e05;
+}
+
+#divTutorial button {
+	width: 7em;
+	font-size: 2.5em;
+	display: block;
+	padding: 0.5em;
+	margin-left: 60%;
+	text-align: right;
+	border: 2px solid #3a0e05;
 }
 
 
@@ -96,13 +109,17 @@ button:focus {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	height: 6.75em;
+	height: 14em;
 	background-color: lightblue;
 	display: block;
 }
 
 #directions div {
 	font-size: 1.5em;
+}
+
+#options {
+	display: flex;
 }
 
 #options h3 {
@@ -115,6 +132,10 @@ button:focus {
 	display: inline-block;
 	margin: 0;
 	padding: 0.25em;
+}
+
+#next {
+	float: left;
 }
 
 #next:focus {
@@ -140,68 +161,11 @@ button:focus {
   animation: slide 1s forwards;
 }
 
-@-webkit-keyframes slide {
-	0% {
-	  left: 500px;
-	  opacity: 0;
-	}
-	50% {
-  	opacity: 0;
-	}
-  100% {
-  	left: 8%;
-  	opacity: 1;
-  }
-}
-
-@keyframes slide {
-	0% {
-		left: 500px;
-		opacity: 0;
-	}
-	50% {
-		opacity: 0;
-	}
-	100% {
-		left: 8%;
-		opacity: 1;
-	}
-}
-
 .slideOut {
 	position: absolute;
-	float: left;
 	width: 80%;
 	-webkit-animation: slideOut 1s forwards;
 	animation: slideOut 1s forwards;
-}
-
-@-webkit-keyframes slideOut {
-	0% {
-		left: 8%;
-		opacity: 1;
-	}
-	20% {
-		opacity: 0;
-	}
-	100% {
-		left: -500px;
-		opacity: 0;
-	}
-}
-
-@keyframes slideOut {
-	0% {
-		left: 8%;
-		opacity: 1;
-	}
-	20% {
-		opacity: 0;
-	}
-	100% {
-		left: -500px;
-		opacity: 0;
-	}
 }
 
 
@@ -223,19 +187,19 @@ button:focus {
 #points {
 	float: left;
 	padding: 0.2em;
-	width: 13em;
-}
-
-#high-score {
-	float: left;
-	padding: 0.2em;
-	width: 10em;
+	width: 15em;
 }
 
 #timer {
 	float: left;
 	padding: 0.2em;
-	width: 14em;
+	width: 12em;
+}
+
+#high-score {
+	float: left;
+	padding: 0.2em;
+	width: 11em;
 }
 
 
@@ -272,7 +236,7 @@ button:focus {
 }
 
 .inset {
-	font-size: 0.75em;
+	font-size: 0.65em;
 	display: flex;
 }
 
@@ -311,9 +275,7 @@ button:focus {
 .square img {
 	margin: 0;
 	padding: 0;
-	/*padding-bottom: 4.25%;*/
 	width: 100%;
-	/*height: 100%;*/
 	opacity: 1;
 }
 
@@ -397,14 +359,20 @@ button:focus {
 	border: none;
 }
 
+#divHints .currentMove {
+	box-sizing: border-box;
+	padding: 0;
+	border: 2px solid orange;
+}
+
 #divHints .b {
 	background-size: cover;
 	padding-bottom: 15.5%;
+	border: none;
 }
 
-#divHints .currentMove {
-	padding: 0;
-	border: 2px solid orange;
+#divHints.highlight {
+	display: block;
 }
 
 .hasImage {
@@ -416,7 +384,46 @@ button:focus {
 	position: absolute;
 	top: 65%;
 	left: 0;
+}
 
+.highlight {
+	display: inline-block;
+	position: relative;
+	opacity: 0.8;
+}
+
+.highlight:before {
+	content: '';
+	position: absolute;
+	border-radius: 5%;
+	box-shadow: inset 0 0 0 100px #202010;
+	top:    0;
+	right:  0;
+	bottom: 0;
+	left:   0;
+	-webkit-animation: highlight 1.5s infinite;
+	animation: highlight 1.5s infinite;
+}
+
+.glow {
+	border: 1.5px solid transparent;
+	-webkit-animation-name: glow;
+	-webkit-animation-duration: 1.5s;
+	-webkit-animation-iteration-count: infinite;
+}
+
+#alert {
+	position: absolute;
+	top: 20%;
+	left: 10%;
+	width: 80%;
+	background-color: lightblue;
+}
+
+#alert p {
+	margin: 2em auto;
+	text-align: center;
+	font-size: 20px;
 }
 
 #alert button {
@@ -441,6 +448,14 @@ button:focus {
 	#container {
 		left: 0;
 	}
+
+	.square {
+		padding-bottom: 16%;
+	}
+
+	.hasImage {
+		padding-bottom: 0;
+	}
 }
 
 @media screen and (min-width: 750px) {
@@ -454,7 +469,7 @@ button:focus {
 	}
 
 	.square {
-		padding-bottom: 16%;
+		padding-bottom: 17%;
 	}
 
 	.hasImage {
@@ -496,11 +511,33 @@ button:focus {
 		width: 640px;
 		height: 640px;
 	}
+
+	.square {
+		padding-bottom: 17%;
+	}
+
+	.hasImage {
+		padding-bottom: 0;
+	}
+
+	#directions {
+		height: 7em;
+	}
+
+	.slideIn {
+		position: relative;
+		width: 90%;
+	}
+
+	.slideOut {
+		width: 350px;
+	}
 }
 
 @media handheld, only screen and (max-width: 639px), only screen and (max-device-width: 1080px) {
 	body {
-		background-size: 200% 104%;
+		background-size: 160% 100%;
+		background-position: left;
 	}
 
 	h1 {
@@ -512,6 +549,7 @@ button:focus {
 	}
 
 	h3 {
+		margin: 0.5em auto;
 		font-size: 3.0em;
 	}
 
@@ -520,8 +558,23 @@ button:focus {
 		display: block;
 		padding: 0.25em;
 		font-size: 3.25em;
-		background-image: none;
 		background-color: #7c7c7c;
+	}
+
+	#divSplash h1 {
+		margin: 10% auto;
+	}
+
+	#divNewGame button {
+		margin: auto;
+		text-align: center;
+		width: 80%;
+	}
+
+	#divTutorial button {
+		margin: auto;
+		text-align: center;
+		width: 80%;
 	}
 
 	#divSplash {
@@ -533,7 +586,7 @@ button:focus {
 		margin-top: 20%;
 		font-size: 2.5em;
 		text-shadow: 0 1px 10px 1px black;
-		border: 3px outset #ababab;
+		border: 2px solid #3a0e05;
 	}
 
 	#directions {
@@ -579,8 +632,9 @@ button:focus {
 
 	.banner {
 		width: 100%;
+		vertical-align: top;
 		float: left;
-		margin: 0;
+		margin: 0 auto;
 		background: none;
 		border: none;
 	}
@@ -615,6 +669,11 @@ button:focus {
 		padding-bottom: 0;
 	}
 
+	#container button {
+		background-image: none;
+		background-color: #572112;
+	}
+
 	#sidebar {
 		position: static;
 		float: none;
@@ -629,11 +688,11 @@ button:focus {
 		width: 100%;
 		float: left;
 		margin: 0;
-		margin-top: -3%;
+		margin-top: -1%;
 	}
 
 	#divHints {
-		margin: auto;
+		margin: 0 auto;
 		padding-bottom: 17.25%;
 		width: 100%;
 		background-image: none;
