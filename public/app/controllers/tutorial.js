@@ -48,7 +48,25 @@ var exampleSolution = [
 // ************************************************************************ //
 tutApp.controller('tutorialController', ['$location', '$timeout',
 	function($location, $timeout){
+	// declare what squares are legal after each click and what the clicks are
+	var pathStuck = {
+		path: [11, 17, 2],
+		animate: false
+	};
+	var pathGuess = {
+		path: [11, 15, 18, 0, 6],
+		animate: false
+	};
+	var pathCorrect = {
+		path: [7, 3, 18, 0, 6],
+		animate: false,
+		solution: true
+	};
+
 	this.game = function () {
+		pathStuck.animate = false;
+		pathGuess.animate = false;
+		pathCorrect.animate = false;
 		$location.path('/game');
 	};
 
@@ -100,6 +118,9 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	// prompt the user to start the tutorial after two seconds
 	$timeout( function () {
 		addToMessages();
+		pathStuck.animate = false;
+		pathGuess.animate = false;
+		pathCorrect.animate = false;
 		viewNumber = 0;
 	}, 0);
 
@@ -120,10 +141,6 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	// first slide
 	// ******************************************************************** //
 
-	// declare what squares are legal after each click and what the clicks are
-	var pathStuck = [11, 17, 2];
-	var pathGuess = [11, 15, 18, 0];
-	var pathCorrect = [7, 3, 18, 0];
 
 	function nextView (num) {
 		addToMessages();
@@ -131,18 +148,16 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 			self.hints.class += ' highlight';
 		} else if (num === 1) {
 			self.hints.class = '';
-			var n;
-			for (n = 0; n < 3; n++) {
-				click(n, pathStuck);
-			}
+			pathStuck.animate = true;
+			animation(0, pathStuck);
 		} else if (num === 2) {
-			clearPath(pathStuck);
-			for (n = 0; n < 4; n++) {
-				click(n, pathGuess);
-			}
-			self.moves.push({"class": 'square b'});
+			clearPath(pathStuck.path);
+			pathStuck.animate = false;
+			pathGuess.animate = true;
+			animation(0, pathGuess);
 		} else if (num === 3) {
-			clearPath(pathGuess);
+			clearPath(pathGuess.path);
+			pathGuess.animate = false;
 			self.hints[1].class += ' color-3 highlight';
 			[7,11].forEach( function (elem) {
 				self.example[elem].class += ' highlight';
@@ -152,19 +167,15 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 			[7,11].forEach( function (elem) {
 				self.example[elem].class = self.example[elem].class.split(' highlight').join('');
 			})
-			var n;
-			for (n = 0; n < 4; n++) {
-				click(n, pathCorrect);
-			}
-			self.moves.push({"class": 'square b'});
-			self.hints.slice(1,5).forEach( function (elem, ind) {
-				var square = self.example[exampleSolution[ind + 1].index];
-				elem.class = square.class;
-			});
+			pathCorrect.animate = true;
+			animation(0, pathCorrect);
+		} else {
+			pathCorrect.animate = false;
+			clearPath(pathCorrect.path);
 		}
 
 
-		if (num <= 4) {
+		if (num <= 5) {
 			viewNumber++;
 		} else {
 			// this is the end of the tutorial
@@ -176,6 +187,24 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 	// ******************************************************************* //
 	// support functions
 	// ******************************************************************* //
+
+	// animation mimics a guess
+	function animation (number, examplePath) {
+		$timeout( function () {
+			if (number < examplePath.path.length && examplePath.animate) {
+					click(number, examplePath.path);
+					animation(number + 1, examplePath);
+			} else if (examplePath.animate) {
+				$timeout( function () {
+					if (examplePath.solution) {
+						show();
+					}
+					clearPath(examplePath.path);
+					animation(0, examplePath);
+				},250);
+			}
+		}, 500);
+	}
 
 	// clearPath removes the styling that's added by a click
 	function clearPath (path) {
@@ -189,16 +218,25 @@ tutApp.controller('tutorialController', ['$location', '$timeout',
 		});
 	}
 
-
 	// click mimics the user clicking on a square
 	function click (number, path) {
 		self.moves.push({
 			"class": self.example[path[number]].class
 		});
-		self.example[path[number]].class += ' hasImage';
-		self.example[path[number]].imgClass = "";
-		var string = self.solution[number + 1].direction;
-		var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
-		self.example[path[number]].image = "../assets/img/" + hint + ".png";
+		if (self.example[path[number]].class.indexOf(' b') === -1) {
+			self.example[path[number]].class += ' hasImage';
+			self.example[path[number]].imgClass = "";
+			var string = self.solution[number + 1].direction;
+			var hint = string.split(' ').reduce(function (prev, curr) {return prev + curr[0];}, '');
+			self.example[path[number]].image = "../assets/img/" + hint + ".png";
+		}
+	}
+
+	// this shows the full solution
+	function show () {
+		self.hints.slice(1,5).forEach( function (elem, ind) {
+			var square = self.example[exampleSolution[ind + 1].index];
+			elem.class = square.class;
+		});
 	}
 }]);
