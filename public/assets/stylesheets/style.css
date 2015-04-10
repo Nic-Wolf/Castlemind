@@ -646,14 +646,17 @@ button:focus {
 	}
 
 	#points {
+		font-size: 0.88em;
 		width: 25em;
 	}
 
 	#timer {
+		font-size: 0.89em;
 		width: 23em;
 	}
 
 	#high-score {
+		font-size: 0.88em;
 		width: 19em;
 	}
 
@@ -681,7 +684,7 @@ button:focus {
 	}
 
 	.inset {
-		font-size: 1.25em;
+		font-size: 1.1em;
 		width: 100%;
 		float: left;
 		margin: 0;
@@ -791,7 +794,7 @@ button:focus {
 	}
 }
 
-@-webkit-keyframes slideOut {
+/*@-webkit-keyframes slideOut {
 	0% {
 		left: 0%;
 		opacity: 1;
@@ -817,5 +820,5 @@ button:focus {
 		left: -500px;
 		opacity: 0;
 	}
-}
+}*/
 
