@@ -184,6 +184,20 @@ function makeHint (elem, ind) {
 	}
 }
 
+// Animation for clicked buttons: Checks to see status of button, if clicked animation css transition is triggered //
+
+
+function buttonAnimate(button, data) {
+	if(button.class.indexOf('clicked')) {
+		button.class += 'animated';
+	}
+	else {
+		button.class += '';
+	}
+}
+
+
+
 module.exports = {
 	stringState: stringState,
 	deStringState: deStringState,
