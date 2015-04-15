@@ -47,7 +47,8 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 				self.squares.forEach( function (square) {
 					delete square.click;
 				});
-				alert("Game Over!\nYour final score is: " + self.points + "!");
+				self.message = "Game Over!\nYour final score is: " + self.points + "!";
+				self.hideAlert = false;
 			}
 			$cookies.timeDisplay = self.timeDisplay;
 		}, 500);
