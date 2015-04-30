@@ -21,6 +21,7 @@
 		h3 Current Guess: &#40;Incorrect Guesses: {{gCtrl.guesses}}&#41;
 		#divUserMoves
 			div(ng-repeat="move in gCtrl.moves",class="{{move.class}}")
+		p {{gCtrl.directions}}
 	#main
 		table#divGrid
 			tr(ng-repeat="row in [0, 1, 2, 3, 4]",class="rows")

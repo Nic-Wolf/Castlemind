@@ -133,6 +133,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		
 		self.squares[self.solution[0].index].class += ' a';
 		self.squares[self.solution[0].index].click();
+		self.directions = "Click a flashing square to move.";
 	} // end setSquares()
 
 	// ************************************************************************* //
@@ -201,6 +202,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 							return result;
 						});
 						self.squares[self.solution[0].index].click();
+						self.message = "Good guess!  Looks like it wasn't the secret path, though.  Use the updated hints bar to guess again.";
 					} else {
 						$cookies.victory = true;
 						self.hideAlert = false;
@@ -214,7 +216,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 		} else if (toHighlight.length === 0) {
 			self.cancel();
 			self.guesses++;
-			self.message = "Oops! You had nowhere to go.";
+			self.directions = "Oops! You had nowhere to go. Try another path.";
 		} else {
 			$timeout( function () {
 				self.squares.forEach(function (square) {

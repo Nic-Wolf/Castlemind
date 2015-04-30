@@ -29,5 +29,5 @@ routeApp.config(['$routeProvider',
 		}).
 		otherwise({
 			redirectTo: '/main'
-	});
+		});
 }]);
