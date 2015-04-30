@@ -10,7 +10,6 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 	self.killAlert = function () {
 		self.hideAlert = true;
 	}
-
 	self.points = 0;
 	if (!$cookies.highScore) {
 		self.highScore = 0;
@@ -283,6 +282,8 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 			$cookies.timeCheck = Date.now();
 			self.countDown();
 		}
+		self.message = "Welcome to Castlemind!\nTry to figure out the secret path to the castle!\nClick New Game to Start!";
+		self.hideAlert = false;
 	}
 
 	
