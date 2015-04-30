@@ -202,7 +202,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 							return result;
 						});
 						self.squares[self.solution[0].index].click();
-						self.message = "Good guess!  Looks like it wasn't the secret path, though.  Use the updated hints bar to guess again.";
+						self.directions = "Good guess!  Looks like it wasn't the secret path, though.  Use the updated hints bar to guess again.";
 					} else {
 						$cookies.victory = true;
 						self.hideAlert = false;
@@ -210,6 +210,7 @@ gameApp.controller('gameController', ['$http', '$cookies', '$location', '$timeou
 							self.highScore = self.points;
 							$cookies.highScore = self.highScore;
 						}
+						self.directions = "Well done!  Click new board to continue.";
 					}
 				}
 			);
