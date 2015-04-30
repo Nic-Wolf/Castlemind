@@ -235,6 +235,12 @@ button:focus {
 	padding: 0;
 }
 
+#sidebar p {
+	color: white;
+	margin-top: 10%;
+	font-family: 'Artifika';
+}
+
 .inset {
 	font-size: 0.65em;
 	display: flex;
