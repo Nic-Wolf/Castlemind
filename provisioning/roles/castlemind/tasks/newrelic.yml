@@ -1,0 +1,6 @@
+- name: ensure newrelic_agent.log exists
+  file: path={{ app_root }}/{{ nodeapp_name }}/newrelic_agent.log state=touch owner={{ nodeapp_user }} mode=0644
+
+- name: restart node app
+  service: name={{ nodeapp_name }} state=restarted
+

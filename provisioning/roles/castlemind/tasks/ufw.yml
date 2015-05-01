@@ -1,0 +1,13 @@
+---
+- name: (ufw) deny all incoming
+  ufw: state=enabled policy=deny direction=incoming
+
+- name: (ufw) allow ssh
+  ufw: rule=allow port=ssh
+
+- name: (ufw) allow www
+  ufw: rule=allow port=www
+
+- name: (ufw) reload
+  ufw: state=reloaded
+
